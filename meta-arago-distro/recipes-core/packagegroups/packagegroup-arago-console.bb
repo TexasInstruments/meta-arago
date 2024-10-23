@@ -66,6 +66,10 @@ ARAGO_SDK_PREREQ = "\
     freetype \
     "
 
+ARAGO_SDK_PREREQ:append:k3 = "\
+    ti-rtos-firmware \
+    "
+
 ARAGO_CONSOLE = "\
     ${@bb.utils.contains('MACHINE_FEATURES', 'alsa', '${ARAGO_ALSA_EXTRA}', '',d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'wayland', '', '${ARAGO_TSLIB}', d)} \
