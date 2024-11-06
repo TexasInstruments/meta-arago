@@ -137,6 +137,10 @@ TI_TEST_TI_TOOLS:append:j784s4 = " \
     ufs-utils \
 "
 
+TI_TEST_TI_TOOLS:append:j742s2 = " \
+    ufs-utils \
+"
+
 TI_TEST_TI_TOOLS:append:omapl138 = " \
     ${@oe.utils.conditional('ARAGO_BRAND', 'mainline', '', 'ti-ipc-test', d)} \
 "
