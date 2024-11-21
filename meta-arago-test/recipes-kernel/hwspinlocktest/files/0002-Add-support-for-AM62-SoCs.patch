@@ -1,0 +1,31 @@
+From 5ea20dff1aba059cc49e11031f731a422f3fd114 Mon Sep 17 00:00:00 2001
+From: Judith Mendez <jm@ti.com>
+Date: Mon, 18 Nov 2024 14:57:45 -0600
+Subject: [PATCH 2/2] Add support for AM62* SoCs
+
+The K3 AM62* SoCs have a hwspinlock IP in MAIN domain.
+Extend the test to add the desired SoC compatible so that
+the test can be exercised on these new SoC families.
+
+Upstream-Status: Inactive-Upstream [private repo]
+Signed-off-by: Judith Mendez <jm@ti.com>
+---
+ omap_hwspinlock_test.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/omap_hwspinlock_test.c b/omap_hwspinlock_test.c
+index b180138..46fcc08 100644
+--- a/omap_hwspinlock_test.c
++++ b/omap_hwspinlock_test.c
+@@ -199,6 +199,9 @@ static const struct hwspinlock_data soc_data[] = {
+	{ "ti,j7200",	256, },
+	{ "ti,am642",	256, },
+	{ "ti,j721s2",	256, },
++	{ "ti,am625",	256, },
++	{ "ti,am62a7",	256, },
++	{ "ti,am62p5",	256, },
+	{ /* sentinel */ },
+ };
+
+--
+2.47.0
