@@ -23,7 +23,11 @@ branch: scarthgap
 revision: HEAD
 layers: meta-oe, meta-networking, meta-python
 
-Send pull requests to meta-arago@lists.yoctoproject.org
+Send pull requests, patches, comments or questions to:
+meta-arago@lists.yoctoproject.org
+
+Please note - meta-arago mailing list requires subscription for posting:
+https://lists.yoctoproject.org/g/meta-arago
 
 Layer maintainers:
 Ryan Eatmon <reatmon@ti.com>
