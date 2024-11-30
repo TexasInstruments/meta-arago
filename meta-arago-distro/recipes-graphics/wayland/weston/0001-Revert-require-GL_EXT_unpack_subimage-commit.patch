@@ -23,7 +23,7 @@ diff --git a/libweston/renderer-gl/gl-renderer-internal.h b/libweston/renderer-g
 index 5032035..85616c9 100644
 --- a/libweston/renderer-gl/gl-renderer-internal.h
 +++ b/libweston/renderer-gl/gl-renderer-internal.h
-@@ -160,6 +160,8 @@ struct gl_renderer {
+@@ -229,6 +229,8 @@ struct gl_renderer {
 	PFNEGLCREATEPLATFORMWINDOWSURFACEEXTPROC create_platform_window;
 	bool has_platform_base;
 
@@ -33,20 +33,20 @@ index 5032035..85616c9 100644
 	PFNEGLUNBINDWAYLANDDISPLAYWL unbind_display;
 	PFNEGLQUERYWAYLANDBUFFERWL query_buffer;
 diff --git a/libweston/renderer-gl/gl-renderer.c b/libweston/renderer-gl/gl-renderer.c
-index ccb41e6..38a0e0c 100644
+index e694418b..2be6d621 100644
 --- a/libweston/renderer-gl/gl-renderer.c
 +++ b/libweston/renderer-gl/gl-renderer.c
-@@ -2106,6 +2106,7 @@ gl_renderer_flush_damage(struct weston_surface *surface,
- {
+@@ -2523,6 +2523,7 @@ gl_renderer_flush_damage(struct weston_paint_node *pnode)
+	struct weston_surface *surface = pnode->surface;
 	const struct weston_testsuite_quirks *quirks =
 		&surface->compositor->test_data.test_quirks;
 +	struct gl_renderer *gr = get_renderer(surface->compositor);
+	struct weston_buffer *buffer = surface->buffer_ref.buffer;
 	struct gl_surface_state *gs = get_surface_state(surface);
 	struct gl_buffer_state *gb = gs->buffer;
-	struct weston_paint_node *pnode;
-@@ -2152,6 +2153,24 @@ gl_renderer_flush_damage(struct weston_surface *surface,
+@@ -2550,6 +2551,24 @@ gl_renderer_flush_damage(struct weston_paint_node *pnode)
 
-	glActiveTexture(GL_TEXTURE0);
+	data = wl_shm_buffer_get_data(buffer->shm_buffer);
 
 +	if (!gr->has_unpack_subimage) {
 +		wl_shm_buffer_begin_access(buffer->shm_buffer);
@@ -67,9 +67,9 @@ index ccb41e6..38a0e0c 100644
 +	}
 +
 	if (gb->needs_full_upload || quirks->gl_force_full_upload) {
-		glPixelStorei(GL_UNPACK_SKIP_PIXELS_EXT, 0);
-		glPixelStorei(GL_UNPACK_SKIP_ROWS_EXT, 0);
-@@ -4169,11 +4188,9 @@ gl_renderer_setup(struct weston_compositor *ec)
+		wl_shm_buffer_begin_access(buffer->shm_buffer);
+
+@@ -4754,11 +4773,9 @@ gl_renderer_setup(struct weston_compositor *ec)
 	else
 		ec->read_format = pixel_format_get_info(DRM_FORMAT_ABGR8888);
 
@@ -84,7 +84,7 @@ index ccb41e6..38a0e0c 100644
 
 	if (gr->gl_version >= gr_gl_version(3, 0) ||
 	    weston_check_egl_extension(extensions, "GL_EXT_texture_type_2_10_10_10_REV"))
-@@ -4268,6 +4285,8 @@ gl_renderer_setup(struct weston_compositor *ec)
+@@ -4880,6 +4897,8 @@ gl_renderer_setup(struct weston_compositor *ec)
 		   gr_gl_version_minor(gr->gl_version));
 	weston_log_continue(STAMP_SPACE "read-back format: %s\n",
 			    ec->read_format->drm_format_name);
@@ -92,4 +92,4 @@ index ccb41e6..38a0e0c 100644
 +			    gr->has_unpack_subimage ? "yes" : "no");
 	weston_log_continue(STAMP_SPACE "glReadPixels supports y-flip: %s\n",
 			    yesno(gr->has_pack_reverse));
-	weston_log_continue(STAMP_SPACE "wl_shm 10 bpc formats: %s\n",
+	weston_log_continue(STAMP_SPACE "glReadPixels supports PBO: %s\n",
