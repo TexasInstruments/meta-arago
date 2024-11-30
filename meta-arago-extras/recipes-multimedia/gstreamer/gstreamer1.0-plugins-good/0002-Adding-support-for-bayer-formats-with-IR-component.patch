@@ -16,10 +16,10 @@ Signed-off-by: Rahul T R <r-ravikumar@ti.com>
  2 files changed, 61 insertions(+)
 
 diff --git a/sys/v4l2/ext/videodev2.h b/sys/v4l2/ext/videodev2.h
-index dc829f08d..5838bf906 100644
+index 2ceb1ca32d..e59363a29d 100644
 --- a/sys/v4l2/ext/videodev2.h
 +++ b/sys/v4l2/ext/videodev2.h
-@@ -638,6 +638,15 @@ struct v4l2_pix_format {
+@@ -702,6 +702,15 @@ struct v4l2_pix_format {
  #define V4L2_PIX_FMT_SGBRG16 v4l2_fourcc('G', 'B', '1', '6') /* 16  GBGB.. RGRG.. */
  #define V4L2_PIX_FMT_SGRBG16 v4l2_fourcc('G', 'R', '1', '6') /* 16  GRGR.. BGBG.. */
  #define V4L2_PIX_FMT_SRGGB16 v4l2_fourcc('R', 'G', '1', '6') /* 16  RGRG.. GBGB.. */
@@ -32,31 +32,31 @@ index dc829f08d..5838bf906 100644
 +#define V4L2_PIX_FMT_SIGGR10 v4l2_fourcc('I', 'G', 'R', '0') /* 10 IrGIrG.. GRGB.. */
 +#define V4L2_PIX_FMT_SGIBG10 v4l2_fourcc('G', 'I', 'B', '0') /* 10 GIrGIr.. BGRG.. */
 +#define V4L2_PIX_FMT_SIGGB10 v4l2_fourcc('I', 'G', 'B', '0') /* 10 IrGIrG.. GBGR.. */
-
+ 
  /* HSV formats */
  #define V4L2_PIX_FMT_HSV24 v4l2_fourcc('H', 'S', 'V', '3')
 diff --git a/sys/v4l2/gstv4l2object.c b/sys/v4l2/gstv4l2object.c
-index 97d09774b..74a6c5bf6 100644
+index 472a24ef55..9fe5dcc528 100644
 --- a/sys/v4l2/gstv4l2object.c
 +++ b/sys/v4l2/gstv4l2object.c
-@@ -175,6 +175,16 @@ static const GstV4L2FormatDesc gst_v4l2_formats[] = {
-   {V4L2_PIX_FMT_SGRBG16, TRUE, GST_V4L2_RAW},
-   {V4L2_PIX_FMT_SRGGB16, TRUE, GST_V4L2_RAW},
-
+@@ -195,6 +195,16 @@ static const GstV4L2FormatDesc gst_v4l2_formats[] = {
+   {MAP_FMT (SGRBG16, ENCODED),  GST_V4L2_BAYER},
+   {MAP_FMT (SRGGB16, ENCODED),  GST_V4L2_BAYER},
+ 
 +  /* Bayer formats - with IR component */
-+  {V4L2_PIX_FMT_SRGGI10, TRUE, GST_V4L2_RAW},
-+  {V4L2_PIX_FMT_SGRIG10, TRUE, GST_V4L2_RAW},
-+  {V4L2_PIX_FMT_SBGGI10, TRUE, GST_V4L2_RAW},
-+  {V4L2_PIX_FMT_SGBIG10, TRUE, GST_V4L2_RAW},
-+  {V4L2_PIX_FMT_SGIRG10, TRUE, GST_V4L2_RAW},
-+  {V4L2_PIX_FMT_SIGGR10, TRUE, GST_V4L2_RAW},
-+  {V4L2_PIX_FMT_SGIBG10, TRUE, GST_V4L2_RAW},
-+  {V4L2_PIX_FMT_SIGGB10, TRUE, GST_V4L2_RAW},
++  {MAP_FMT (SRGGI10, ENCODED),  GST_V4L2_BAYER},
++  {MAP_FMT (SGRIG10, ENCODED),  GST_V4L2_BAYER},
++  {MAP_FMT (SBGGI10, ENCODED),  GST_V4L2_BAYER},
++  {MAP_FMT (SGBIG10, ENCODED),  GST_V4L2_BAYER},
++  {MAP_FMT (SGIRG10, ENCODED),  GST_V4L2_BAYER},
++  {MAP_FMT (SIGGR10, ENCODED),  GST_V4L2_BAYER},
++  {MAP_FMT (SGIBG10, ENCODED),  GST_V4L2_BAYER},
++  {MAP_FMT (SIGGB10, ENCODED),  GST_V4L2_BAYER},
 +
    /* compressed formats */
-   {V4L2_PIX_FMT_MJPEG, FALSE, GST_V4L2_CODEC},
-   {V4L2_PIX_FMT_JPEG, FALSE, GST_V4L2_CODEC},
-@@ -1129,6 +1139,14 @@ gst_v4l2_object_format_get_rank (const struct v4l2_fmtdesc *fmt)
+   {MAP_FMT (MJPEG, ENCODED),        GST_V4L2_CODEC},
+   {MAP_FMT (JPEG, ENCODED),         GST_V4L2_CODEC},
+@@ -1194,6 +1204,14 @@ gst_v4l2_object_format_get_rank (const struct v4l2_fmtdesc *fmt)
      case V4L2_PIX_FMT_SGBRG16:
      case V4L2_PIX_FMT_SGRBG16:
      case V4L2_PIX_FMT_SRGGB16:
@@ -70,10 +70,10 @@ index 97d09774b..74a6c5bf6 100644
 +    case V4L2_PIX_FMT_SIGGB10:
        rank = BAYER_BASE_RANK;
        break;
-
-@@ -1577,6 +1595,24 @@ gst_v4l2_object_v4l2fourcc_to_bare_struct (guint32 fourcc)
-           fourcc == V4L2_PIX_FMT_SGRBG16 ? "grbg16" :
-           fourcc == V4L2_PIX_FMT_SRGGB16 ? "rggb16" : "rggb16", NULL);
+ 
+@@ -1574,6 +1592,24 @@ gst_v4l2_object_v4l2fourcc_to_bare_struct (guint32 fourcc)
+     case V4L2_PIX_FMT_SRGGB16:
+       bayer_format = "rggb16le";
        break;
 +    case V4L2_PIX_FMT_SRGGI10:
 +    case V4L2_PIX_FMT_SGRIG10:
@@ -96,28 +96,28 @@ index 97d09774b..74a6c5bf6 100644
      case V4L2_PIX_FMT_SN9C10X:
        structure = gst_structure_new_empty ("video/x-sonix");
        break;
-@@ -1921,6 +1957,22 @@ gst_v4l2_object_get_caps_info (GstV4l2Object * v4l2object, GstCaps * caps,
-           fourcc = V4L2_PIX_FMT_SGRBG16;
-         else if (!g_ascii_strcasecmp (format, "rggb16"))
-           fourcc = V4L2_PIX_FMT_SRGGB16;
-+        else if (!g_ascii_strcasecmp (format, "rggi10"))
-+          fourcc = V4L2_PIX_FMT_SRGGI10;
-+        else if (!g_ascii_strcasecmp (format, "grig10"))
-+          fourcc = V4L2_PIX_FMT_SGRIG10;
-+        else if (!g_ascii_strcasecmp (format, "bggi10"))
-+          fourcc = V4L2_PIX_FMT_SBGGI10;
-+        else if (!g_ascii_strcasecmp (format, "gbig10"))
-+          fourcc = V4L2_PIX_FMT_SGBIG10;
-+        else if (!g_ascii_strcasecmp (format, "girg10"))
-+          fourcc = V4L2_PIX_FMT_SGIRG10;
-+        else if (!g_ascii_strcasecmp (format, "iggr10"))
-+          fourcc = V4L2_PIX_FMT_SIGGR10;
-+        else if (!g_ascii_strcasecmp (format, "gibg10"))
-+          fourcc = V4L2_PIX_FMT_SGIBG10;
-+        else if (!g_ascii_strcasecmp (format, "iggb10"))
-+          fourcc = V4L2_PIX_FMT_SIGGB10;
-       }
-     } else if (g_str_equal (mimetype, "video/x-sonix")) {
-       fourcc = V4L2_PIX_FMT_SN9C10X;
+@@ -1952,6 +1988,22 @@ gst_v4l2_object_get_caps_info (GstV4l2Object * v4l2object, GstCaps * caps,
+         fourcc = V4L2_PIX_FMT_SGRBG16;
+       else if (!g_ascii_strcasecmp (format, "rggb16le"))
+         fourcc = V4L2_PIX_FMT_SRGGB16;
++      else if (!g_ascii_strcasecmp (format, "rggi10"))
++        fourcc = V4L2_PIX_FMT_SRGGI10;
++      else if (!g_ascii_strcasecmp (format, "grig10"))
++        fourcc = V4L2_PIX_FMT_SGRIG10;
++      else if (!g_ascii_strcasecmp (format, "bggi10"))
++        fourcc = V4L2_PIX_FMT_SBGGI10;
++      else if (!g_ascii_strcasecmp (format, "gbig10"))
++        fourcc = V4L2_PIX_FMT_SGBIG10;
++      else if (!g_ascii_strcasecmp (format, "girg10"))
++        fourcc = V4L2_PIX_FMT_SGIRG10;
++      else if (!g_ascii_strcasecmp (format, "iggr10"))
++        fourcc = V4L2_PIX_FMT_SIGGR10;
++      else if (!g_ascii_strcasecmp (format, "gibg10"))
++        fourcc = V4L2_PIX_FMT_SGIBG10;
++      else if (!g_ascii_strcasecmp (format, "iggb10"))
++        fourcc = V4L2_PIX_FMT_SIGGB10;
+     }
+   } else if (g_str_equal (mimetype, "video/x-sonix")) {
+     fourcc = V4L2_PIX_FMT_SN9C10X;
 --
 2.37.0
