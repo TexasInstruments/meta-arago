@@ -6,8 +6,6 @@ SRC_URI:remove = "git://git.infradead.org/mtd-utils.git;branch=master \
 SRC_URI:prepend = "git://git.infraroot.at/mtd-utils.git;branch=master;protocol=https \
 "
 
-BBCLASSEXTEND += "nativesdk"
-
 EXTRA_OEMAKE = "'CC=${CC} ${CFLAGS} ${@bb.utils.contains('PACKAGECONFIG', 'xattr', '', '-DWITHOUT_XATTR', d)} -I${S}/include' 'RANLIB=${RANLIB}' 'AR=${AR}' 'BUILDDIR=${S}'"
 
 do_compile:append() {
