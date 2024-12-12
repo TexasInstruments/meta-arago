@@ -11,7 +11,6 @@ inherit packagegroup
 # add wireless-regdb-static
 WLAN_COMMON = "\
     iw \
-    softap-udhcpd-config \
     eventdump \
     wlconf \
     wireless-regdb-static \
