@@ -96,15 +96,12 @@ TI_TEST_TI_TOOLS:append:ti43x = " \
     switch-config \
 "
 
-NOT_MAINLINE_MMIP_DEPS = "${@bb.utils.contains('MACHINE_FEATURES', 'mmip', 'omapdrmtest', '', d)}"
-
 TI_TEST_TI_TOOLS:append:omap-a15 = " \
     omapconf \
     pru-icss \
     switch-config \
     ${@oe.utils.conditional('ARAGO_BRAND', 'mainline', '', " \
         ti-ipc-test \
-	    ${NOT_MAINLINE_MMIP_DEPS} \
     ", d)} \
 "
 
