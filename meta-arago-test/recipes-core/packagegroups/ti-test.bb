@@ -71,7 +71,6 @@ TI_TEST_BASE:append:armv7ve = " \
     cpuburn-neon \
 "
 
-#    timestamping
 TI_TEST_TI_TOOLS = " \
     arm-benchmarks \
     arm-ddr-bandwidth \
