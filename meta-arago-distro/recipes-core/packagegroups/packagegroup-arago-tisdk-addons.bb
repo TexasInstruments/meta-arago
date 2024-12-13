@@ -55,7 +55,7 @@ UTILS:append:k3 = " mmc-utils \
                     statcol \
 "
 
-UTILS:append:k3 = " ti-rtos-firmware"
+UTILS:append:k3 = " ti-rtos-echo-test-fw"
 UTILS:append:am64xx = " pru-icss"
 UTILS:append:am62xx = " pru-icss"
 

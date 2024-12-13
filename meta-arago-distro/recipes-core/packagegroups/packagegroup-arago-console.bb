@@ -67,7 +67,7 @@ ARAGO_SDK_PREREQ = "\
     "
 
 ARAGO_SDK_PREREQ:append:k3 = "\
-    ti-rtos-firmware \
+    ti-rtos-echo-test-fw \
     "
 
 ARAGO_CONSOLE = "\
