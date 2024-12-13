@@ -114,7 +114,7 @@ TI_TEST_TI_TOOLS:append:omap-a15 = " \
 TI_TEST_TI_TOOLS:append:k3 = " \
     k3conf \
     switch-config \
-    ti-rtos-firmware \
+    ti-rtos-echo-test-fw \
     ti-rpmsg-char \
     ti-rpmsg-char-examples \
 "
