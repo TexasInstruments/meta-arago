@@ -9,8 +9,6 @@ SRC_URI = "\
 PR = "r3"
 PV = "1.0"
 
-PACKAGE_ARCH = "${MACHINE_ARCH}"
-
 S = "${WORKDIR}/sources"
 UNPACKDIR = "${S}"
 
