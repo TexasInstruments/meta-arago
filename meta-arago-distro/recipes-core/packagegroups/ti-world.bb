@@ -50,6 +50,6 @@ RDEPENDS:${PN} = "\
     ${DEVTOOLS} \
     ${@bb.utils.contains('TUNE_FEATURES', 'armv7a', 'valgrind', '', d)} \
     packagegroup-arago-misc \
-    ti-demos \
+    ${@bb.utils.contains('DISTRO_FEATURES','opengl','pdm-anomaly-detection','', d)} \
     ${PREFERRED_PROVIDER_virtual/docker} \
 "
