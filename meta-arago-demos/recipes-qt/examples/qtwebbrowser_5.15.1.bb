@@ -18,7 +18,10 @@ SRCREV = "a09ec269e8b296d39d78b45ae251edb3d7bada41"
 
 S = "${WORKDIR}/git"
 
-inherit qt5
+inherit qmake5
+
+# Qt uses atomic instructions not supported in thumb mode
+ARM_INSTRUCTION_SET = "arm"
 
 do_install() {
     install -d ${D}${bindir}
