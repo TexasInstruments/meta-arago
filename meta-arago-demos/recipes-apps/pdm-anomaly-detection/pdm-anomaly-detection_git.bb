@@ -2,7 +2,10 @@ SUMMARY = "Predictive maintenance demo for anomaly detection using Recurrent Neu
 LICENSE = "BSD-3-Clause & MIT & GPL-3.0-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=e88016d2cbc82d0d2efbb0865891e9d6"
 
-inherit qt5
+inherit qmake5
+
+# Qt uses atomic instructions not supported in thumb mode
+ARM_INSTRUCTION_SET = "arm"
 
 PV = "1.0"
 PR = "r2"

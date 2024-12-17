@@ -2,7 +2,12 @@ SUMMARY = "HMI demo for electronic vehicle charging station (EVSE) using QT QWid
 LICENSE = "BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://main.cpp;beginline=1;endline=33;md5=a9cde3921a8be42ed79ab74661799104"
 
-inherit qt5
+DEPENDS += "qtbase"
+
+inherit qmake5
+
+# Qt uses atomic instructions not supported in thumb mode
+ARM_INSTRUCTION_SET = "arm"
 
 PV = "1.0"
 PR = "r1"
