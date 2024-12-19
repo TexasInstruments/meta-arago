@@ -10,11 +10,6 @@ PREFERRED_PROVIDER_virtual/kernel:append = "${ARAGO_KERNEL_SUFFIX}"
 PREFERRED_VERSION_crda = "3.18"
 PREFERRED_VERSION_obex = "0.34"
 
-PREFERRED_PROVIDER_wpa-supplicant = "wpa-supplicant"
-#PREFERRED_PROVIDER_wpa-supplicant:ti33x = "wpa-supplicant-wl18xx"
-#PREFERRED_PROVIDER_wpa-supplicant:ti43x = "wpa-supplicant-wl18xx"
-#PREFERRED_PROVIDER_wpa-supplicant:omap-a15 = "wpa-supplicant-wl18xx"
-
 # Select meta-clang providers
 PREFERRED_PROVIDER_llvm = "clang"
 PREFERRED_PROVIDER_llvm-native = "clang-native"
