@@ -5,7 +5,6 @@ require branding-core.inc
 # Auto rev important packages to pick up latest
 SRCREV:pn-linux-ti-staging = "${AUTOREV}"
 SRCREV:pn-linux-ti-staging-rt = "${AUTOREV}"
-SRCREV:pn-linux-ti-staging-systest = "${AUTOREV}"
 SRCREV:pn-u-boot-ti-staging = "${AUTOREV}"
 SRCREV:pn-ltp-ddt = "${AUTOREV}"
 #SRCREV:pn-optee-os = "${AUTOREV}"
