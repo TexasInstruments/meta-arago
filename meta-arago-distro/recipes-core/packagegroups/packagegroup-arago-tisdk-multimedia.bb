@@ -7,7 +7,6 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 inherit packagegroup
 
 MULTIMEDIA = " \
-    amsdk-av-files \
     ffmpeg \
     libcamera \
     libcamera-gst \
