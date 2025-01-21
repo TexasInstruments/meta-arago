@@ -5,8 +5,6 @@ PREFERRED_PROVIDER_virtual/gettext = "gettext"
 
 PREFERRED_PROVIDER_virtual/kernel:append = "${ARAGO_KERNEL_SUFFIX}"
 
-PREFERRED_PROVIDER_jpeg = "libjpeg-turbo"
-
 # Setting PREFERRED_VERSIONS due to selecting a specific version of a library or
 # application that does not have a GPLv3 license
 PREFERRED_VERSION_crda = "3.18"

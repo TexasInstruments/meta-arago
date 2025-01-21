@@ -21,7 +21,7 @@ RDEPENDS:${PN} = "\
     curl-dev \
     i2c-tools-dev \
     freetype-dev \
-    ${@oe.utils.conditional('PREFERRED_PROVIDER_jpeg', 'libjpeg-turbo', 'libjpeg-turbo-dev', 'jpeg-dev', d)}  \
+    libjpeg-turbo-dev  \
     lzo-dev \
     opkg-dev \
     libpng-dev \
