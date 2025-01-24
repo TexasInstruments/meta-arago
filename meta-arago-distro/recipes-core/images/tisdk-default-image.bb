@@ -23,23 +23,11 @@ IMAGE_INSTALL += "\
     packagegroup-arago-tisdk-multimedia \
     packagegroup-arago-tisdk-addons \
     packagegroup-arago-tisdk-addons-extra \
-    ${@bb.utils.contains('DISTRO_FEATURES','opengl','packagegroup-arago-tisdk-hmi','packagegroup-arago-base-tisdk-server-extra',d)} \
-    ${@bb.utils.contains('DISTRO_FEATURES','opengl','pdm-anomaly-detection','', d)} \
     ${ARAGO_DEFAULT_IMAGE_EXTRA_INSTALL} \
     packagegroup-arago-tisdk-sysrepo \
 "
 
 export IMAGE_BASENAME = "tisdk-default-image${ARAGO_IMAGE_SUFFIX}"
-
-EXTRABROWSERS = " \
-    qtwebbrowser-examples \
-    qtwebengine-qmlplugins \
-    qtwebengine-examples \
-"
-
-PYTHON2APPS = " \
-    ${@bb.utils.contains('DISTRO_FEATURES','opengl',"${EXTRABROWSERS}",'',d)} \
-"
 
 DEVTOOLS = " \
     linux-libc-headers-dev \
@@ -50,7 +38,6 @@ DEVTOOLS = " \
 "
 
 IMAGE_INSTALL += "\
-    ${@bb.utils.contains("BBFILE_COLLECTIONS", "meta-python2", "${PYTHON2APPS}", "", d)} \
     ${DEVTOOLS} \
     ${@bb.utils.contains('TUNE_FEATURES', 'armv7a', 'valgrind', '', d)} \
     docker \
