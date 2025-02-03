@@ -1,0 +1,32 @@
+From b1689f3f963f4c07d3329a838569ac4c2fa2bd5f Mon Sep 17 00:00:00 2001
+From: Andrew Davis <afd@ti.com>
+Date: Thu, 16 Jan 2025 12:38:13 -0600
+Subject: [PATCH] [ACL] Do not add LD_LIBRARY_PATH to search path when not
+ defined
+
+If LD_LIBRARY_PATH is not defined a blank "-L" is added to the
+link command. This causes the next object to be linked to get
+treated as if it was a search path and causes link failure.
+
+Upstream-Status: Pending
+
+Signed-off-by: Andrew Davis <afd@ti.com>
+---
+ cmake/onnxruntime_providers_acl.cmake | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/cmake/onnxruntime_providers_acl.cmake b/cmake/onnxruntime_providers_acl.cmake
+index e23d289271..19d41dc73f 100644
+--- a/cmake/onnxruntime_providers_acl.cmake
++++ b/cmake/onnxruntime_providers_acl.cmake
+@@ -13,7 +13,9 @@
+     onnxruntime_common onnxruntime_framework onnx onnx_proto ${PROTOBUF_LIB} flatbuffers::flatbuffers Boost::mp11 safeint_interface
+   )
+
+-  target_link_libraries(onnxruntime_providers_acl -L$ENV{LD_LIBRARY_PATH})
++  if (DEFINED ENV{LD_LIBRARY_PATH})
++    target_link_libraries(onnxruntime_providers_acl -L$ENV{LD_LIBRARY_PATH})
++  endif()
+   add_dependencies(onnxruntime_providers_acl ${onnxruntime_EXTERNAL_DEPENDENCIES})
+   set_target_properties(onnxruntime_providers_acl PROPERTIES FOLDER "ONNXRuntime")
+   target_include_directories(onnxruntime_providers_acl

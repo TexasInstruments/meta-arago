@@ -1,0 +1,72 @@
+From 626066499c34c524924302342fc071f32442caae Mon Sep 17 00:00:00 2001
+From: Andrew Davis <afd@ti.com>
+Date: Sun, 12 Jan 2025 12:48:49 -0600
+Subject: [PATCH] Remove executable permission bit from source files
+
+These are source files, not executables, do not set the executable
+permission bit on these files.
+
+Upstream-Status: Pending
+
+Signed-off-by: Andrew Davis <afd@ti.com>
+---
+ onnxruntime/contrib_ops/cpu/utils/console_dumper.h           | 1 +
+ onnxruntime/core/optimizer/bias_softmax_fusion.cc            | 0
+ onnxruntime/core/providers/acl/acl_execution_provider.h      | 0
+ onnxruntime/core/providers/acl/acl_fwd.h                     | 0
+ onnxruntime/core/providers/acl/acl_provider_factory.cc       | 0
+ onnxruntime/core/providers/acl/math/gemm.cc                  | 0
+ onnxruntime/core/providers/acl/nn/batch_norm.cc              | 0
+ onnxruntime/core/providers/acl/nn/batch_norm.h               | 0
+ onnxruntime/test/optimizer/graph_transform_test.cc           | 0
+ onnxruntime/test/optimizer/graph_transform_test_layernorm.cc | 0
+ 10 files changed, 1 insertion(+)
+ mode change 100755 => 100644 onnxruntime/core/optimizer/bias_softmax_fusion.cc
+ mode change 100755 => 100644 onnxruntime/core/providers/acl/acl_execution_provider.h
+ mode change 100755 => 100644 onnxruntime/core/providers/acl/acl_fwd.h
+ mode change 100755 => 100644 onnxruntime/core/providers/acl/acl_provider_factory.cc
+ mode change 100755 => 100644 onnxruntime/core/providers/acl/math/gemm.cc
+ mode change 100755 => 100644 onnxruntime/core/providers/acl/nn/batch_norm.cc
+ mode change 100755 => 100644 onnxruntime/core/providers/acl/nn/batch_norm.h
+ mode change 100755 => 100644 onnxruntime/test/optimizer/graph_transform_test.cc
+ mode change 100755 => 100644 onnxruntime/test/optimizer/graph_transform_test_layernorm.cc
+
+diff --git a/onnxruntime/contrib_ops/cpu/utils/console_dumper.h b/onnxruntime/contrib_ops/cpu/utils/console_dumper.h
+index 9ebc44f441..64bd2b7b18 100644
+--- a/onnxruntime/contrib_ops/cpu/utils/console_dumper.h
++++ b/onnxruntime/contrib_ops/cpu/utils/console_dumper.h
+@@ -3,6 +3,7 @@
+
+ #pragma once
+ #include <string>
++#include <iostream>
+ #include "core/framework/ort_value.h"
+ #include "core/framework/float16.h"
+ #include "contrib_ops/cpu/utils/debug_macros.h"
+diff --git a/onnxruntime/core/optimizer/bias_softmax_fusion.cc b/onnxruntime/core/optimizer/bias_softmax_fusion.cc
+old mode 100755
+new mode 100644
+diff --git a/onnxruntime/core/providers/acl/acl_execution_provider.h b/onnxruntime/core/providers/acl/acl_execution_provider.h
+old mode 100755
+new mode 100644
+diff --git a/onnxruntime/core/providers/acl/acl_fwd.h b/onnxruntime/core/providers/acl/acl_fwd.h
+old mode 100755
+new mode 100644
+diff --git a/onnxruntime/core/providers/acl/acl_provider_factory.cc b/onnxruntime/core/providers/acl/acl_provider_factory.cc
+old mode 100755
+new mode 100644
+diff --git a/onnxruntime/core/providers/acl/math/gemm.cc b/onnxruntime/core/providers/acl/math/gemm.cc
+old mode 100755
+new mode 100644
+diff --git a/onnxruntime/core/providers/acl/nn/batch_norm.cc b/onnxruntime/core/providers/acl/nn/batch_norm.cc
+old mode 100755
+new mode 100644
+diff --git a/onnxruntime/core/providers/acl/nn/batch_norm.h b/onnxruntime/core/providers/acl/nn/batch_norm.h
+old mode 100755
+new mode 100644
+diff --git a/onnxruntime/test/optimizer/graph_transform_test.cc b/onnxruntime/test/optimizer/graph_transform_test.cc
+old mode 100755
+new mode 100644
+diff --git a/onnxruntime/test/optimizer/graph_transform_test_layernorm.cc b/onnxruntime/test/optimizer/graph_transform_test_layernorm.cc
+old mode 100755
+new mode 100644
