@@ -1,0 +1,28 @@
+From 0bdd879060cb5022b62d06bff0f21a21c3be18ca Mon Sep 17 00:00:00 2001
+From: Andrew Davis <afd@ti.com>
+Date: Mon, 3 Feb 2025 11:28:52 -0600
+Subject: [PATCH] Do not re-export internal targets directories
+
+These can be specific to a given project build and should not
+be automatically inherited to dependent projects.
+
+Upstream-Status: Pending
+
+Signed-off-by: Andrew Davis <afd@ti.com>
+---
+ cmake/ONNXConfig.cmake.in | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/cmake/ONNXConfig.cmake.in b/cmake/ONNXConfig.cmake.in
+index d588f8ae..a61af089 100644
+--- a/cmake/ONNXConfig.cmake.in
++++ b/cmake/ONNXConfig.cmake.in
+@@ -6,8 +6,6 @@
+ # library version information
+ set(ONNX_VERSION "@ONNX_VERSION@")
+
+-list(APPEND CMAKE_PREFIX_PATH "@PROTOBUF_DIR@")
+-set(Protobuf_INCLUDE_DIR "@PROTOBUF_INCLUDE_DIR@")
+ find_package(Protobuf REQUIRED)
+
+ # import targets
