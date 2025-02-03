@@ -1,0 +1,30 @@
+From 7ea6e35d3630f8c19080a0cb5a4a4c55c242a36b Mon Sep 17 00:00:00 2001
+From: Andrew Davis <afd@ti.com>
+Date: Thu, 16 Jan 2025 12:40:57 -0600
+Subject: [PATCH] Do not include CMAKE_CXX_FLAGS in build information string
+
+While this information can be useful, it often includes information
+that may be specific to the build machine (like include paths with
+usernames, e.g. -I /home/myname/externalproject/fakeroot/inlcude).
+
+This causes issues for reproducible builds (resulting binaries will
+be different between different build machines).
+
+Upstream-Status: Pending
+
+Signed-off-by: Andrew Davis <afd@ti.com>
+---
+ cmake/CMakeLists.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/cmake/CMakeLists.txt b/cmake/CMakeLists.txt
+index e0cde678db..e0d8fd0a17 100644
+--- a/cmake/CMakeLists.txt
++++ b/cmake/CMakeLists.txt
+@@ -1439,7 +1439,6 @@ if (Git_FOUND)
+   string(APPEND ORT_BUILD_INFO "git-branch=${ORT_GIT_BRANCH}, git-commit-id=${ORT_GIT_COMMIT}, ")
+ endif()
+ string(APPEND ORT_BUILD_INFO "build type=${CMAKE_BUILD_TYPE}")
+-string(APPEND ORT_BUILD_INFO ", cmake cxx flags: ${CMAKE_CXX_FLAGS}")
+ configure_file(onnxruntime_config.h.in ${CMAKE_CURRENT_BINARY_DIR}/onnxruntime_config.h)
+ get_property(onnxruntime_GENERATOR_IS_MULTI_CONFIG GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)

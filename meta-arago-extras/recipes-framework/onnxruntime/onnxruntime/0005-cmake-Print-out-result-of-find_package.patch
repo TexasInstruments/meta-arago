@@ -1,0 +1,37 @@
+From a73d9b9f4dba6d164e128d6c768d1b0a04e969ab Mon Sep 17 00:00:00 2001
+From: Andrew Davis <afd@ti.com>
+Date: Thu, 16 Jan 2025 12:47:27 -0600
+Subject: [PATCH] [cmake] Print out result of find_package
+
+A verbose only message is already printed that states the CMake will
+attempt to find a package using find_package():
+
+> Trying find_package(...) before FetchContent
+
+But it never prints if the package was found this way or not.
+Add this result message.
+
+Upstream-Status: Pending
+
+Signed-off-by: Andrew Davis <afd@ti.com>
+---
+ cmake/external/helper_functions.cmake | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/cmake/external/helper_functions.cmake b/cmake/external/helper_functions.cmake
+index e3f2211f96..9ca6a967da 100644
+--- a/cmake/external/helper_functions.cmake
++++ b/cmake/external/helper_functions.cmake
+@@ -138,9 +138,12 @@ macro(onnxruntime_fetchcontent_makeavailable)
+         unset(__cmake_fpArgs)
+
+         if(${__cmake_contentName}_FOUND)
++          message(VERBOSE "Found ${__cmake_contentName} with find_package()")
+           FetchContent_SetPopulated(${__cmake_contentName})
+           FetchContent_GetProperties(${__cmake_contentName})
+           continue()
++        else()
++          message(VERBOSE "Could not find ${__cmake_contentName} with find_package()")
+         endif()
+       endif()
+     else()
