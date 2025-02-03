@@ -1,0 +1,112 @@
+From cdb765df59d8ce5f388ac2a820b5da76eb8d610c Mon Sep 17 00:00:00 2001
+From: Andrew Davis <afd@ti.com>
+Date: Thu, 5 Dec 2024 09:47:25 -0600
+Subject: [PATCH] Add CMake options for SVE, SVE2, and BF16 support
+
+These should be optional, add options for these. Remove the hard-coded
+definitions of these for the libraries. This also makes it so validation
+options are not needed, if SVE is enabled it will be validated.
+
+Upstream-Status: Pending
+
+Signed-off-by: Andrew Davis <afd@ti.com>
+Change-Id: I03182ac6ece843e813c027ef6a573cbba254dee9
+---
+ CMakeLists.txt      | 19 -------------------
+ cmake/Options.cmake | 16 +++++++++++++---
+ 2 files changed, 13 insertions(+), 22 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 4073e06b17..4d95fb1bfd 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -149,9 +149,6 @@ add_library(arm_compute_sve OBJECT ${ARM_COMPUTE_SVE_SOURCES})
+ target_compile_options(arm_compute_sve
+                        PRIVATE "-march=armv8.2-a+sve+fp16+dotprod"
+                        PRIVATE "-fPIC")
+-target_compile_definitions(arm_compute_sve PRIVATE ARM_COMPUTE_ENABLE_BF16)
+-target_compile_definitions(arm_compute_sve PRIVATE ENABLE_SVE)
+-target_compile_definitions(arm_compute_sve PRIVATE ARM_COMPUTE_ENABLE_SVE)
+ target_include_directories(
+   arm_compute_sve
+   PUBLIC $<INSTALL_INTERFACE:include>
+@@ -171,10 +168,6 @@ add_library(arm_compute_sve2 OBJECT ${ARM_COMPUTE_SVE2_SOURCES})
+ target_compile_options(arm_compute_sve2
+                        PRIVATE "-march=armv8.6-a+sve2+fp16+dotprod"
+                        PRIVATE "-fPIC")
+-target_compile_definitions(arm_compute_sve2 PRIVATE ARM_COMPUTE_ENABLE_SVE2)
+-target_compile_definitions(arm_compute_sve2 PRIVATE ARM_COMPUTE_ENABLE_BF16)
+-target_compile_definitions(arm_compute_sve2 PRIVATE ENABLE_SVE)
+-target_compile_definitions(arm_compute_sve2 PRIVATE ARM_COMPUTE_ENABLE_SVE)
+ target_include_directories(
+   arm_compute_sve2
+   PUBLIC $<INSTALL_INTERFACE:include>
+@@ -193,9 +186,6 @@ target_include_directories(
+
+ add_library(arm_compute ${ARM_COMPUTE_SOURCES})
+ target_compile_options(arm_compute PRIVATE "-march=${ARM_COMPUTE_ARCH}")
+-target_compile_definitions(arm_compute PRIVATE ARM_COMPUTE_ENABLE_BF16)
+-target_compile_definitions(arm_compute PRIVATE ENABLE_SVE)
+-target_compile_definitions(arm_compute PRIVATE ARM_COMPUTE_ENABLE_SVE)
+ target_include_directories(
+   arm_compute
+   PUBLIC $<INSTALL_INTERFACE:include>
+@@ -222,8 +212,6 @@ target_link_libraries(
+
+ add_library(arm_compute_graph ${ARM_COMPUTE_GRAPH_SOURCES})
+ target_compile_options(arm_compute_graph PRIVATE "-march=${ARM_COMPUTE_ARCH}")
+-target_compile_definitions(arm_compute_graph PRIVATE ENABLE_SVE)
+-target_compile_definitions(arm_compute_graph PRIVATE ARM_COMPUTE_ENABLE_SVE)
+ # add_subdirectory(src/graph)
+
+ target_include_directories(
+@@ -268,13 +256,6 @@ if(ARM_COMPUTE_BUILD_TESTING)
+
+   add_executable(arm_compute_validation "")
+   target_compile_options(arm_compute_validation PRIVATE "-march=${ARM_COMPUTE_ARCH}")
+-  if(ARM_COMPUTE_ENABLE_BF16_VALIDATION)
+-    target_compile_definitions(arm_compute_validation PRIVATE ARM_COMPUTE_ENABLE_BF16)
+-  endif()
+-  if(ARM_COMPUTE_ENABLE_SVE_VALIDATION)
+-    target_compile_definitions(arm_compute_validation PRIVATE ENABLE_SVE)
+-    target_compile_definitions(arm_compute_validation PRIVATE ARM_COMPUTE_ENABLE_SVE)
+-  endif()
+   add_subdirectory(tests/validation)
+   target_compile_options(arm_compute_validation PUBLIC ${COMMON_CXX_FLAGS})
+   set_target_properties(
+diff --git a/cmake/Options.cmake b/cmake/Options.cmake
+index 121d527718..5c23fcb490 100644
+--- a/cmake/Options.cmake
++++ b/cmake/Options.cmake
+@@ -48,11 +48,12 @@ set(ARM_COMPUTE_ARCH armv8-a CACHE STRING "Architecture to use")
+ # ---------------------------------------------------------------------
+ # Backends
+
+-option(ARM_COMPUTE_ENABLE_BF16_VALIDATION "" ON)
+-option(ARM_COMPUTE_ENABLE_SVE_VALIDATION "" OFF)
+-
+ option(ENABLE_NEON "Enable Arm® Neon™ support" ON)
++option(ENABLE_SVE "Enable Arm® SVE support" ON)
++option(ENABLE_SVE2 "Enable Arm® SVE2 support" ON)
++
+ option(ARM_COMPUTE_CPU_ENABLED "" ON)
++option(ARM_COMPUTE_ENABLE_BF16 "" ON)
+ option(ARM_COMPUTE_ENABLE_I8MM "" ON)
+ option(ENABLE_FP32_KERNELS "" ON)
+ option(ENABLE_QASYMM8_KERNELS "" ON)
+@@ -74,6 +75,15 @@ endif()
+ if(ARM_COMPUTE_CPU_ENABLED)
+   add_definitions(-DARM_COMPUTE_CPU_ENABLED)
+ endif()
++if(ENABLE_SVE)
++  add_definitions(-DARM_COMPUTE_ENABLE_SVE)
++endif()
++if(ENABLE_SVE2)
++  add_definitions(-DARM_COMPUTE_ENABLE_SVE2)
++endif()
++if(ARM_COMPUTE_ENABLE_BF16)
++  add_definitions(-DARM_COMPUTE_ENABLE_BF16)
++endif()
+ if(ARM_COMPUTE_ENABLE_FP16)
+   add_definitions(-DARM_COMPUTE_ENABLE_FP16)
+ endif()

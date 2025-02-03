@@ -1,0 +1,114 @@
+From 4350c56d14b7b68acd060d8331f3ade1fb74e167 Mon Sep 17 00:00:00 2001
+From: Andrew Davis <afd@ti.com>
+Date: Thu, 5 Dec 2024 09:21:23 -0600
+Subject: [PATCH] Use ARM_COMPUTE_ENABLE_NEON in code for checking NEON support
+
+ENABLE_NEON is a flag used by the build systems. The flag is not used
+in code, instead ARM_COMPUTE_ENABLE_NEON is used everywhere.
+
+Drop the ENABLE_NEON compiler definition to prevent any accidental
+use in code.
+
+Upstream-Status: Pending
+
+Signed-off-by: Andrew Davis <afd@ti.com>
+Change-Id: I65f5e7411c99280e2dd8c187140909cefd1c6892
+---
+ Android.bp                     | 1 -
+ BUILD.bazel                    | 1 -
+ SConscript                     | 2 +-
+ SConstruct                     | 2 +-
+ cmake/Options.cmake            | 6 +-----
+ scripts/generate_android_bp.py | 1 -
+ 6 files changed, 3 insertions(+), 10 deletions(-)
+
+diff --git a/Android.bp b/Android.bp
+index 69379472b0..9288bba2d4 100644
+--- a/Android.bp
++++ b/Android.bp
+@@ -157,7 +157,6 @@ arm_compute_library_defaults {
+             "-DEMBEDDED_KERNELS",
+             "-DARM_COMPUTE_ASSERTS_ENABLED",
+             "-DARM_COMPUTE_CPP_SCHEDULER",
+-            "-DENABLE_NEON",
+             "-DARM_COMPUTE_ENABLE_NEON",
+             "-Wno-unused-parameter",
+             "-DNO_DOT_IN_TOOLCHAIN",
+diff --git a/BUILD.bazel b/BUILD.bazel
+index f553b7bfad..2262a09655 100644
+--- a/BUILD.bazel
++++ b/BUILD.bazel
+@@ -170,7 +170,6 @@ config_setting(
+ cc_library(
+     name = "common_defines",
+     defines = [
+-                  "ENABLE_NEON",
+                   "ARM_COMPUTE_CPU_ENABLED",
+                   "ARM_COMPUTE_ENABLE_NEON",
+                   "ARM_COMPUTE_ENABLE_I8MM",
+diff --git a/SConscript b/SConscript
+index 12e8fd1025..69a564873f 100644
+--- a/SConscript
++++ b/SConscript
+@@ -97,7 +97,7 @@ def build_multiisa_lib_objects():
+
+     # note that ARM_COMPUTE_ENABLE_FP16 is enabled in update_data_type_layout_flags() to make
+     # sure the environment is progated to the validation suite
+-    arm_compute_env.Append(CPPDEFINES = ['ENABLE_NEON', 'ARM_COMPUTE_ENABLE_NEON',
++    arm_compute_env.Append(CPPDEFINES = ['ARM_COMPUTE_ENABLE_NEON',
+                            'ENABLE_SVE', 'ARM_COMPUTE_ENABLE_SVE','ARM_COMPUTE_ENABLE_BF16',
+                            'ARM_COMPUTE_ENABLE_I8MM', 'ARM_COMPUTE_ENABLE_SVEF32MM'])
+
+diff --git a/SConstruct b/SConstruct
+index 8d7bd291e8..7381300fc8 100644
+--- a/SConstruct
++++ b/SConstruct
+@@ -302,7 +302,7 @@ if 'v7a' in env['estate'] and env['estate'] == '64':
+     print("ERROR: armv7a architecture has only 32-bit execution state")
+     Exit(1)
+
+-env.Append(CPPDEFINES = ['ENABLE_NEON', 'ARM_COMPUTE_ENABLE_NEON'])
++env.Append(CPPDEFINES = ['ARM_COMPUTE_ENABLE_NEON'])
+
+ if 'sve' in env['arch']:
+     env.Append(CPPDEFINES = ['ENABLE_SVE', 'ARM_COMPUTE_ENABLE_SVE'])
+diff --git a/cmake/Options.cmake b/cmake/Options.cmake
+index 5d685be48d..121d527718 100644
+--- a/cmake/Options.cmake
++++ b/cmake/Options.cmake
+@@ -53,7 +53,6 @@ option(ARM_COMPUTE_ENABLE_SVE_VALIDATION "" OFF)
+
+ option(ENABLE_NEON "Enable Arm® Neon™ support" ON)
+ option(ARM_COMPUTE_CPU_ENABLED "" ON)
+-option(ARM_COMPUTE_ENABLE_NEON "" ON)
+ option(ARM_COMPUTE_ENABLE_I8MM "" ON)
+ option(ENABLE_FP32_KERNELS "" ON)
+ option(ENABLE_QASYMM8_KERNELS "" ON)
+@@ -70,14 +69,11 @@ option(ENABLE_FP16_KERNELS "" OFF)
+ option(ARM_COMPUTE_ENABLE_FP16 "" OFF)
+
+ if(ENABLE_NEON)
+-  add_definitions(-DENABLE_NEON)
++  add_definitions(-DARM_COMPUTE_ENABLE_NEON)
+ endif()
+ if(ARM_COMPUTE_CPU_ENABLED)
+   add_definitions(-DARM_COMPUTE_CPU_ENABLED)
+ endif()
+-if(ARM_COMPUTE_ENABLE_NEON)
+-  add_definitions(-DARM_COMPUTE_ENABLE_NEON)
+-endif()
+ if(ARM_COMPUTE_ENABLE_FP16)
+   add_definitions(-DARM_COMPUTE_ENABLE_FP16)
+ endif()
+diff --git a/scripts/generate_android_bp.py b/scripts/generate_android_bp.py
+index d5b268f522..99a04e7071 100755
+--- a/scripts/generate_android_bp.py
++++ b/scripts/generate_android_bp.py
+@@ -94,7 +94,6 @@ arm_compute_library_defaults {
+             "-DEMBEDDED_KERNELS",
+             "-DARM_COMPUTE_ASSERTS_ENABLED",
+             "-DARM_COMPUTE_CPP_SCHEDULER",
+-            "-DENABLE_NEON",
+             "-DARM_COMPUTE_ENABLE_NEON",
+             "-Wno-unused-parameter",
+             "-DNO_DOT_IN_TOOLCHAIN",

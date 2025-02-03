@@ -1,0 +1,46 @@
+From 58698788adaeb2f74cf9fcddf06f3e9a2e78b984 Mon Sep 17 00:00:00 2001
+From: Andrew Davis <afd@ti.com>
+Date: Mon, 16 Dec 2024 09:42:22 -0600
+Subject: [PATCH] Fix undefined symbol error when building TensorInfo
+
+Upstream-Status: Pending
+
+Signed-off-by: Andrew Davis <afd@ti.com>
+Change-Id: I657d1b7faaad94147c685c4826916d3c21da82e1
+---
+ arm_compute/core/TensorInfo.h | 5 +----
+ src/core/TensorInfo.cpp       | 5 +++++
+ 2 files changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/arm_compute/core/TensorInfo.h b/arm_compute/core/TensorInfo.h
+index e4c9cbe879..2bfe83c4b1 100644
+--- a/arm_compute/core/TensorInfo.h
++++ b/arm_compute/core/TensorInfo.h
+@@ -242,10 +242,7 @@ public:
+     {
+         return _num_channels;
+     }
+-    const TensorShape &tensor_shape() const override
+-    {
+-        return _tensor_shape;
+-    }
++    const TensorShape &tensor_shape() const override;
+     const TensorDimsState &tensor_dims_state() const override
+     {
+         return _dims_state;
+diff --git a/src/core/TensorInfo.cpp b/src/core/TensorInfo.cpp
+index 31bddbde40..884203fd7c 100644
+--- a/src/core/TensorInfo.cpp
++++ b/src/core/TensorInfo.cpp
+@@ -395,6 +395,11 @@ ITensorInfo &TensorInfo::set_tensor_dims_state(const TensorDimsState &state)
+     return *this;
+ }
+
++const TensorShape &TensorInfo::tensor_shape() const
++{
++    return _tensor_shape;
++}
++
+ ITensorInfo &TensorInfo::set_quantization_info(const QuantizationInfo &quantization_info)
+ {
+     _quantization_info = quantization_info;

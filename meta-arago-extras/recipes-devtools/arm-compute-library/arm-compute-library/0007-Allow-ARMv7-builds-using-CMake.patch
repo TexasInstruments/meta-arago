@@ -1,0 +1,86 @@
+From 416cffe2a75a4ec66a75e00bc00297f2f0187e0f Mon Sep 17 00:00:00 2001
+From: Andrew Davis <afd@ti.com>
+Date: Thu, 5 Dec 2024 10:05:03 -0600
+Subject: [PATCH] Allow ARMv7 builds using CMake
+
+Upstream-Status: Pending
+
+Signed-off-by: Andrew Davis <afd@ti.com>
+Change-Id: Ib6bae5820569a8eadd53afdfe31e611a3089140e
+---
+ CMakeLists.txt                                | 25 +++++++++++++++++--
+ .../fixtures/CpuGemmAssemblyDispatchFixture.h |  3 +++
+ 2 files changed, 26 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d233d6bc67..4fc27553f3 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -148,7 +148,7 @@ endif()
+ if(ENABLE_SVE)
+ add_library(arm_compute_sve OBJECT ${ARM_COMPUTE_SVE_SOURCES})
+ target_compile_options(arm_compute_sve
+-                       PRIVATE "-march=armv8.2-a+sve+fp16+dotprod"
++                       PRIVATE "-march=${ARM_COMPUTE_ARCH}"
+                        PRIVATE "-fPIC")
+ target_include_directories(
+   arm_compute_sve
+@@ -169,7 +169,7 @@ endif() # ENABLE_SVE
+ if(ENABLE_SVE2)
+ add_library(arm_compute_sve2 OBJECT ${ARM_COMPUTE_SVE2_SOURCES})
+ target_compile_options(arm_compute_sve2
+-                       PRIVATE "-march=armv8.6-a+sve2+fp16+dotprod"
++                       PRIVATE "-march=${ARM_COMPUTE_ARCH}"
+                        PRIVATE "-fPIC")
+ target_include_directories(
+   arm_compute_sve2
+@@ -204,6 +204,15 @@ target_include_directories(
+           src/core/NEON/kernels/convolution/winograd)
+ target_compile_options(arm_compute PUBLIC ${COMMON_CXX_FLAGS})
+
++if(ARM_COMPUTE_ARCH MATCHES "armv7")
++  target_sources(
++    arm_compute
++    PRIVATE
++      src/core/NEON/kernels/arm_gemm/kernels/a32_sgemm_8x6/a53.cpp
++      src/core/NEON/kernels/arm_gemm/kernels/a32_sgemm_8x6/a55r1.cpp
++      src/core/NEON/kernels/arm_gemm/kernels/a32_sgemm_8x6/generic.cpp)
++endif()
++
+ add_library(ArmCompute::Core ALIAS arm_compute)
+
+ # arm_compute_sve and arm_compute_sve2 obj files will not be public in the arm_compute.so
+@@ -264,6 +273,18 @@ if(ARM_COMPUTE_BUILD_TESTING)
+   add_executable(arm_compute_validation "")
+   target_compile_options(arm_compute_validation PRIVATE "-march=${ARM_COMPUTE_ARCH}")
+   add_subdirectory(tests/validation)
++  target_include_directories(
++    arm_compute_validation
++    PUBLIC $<INSTALL_INTERFACE:include>
++          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
++          ${CMAKE_CURRENT_SOURCE_DIR}
++    PRIVATE src
++          src/cpu/kernels/assembly
++          src/core/NEON/kernels/arm_gemm
++          src/core/NEON/kernels/assembly
++          src/core/NEON/kernels/convolution/common
++          src/core/NEON/kernels/arm_conv/depthwise
++          src/core/NEON/kernels/convolution/winograd)
+   target_compile_options(arm_compute_validation PUBLIC ${COMMON_CXX_FLAGS})
+   set_target_properties(
+     arm_compute_validation PROPERTIES RUNTIME_OUTPUT_DIRECTORY
+diff --git a/tests/validation/fixtures/CpuGemmAssemblyDispatchFixture.h b/tests/validation/fixtures/CpuGemmAssemblyDispatchFixture.h
+index 5d74e210d5..0b45cdf356 100644
+--- a/tests/validation/fixtures/CpuGemmAssemblyDispatchFixture.h
++++ b/tests/validation/fixtures/CpuGemmAssemblyDispatchFixture.h
+@@ -25,7 +25,10 @@
+ #define ACL_TESTS_VALIDATION_FIXTURES_CPUGEMMASSEMBLYDISPATCHFIXTURE_H
+
+ #include "arm_compute/core/Helpers.h"
++
++#ifdef ARM_COMPUTE_ENABLE_FIXED_FORMAT_KERNELS
+ #include "arm_compute/runtime/NEON/functions/NEReorderLayer.h"
++#endif //ARM_COMPUTE_ENABLE_FIXED_FORMAT_KERNELS
+ #include "arm_compute/runtime/NEON/functions/NETranspose.h"
+
+ #include "src/core/NEON/kernels/arm_gemm/utils.hpp"

@@ -1,0 +1,91 @@
+From ab5bf5b8f86337a31bfd48277650f583a040e658 Mon Sep 17 00:00:00 2001
+From: Andrew Davis <afd@ti.com>
+Date: Thu, 5 Dec 2024 09:59:48 -0600
+Subject: [PATCH] Allow SVE and SVE2 support to be disabled in CMake
+
+Currently these are hard-coded as enabled. The SVE and SVE2 libraries
+are built unconditionally. These should only be built when SVE or
+SVE2 is available.
+
+Upstream-Status: Pending
+
+Signed-off-by: Andrew Davis <afd@ti.com>
+Change-Id: I176259f872a84f736028622694d65d4c5b57e379
+---
+ CMakeLists.txt | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 4d95fb1bfd..d233d6bc67 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -145,6 +145,7 @@ endif()
+
+ # ---------------------------------------------------------------------
+ # SVE Object Library
++if(ENABLE_SVE)
+ add_library(arm_compute_sve OBJECT ${ARM_COMPUTE_SVE_SOURCES})
+ target_compile_options(arm_compute_sve
+                        PRIVATE "-march=armv8.2-a+sve+fp16+dotprod"
+@@ -161,9 +162,11 @@ target_include_directories(
+          src/core/cpu/kernels/assembly
+          src/cpu/kernels/assembly
+          src/core/NEON/kernels/arm_gemm/merges)
++endif() # ENABLE_SVE
+
+ # ---------------------------------------------------------------------
+ # SVE2 Object Library
++if(ENABLE_SVE2)
+ add_library(arm_compute_sve2 OBJECT ${ARM_COMPUTE_SVE2_SOURCES})
+ target_compile_options(arm_compute_sve2
+                        PRIVATE "-march=armv8.6-a+sve2+fp16+dotprod"
+@@ -180,6 +183,7 @@ target_include_directories(
+          src/core/cpu/kernels/assembly
+          src/cpu/kernels/assembly
+          src/core/NEON/kernels/arm_gemm/merges)
++endif() # ENABLE_SVE2
+
+ # ---------------------------------------------------------------------
+ # Core Library
+@@ -203,9 +207,12 @@ target_compile_options(arm_compute PUBLIC ${COMMON_CXX_FLAGS})
+ add_library(ArmCompute::Core ALIAS arm_compute)
+
+ # arm_compute_sve and arm_compute_sve2 obj files will not be public in the arm_compute.so
+-target_link_libraries(
+-  arm_compute PRIVATE $<TARGET_OBJECTS:arm_compute_sve>
+-              PRIVATE $<TARGET_OBJECTS:arm_compute_sve2>)
++if(ENABLE_SVE)
++  target_link_libraries(arm_compute PRIVATE $<TARGET_OBJECTS:arm_compute_sve>)
++endif()
++if(ENABLE_SVE2)
++  target_link_libraries(arm_compute PRIVATE $<TARGET_OBJECTS:arm_compute_sve2>)
++endif()
+
+ # ---------------------------------------------------------------------
+ # Graph Library
+@@ -263,8 +270,10 @@ if(ARM_COMPUTE_BUILD_TESTING)
+                                       "${CMAKE_BINARY_DIR}/validation")
+   target_link_libraries(
+     arm_compute_validation
+-    PUBLIC arm_compute arm_compute_graph arm_compute_validation_framework
+-           arm_compute_sve)
++    PUBLIC arm_compute arm_compute_graph arm_compute_validation_framework)
++    if(ENABLE_SVE)
++      target_link_libraries(arm_compute_validation PUBLIC arm_compute_sve)
++    endif()
+   target_link_directories(arm_compute_validation PUBLIC tests)
+
+   # ---------------------------------------------------------------------
+@@ -299,8 +308,10 @@ if(ARM_COMPUTE_BUILD_EXAMPLES)
+     set_target_properties(
+       ${test_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY
+                               "${CMAKE_BINARY_DIR}/examples")
+-    target_link_libraries(${test_name} PUBLIC arm_compute
+-                                              arm_compute_graph arm_compute_sve)
++    target_link_libraries(${test_name} PUBLIC arm_compute arm_compute_graph)
++    if(ENABLE_SVE)
++      target_link_libraries(${test_name} PUBLIC arm_compute_sve)
++    endif()
+   endforeach()
+
+   # NEON Examples

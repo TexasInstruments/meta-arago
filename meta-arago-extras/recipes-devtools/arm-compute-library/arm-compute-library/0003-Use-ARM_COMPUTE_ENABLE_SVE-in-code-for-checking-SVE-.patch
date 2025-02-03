@@ -1,0 +1,197 @@
+From 92a881cebfee5504b188a046a96d39dd9361ddb1 Mon Sep 17 00:00:00 2001
+From: Andrew Davis <afd@ti.com>
+Date: Thu, 5 Dec 2024 08:57:38 -0600
+Subject: [PATCH] Use ARM_COMPUTE_ENABLE_SVE in code for checking SVE support
+
+ENABLE_SVE is a flag used by the build systems. The flag used in code
+is ARM_COMPUTE_ENABLE_SVE. There are just a couple spots where the
+build system flag is used instead causing the need to define both.
+
+Switch these last users of ENABLE_SVE over to ARM_COMPUTE_ENABLE_SVE
+then drop the ENABLE_SVE definition to prevent any more instances
+being added in the future.
+
+Upstream-Status: Pending
+
+Signed-off-by: Andrew Davis <afd@ti.com>
+Change-Id: I00da7580c4520647b62c6989bc7fbdd5efc7935e
+---
+ BUILD.bazel                                   |  3 ---
+ SConscript                                    |  2 +-
+ SConstruct                                    |  2 +-
+ .../batchnormalization/impl/SVE/fp16.cpp      |  2 +-
+ .../batchnormalization/impl/SVE/fp32.cpp      |  2 +-
+ tests/BUILD.bazel                             |  1 -
+ tests/validation/NEON/ActivationLayer.cpp     | 24 +++++++++----------
+ tests/validation/NEON/ArithmeticAddition.cpp  |  6 ++---
+ 8 files changed, 19 insertions(+), 23 deletions(-)
+
+diff --git a/BUILD.bazel b/BUILD.bazel
+index 2262a09655..c04a52e084 100644
+--- a/BUILD.bazel
++++ b/BUILD.bazel
+@@ -297,7 +297,6 @@ cc_library(
+         "//conditions:default": [],
+     }),
+     local_defines = [
+-        "ENABLE_SVE",
+         "ARM_COMPUTE_ENABLE_SVE",
+         "ARM_COMPUTE_ENABLE_SVE2",
+         "ARM_COMPUTE_ENABLE_BF16",
+@@ -348,7 +347,6 @@ cc_library(
+         "//conditions:default": [],
+     }),
+     local_defines = [
+-        "ENABLE_SVE",
+         "ARM_COMPUTE_ENABLE_SVE",
+         "ARM_COMPUTE_ENABLE_BF16",
+     ],
+@@ -409,7 +407,6 @@ cc_library(
+         "//conditions:default": [],
+     }),
+     local_defines = [
+-        "ENABLE_SVE",
+         "ARM_COMPUTE_ENABLE_SVE",
+         "ARM_COMPUTE_ENABLE_BF16",
+     ],
+diff --git a/SConscript b/SConscript
+index 69a564873f..c2ca549b71 100644
+--- a/SConscript
++++ b/SConscript
+@@ -98,7 +98,7 @@ def build_multiisa_lib_objects():
+     # note that ARM_COMPUTE_ENABLE_FP16 is enabled in update_data_type_layout_flags() to make
+     # sure the environment is progated to the validation suite
+     arm_compute_env.Append(CPPDEFINES = ['ARM_COMPUTE_ENABLE_NEON',
+-                           'ENABLE_SVE', 'ARM_COMPUTE_ENABLE_SVE','ARM_COMPUTE_ENABLE_BF16',
++                                         'ARM_COMPUTE_ENABLE_SVE','ARM_COMPUTE_ENABLE_BF16',
+                            'ARM_COMPUTE_ENABLE_I8MM', 'ARM_COMPUTE_ENABLE_SVEF32MM'])
+
+     # Build all the common files for the base architecture
+diff --git a/SConstruct b/SConstruct
+index 7381300fc8..17f5615acf 100644
+--- a/SConstruct
++++ b/SConstruct
+@@ -305,7 +305,7 @@ if 'v7a' in env['estate'] and env['estate'] == '64':
+ env.Append(CPPDEFINES = ['ARM_COMPUTE_ENABLE_NEON'])
+
+ if 'sve' in env['arch']:
+-    env.Append(CPPDEFINES = ['ENABLE_SVE', 'ARM_COMPUTE_ENABLE_SVE'])
++    env.Append(CPPDEFINES = ['ARM_COMPUTE_ENABLE_SVE'])
+     if 'sve2' in env['arch']:
+         env.Append(CPPDEFINES = ['ARM_COMPUTE_ENABLE_SVE2'])
+
+diff --git a/src/core/NEON/kernels/batchnormalization/impl/SVE/fp16.cpp b/src/core/NEON/kernels/batchnormalization/impl/SVE/fp16.cpp
+index 48caaa3e63..e07593312c 100644
+--- a/src/core/NEON/kernels/batchnormalization/impl/SVE/fp16.cpp
++++ b/src/core/NEON/kernels/batchnormalization/impl/SVE/fp16.cpp
+@@ -128,4 +128,4 @@ void fp16_sve_batch_normalization(ITensor             *src,
+ }
+ } // namespace cpu
+ } // namespace arm_compute
+-#endif // ENABLE_SVE
++#endif // ARM_COMPUTE_ENABLE_SVE
+diff --git a/src/core/NEON/kernels/batchnormalization/impl/SVE/fp32.cpp b/src/core/NEON/kernels/batchnormalization/impl/SVE/fp32.cpp
+index df4fbfe607..0d52d2c3c0 100644
+--- a/src/core/NEON/kernels/batchnormalization/impl/SVE/fp32.cpp
++++ b/src/core/NEON/kernels/batchnormalization/impl/SVE/fp32.cpp
+@@ -128,4 +128,4 @@ void fp32_sve_batch_normalization(ITensor             *src,
+ }
+ } // namespace cpu
+ } // namespace arm_compute
+-#endif // ENABLE_SVE
++#endif // ARM_COMPUTE_ENABLE_SVE
+diff --git a/tests/BUILD.bazel b/tests/BUILD.bazel
+index 7085f1facc..4b4be8b257 100644
+--- a/tests/BUILD.bazel
++++ b/tests/BUILD.bazel
+@@ -114,7 +114,6 @@ cc_binary(
+               }) +
+         select({
+                 "//:sve_validation_flag": [
+-                "ENABLE_SVE",
+                 "ARM_COMPUTE_ENABLE_SVE",
+                 ],
+                 "//conditions:default": [],
+diff --git a/tests/validation/NEON/ActivationLayer.cpp b/tests/validation/NEON/ActivationLayer.cpp
+index 119d51808a..69a8b52354 100644
+--- a/tests/validation/NEON/ActivationLayer.cpp
++++ b/tests/validation/NEON/ActivationLayer.cpp
+@@ -73,11 +73,11 @@ RelativeTolerance<float> relative_tolerance(DataType data_type, ActivationLayerI
+             switch(data_type)
+             {
+                 case DataType::F16:
+-#if defined(ENABLE_SVE)
++#if defined(ARM_COMPUTE_ENABLE_SVE)
+                     return RelativeTolerance<float>(0.25f);
+-#else  // !defined(ENABLE_SVE)
++#else  // !defined(ARM_COMPUTE_ENABLE_SVE)
+                     return RelativeTolerance<float>(0.1f);
+-#endif // defined(ENABLE_SVE)
++#endif // defined(ARM_COMPUTE_ENABLE_SVE)
+                 default:
+                     return RelativeTolerance<float>(0.05f);
+             }
+@@ -85,11 +85,11 @@ RelativeTolerance<float> relative_tolerance(DataType data_type, ActivationLayerI
+             switch(data_type)
+             {
+                 case DataType::F16:
+-#if defined(ENABLE_SVE)
++#if defined(ARM_COMPUTE_ENABLE_SVE)
+                     return RelativeTolerance<float>(0.9f);
+-#else  // !defined(ENABLE_SVE)
++#else  // !defined(ARM_COMPUTE_ENABLE_SVE)
+                     return RelativeTolerance<float>(0.01f);
+-#endif // defined(ENABLE_SVE)
++#endif // defined(ARM_COMPUTE_ENABLE_SVE)
+                 default:
+                     return RelativeTolerance<float>(0.00001f);
+             }
+@@ -117,11 +117,11 @@ AbsoluteTolerance<float> absolute_tolerance(DataType data_type, ActivationLayerI
+             switch(data_type)
+             {
+                 case DataType::F16:
+-#if defined(ENABLE_SVE)
++#if defined(ARM_COMPUTE_ENABLE_SVE)
+                     return AbsoluteTolerance<float>(0.25f);
+-#else  // !defined(ENABLE_SVE)
++#else  // !defined(ARM_COMPUTE_ENABLE_SVE)
+                     return AbsoluteTolerance<float>(0.01f);
+-#endif // defined(ENABLE_SVE)
++#endif // defined(ARM_COMPUTE_ENABLE_SVE)
+                 default:
+                     return AbsoluteTolerance<float>(0.00001f);
+             }
+@@ -129,11 +129,11 @@ AbsoluteTolerance<float> absolute_tolerance(DataType data_type, ActivationLayerI
+             switch(data_type)
+             {
+                 case DataType::F16:
+-#if defined(ENABLE_SVE)
++#if defined(ARM_COMPUTE_ENABLE_SVE)
+                     return AbsoluteTolerance<float>(0.9f);
+-#else  // !defined(ENABLE_SVE)
++#else  // !defined(ARM_COMPUTE_ENABLE_SVE)
+                     return AbsoluteTolerance<float>(0.01f);
+-#endif // defined(ENABLE_SVE)
++#endif // defined(ARM_COMPUTE_ENABLE_SVE)
+                 default:
+                     return AbsoluteTolerance<float>(0.00001f);
+             }
+diff --git a/tests/validation/NEON/ArithmeticAddition.cpp b/tests/validation/NEON/ArithmeticAddition.cpp
+index c0033daab0..bae8535ff3 100644
+--- a/tests/validation/NEON/ArithmeticAddition.cpp
++++ b/tests/validation/NEON/ArithmeticAddition.cpp
+@@ -48,11 +48,11 @@ namespace validation
+ using framework::dataset::make;
+ namespace
+ {
+-#if !defined(__aarch64__) || defined(ENABLE_SVE)
++#if !defined(__aarch64__) || defined(ARM_COMPUTE_ENABLE_SVE)
+ constexpr AbsoluteTolerance<float> tolerance_quant(1); /**< Tolerance value for comparing reference's output against implementation's output for quantized data types */
+-#else                                                  // !defined(__aarch64__) || defined(ENABLE_SVE)
++#else                                                  // !defined(__aarch64__) || defined(ARM_COMPUTE_ENABLE_SVE)
+ constexpr AbsoluteTolerance<float> tolerance_quant(1);
+-#endif                                                 // !defined(__aarch64__) || defined(ENABLE_SVE)
++#endif                                                 // !defined(__aarch64__) || defined(ARM_COMPUTE_ENABLE_SVE)
+ const auto InPlaceDataSet    = framework::dataset::make("InPlace", { false, true });
+ const auto OutOfPlaceDataSet = framework::dataset::make("InPlace", { false });
+ } // namespace
