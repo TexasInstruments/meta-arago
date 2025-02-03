@@ -1,0 +1,167 @@
+From a3c7d6aefc289dcce6656fc6d9f9c8c9b1af8f0b Mon Sep 17 00:00:00 2001
+From: Andrew Davis <afd@ti.com>
+Date: Thu, 5 Dec 2024 09:38:26 -0600
+Subject: [PATCH] Add source files at library definition time
+
+This allows for easier conditional disabling of these libraries.
+
+Upstream-Status: Pending
+
+Signed-off-by: Andrew Davis <afd@ti.com>
+Change-Id: I442aaa03060f2cb7db4ed0c1d93e64dbc223fdc6
+---
+ CMakeLists.txt                  | 20 ++++++++++----------
+ scripts/generate_build_files.py | 16 ++++------------
+ src/CMakeLists.txt              | 16 ++++------------
+ 3 files changed, 18 insertions(+), 34 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e8bdf2af1a..4073e06b17 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -46,6 +46,12 @@ set(CMAKE_CXX_EXTENSIONS OFF)
+ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+ include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Options.cmake)
+ include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Version.cmake)
++include(${CMAKE_CURRENT_SOURCE_DIR}/src/CMakeLists.txt)
++
++list(TRANSFORM ARM_COMPUTE_GRAPH_SOURCES PREPEND "src/")
++list(TRANSFORM ARM_COMPUTE_SVE_SOURCES PREPEND "src/")
++list(TRANSFORM ARM_COMPUTE_SVE2_SOURCES PREPEND "src/")
++list(TRANSFORM ARM_COMPUTE_SOURCES PREPEND "src/")
+
+ # Require at least gcc/g++ 11) CMAKE_CXX_COMPILER_VERSION OR
+ if(CMAKE_C_COMPILER_VERSION VERSION_LESS 10.2 OR CMAKE_CXX_COMPILER_VERSION
+@@ -139,8 +145,7 @@ endif()
+
+ # ---------------------------------------------------------------------
+ # SVE Object Library
+-
+-add_library(arm_compute_sve OBJECT "")
++add_library(arm_compute_sve OBJECT ${ARM_COMPUTE_SVE_SOURCES})
+ target_compile_options(arm_compute_sve
+                        PRIVATE "-march=armv8.2-a+sve+fp16+dotprod"
+                        PRIVATE "-fPIC")
+@@ -162,8 +167,7 @@ target_include_directories(
+
+ # ---------------------------------------------------------------------
+ # SVE2 Object Library
+-
+-add_library(arm_compute_sve2 OBJECT "")
++add_library(arm_compute_sve2 OBJECT ${ARM_COMPUTE_SVE2_SOURCES})
+ target_compile_options(arm_compute_sve2
+                        PRIVATE "-march=armv8.6-a+sve2+fp16+dotprod"
+                        PRIVATE "-fPIC")
+@@ -187,7 +191,7 @@ target_include_directories(
+ # ---------------------------------------------------------------------
+ # Core Library
+
+-add_library(arm_compute "")
++add_library(arm_compute ${ARM_COMPUTE_SOURCES})
+ target_compile_options(arm_compute PRIVATE "-march=${ARM_COMPUTE_ARCH}")
+ target_compile_definitions(arm_compute PRIVATE ARM_COMPUTE_ENABLE_BF16)
+ target_compile_definitions(arm_compute PRIVATE ENABLE_SVE)
+@@ -216,7 +220,7 @@ target_link_libraries(
+ # ---------------------------------------------------------------------
+ # Graph Library
+
+-add_library(arm_compute_graph "")
++add_library(arm_compute_graph ${ARM_COMPUTE_GRAPH_SOURCES})
+ target_compile_options(arm_compute_graph PRIVATE "-march=${ARM_COMPUTE_ARCH}")
+ target_compile_definitions(arm_compute_graph PRIVATE ENABLE_SVE)
+ target_compile_definitions(arm_compute_graph PRIVATE ARM_COMPUTE_ENABLE_SVE)
+@@ -238,10 +242,6 @@ target_compile_options(arm_compute_graph PUBLIC ${COMMON_CXX_FLAGS})
+
+ add_library(ArmCompute::Graph ALIAS arm_compute_graph)
+
+-# ---------------------------------------------------------------------
+-# Library Target Sources
+-add_subdirectory(src)
+-
+ if(ARM_COMPUTE_BUILD_TESTING)
+   # ---------------------------------------------------------------------
+   # Validation Framework Library
+diff --git a/scripts/generate_build_files.py b/scripts/generate_build_files.py
+index 52a8cc14da..4c4a14623f 100644
+--- a/scripts/generate_build_files.py
++++ b/scripts/generate_build_files.py
+@@ -167,27 +167,19 @@ def build_from_template_cmake(srcs_graph, srcs_sve, srcs_sve2, srcs_core):
+
+     template = f"""{get_template_header()}
+
+-target_sources(
+-	arm_compute_graph
+-	PRIVATE
++set(ARM_COMPUTE_GRAPH_SOURCES
+	{line_separator.join(srcs_graph)}
+ )
+
+-target_sources(
+-	arm_compute_sve
+-	PRIVATE
++set(ARM_COMPUTE_SVE_SOURCES
+	{line_separator.join(srcs_sve)}
+ )
+
+-target_sources(
+-	arm_compute_sve2
+-	PRIVATE
++set(ARM_COMPUTE_SVE2_SOURCES
+	{line_separator.join(srcs_sve2)}
+ )
+
+-target_sources(
+-	arm_compute
+-	PRIVATE
++set(ARM_COMPUTE_SOURCES
+	{line_separator.join(srcs_core)}
+ )
+ """
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index f1b275532a..73871563e1 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -20,9 +20,7 @@
+ # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ # SOFTWARE.
+
+-target_sources(
+-	arm_compute_graph
+-	PRIVATE
++set(ARM_COMPUTE_GRAPH_SOURCES
+	graph/DataLayerVisitor.cpp
+	graph/Graph.cpp
+	graph/GraphBuilder.cpp
+@@ -100,9 +98,7 @@ target_sources(
+	graph/printers/DotGraphPrinter.cpp
+ )
+
+-target_sources(
+-	arm_compute_sve
+-	PRIVATE
++set(ARM_COMPUTE_SVE_SOURCES
+	core/NEON/kernels/arm_conv/depthwise/interleaves/sve_s8q_3x3_dot.cpp
+	core/NEON/kernels/arm_conv/depthwise/interleaves/sve_u8q_3x3_dot.cpp
+	core/NEON/kernels/arm_conv/depthwise/kernels/sme2_fp16_nhwc_3x3_s1_output2x2_mla_depthfirst/generic_direct.cpp
+@@ -331,9 +327,7 @@ target_sources(
+	cpu/kernels/softmax/generic/sve/impl_bf16.cpp
+ )
+
+-target_sources(
+-	arm_compute_sve2
+-	PRIVATE
++set(ARM_COMPUTE_SVE2_SOURCES
+	cpu/kernels/activation/generic/sve2/lut.cpp
+	cpu/kernels/activation/generic/sve2/qasymm8.cpp
+	cpu/kernels/activation/generic/sve2/qasymm8_signed.cpp
+@@ -356,9 +350,7 @@ target_sources(
+	cpu/kernels/softmax/generic/sve2/impl.cpp
+ )
+
+-target_sources(
+-	arm_compute
+-	PRIVATE
++set(ARM_COMPUTE_SOURCES
+	c/AclContext.cpp
+	c/AclOperator.cpp
+	c/AclQueue.cpp
