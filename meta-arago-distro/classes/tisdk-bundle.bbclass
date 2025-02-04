@@ -42,6 +42,7 @@ TOOLCHAIN_SUFFIX ?= "-sdk"
 
 # K3R5 baremetal toolchain recipe(s) to build and package as part of the tisdk bundle
 TOOLCHAIN_MC_DEP = ""
+TOOLCHAIN_MC_DEP:am62lxx = ""
 TOOLCHAIN_MC_DEP:k3 = "mc::k3r5:meta-toolchain-arago"
 TISDK_TOOLCHAIN_K3R5 ?= "${TOOLCHAIN_MC_DEP}"
 TOOLCHAIN_K3R5_SUFFIX ?= "-sdk"
