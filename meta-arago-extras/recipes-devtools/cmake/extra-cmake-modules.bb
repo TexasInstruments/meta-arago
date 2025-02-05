@@ -7,7 +7,6 @@ SRCREV = "8dc36cfa882f07a60b3ebdf16d9aac57871bd382"
 
 SRC_URI = " \
     git://anongit.kde.org/extra-cmake-modules;protocol=git;branch=master \
-    file://0001-Search-within-OE_QMAKE_PATH_EXTERNAL_HOST_BINS-for-q.patch \
 "
 S = "${WORKDIR}/git"
 
