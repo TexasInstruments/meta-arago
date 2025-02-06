@@ -3,8 +3,6 @@ DESCRIPTION = "Linux software and tools to enable machine learning workloads on 
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=3e14a924c16f7d828b8335a59da64074"
 
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
-
 BRANCH = "branches/armnn_24_11"
 SRC_URI = "git://github.com/ARM-software/armnn.git;branch=${BRANCH};protocol=https"
 SRC_URI += "file://0001-Fix-type-casting-for-32bit-builds.patch"
