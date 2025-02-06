@@ -17,5 +17,3 @@ SRC_URI = " \
     git://git.ti.com/git/glsdk/gst-plugin-ducati.git;protocol=https;branch=${BRANCH} \
     file://0001-gstducati-configure.ac-stop-using-export-symbols-reg.patch \
 "
-
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
