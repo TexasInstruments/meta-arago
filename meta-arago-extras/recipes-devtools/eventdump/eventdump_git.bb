@@ -7,8 +7,6 @@ PV = "1.0+git"
 
 SRCREV = "5db45a36a05a78ea44a4cb25312ed5ee3c2bd76d"
 
-FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
-
 SRC_URI = "git://github.com/TI-ECS/eventdump.git;protocol=https;branch=master \
 	file://0001-PATCH_Makefile_Play_nicer_with_bitbake-OpenEmbedded.patch"
 
