@@ -4,8 +4,6 @@ HOMEPAGE = "https://www.onnxruntime.ai/"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=0f7e3b1308cb5c00b372a6e78835732d"
 
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
-
 SRC_URI = "\
 	git://github.com/microsoft/onnxruntime.git;protocol=https;branch=rel-1.20.1 \
 	git://github.com/HowardHinnant/date.git;protocol=https;branch=master;name=date;destsuffix=${S}/cmake/external/date \
