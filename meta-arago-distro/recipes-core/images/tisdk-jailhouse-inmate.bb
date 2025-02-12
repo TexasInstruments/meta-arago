@@ -7,7 +7,7 @@ packages for OOB demo.\
 
 require recipes-core/images/tisdk-tiny-initramfs.bb
 
-COMPATIBLE_MACHINE = "am62xx|am62pxx"
+COMPATIBLE_MACHINE = "am62xx|am62pxx|am62lxx"
 
 IMAGE_FSTYPES += "cpio"
 

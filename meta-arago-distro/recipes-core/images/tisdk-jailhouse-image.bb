@@ -7,7 +7,7 @@ contains additional firmware and management tools for Jailhouse.\
 
 require recipes-core/images/tisdk-default-image.bb
 
-COMPATIBLE_MACHINE = "am62xx|am62pxx"
+COMPATIBLE_MACHINE = "am62xx|am62pxx|am62lxx"
 
 IMAGE_INSTALL += " jailhouse"
 
