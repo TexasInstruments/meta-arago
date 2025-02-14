@@ -31,24 +31,7 @@ EXTRA_LIBS:append:dra7xx = " libulm-dev \
                              gdbserver-c6x-dev \
 "
 
-PDM_ANOMALY_PKG_DEV = "\
-    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'pdm-anomaly-detection-dev', '', d)} \
-"
-
-
 EXTRA_PACKAGES = ""
-#EXTRA_PACKAGES:append:ti33x = " \
-#                                ${PDM_ANOMALY_PKG_DEV} \
-#"
-#EXTRA_PACKAGES:append:ti43x = " \
-#                                ${PDM_ANOMALY_PKG_DEV} \
-#"
-#EXTRA_PACKAGES:append:omap-a15 = " \
-#                                ${PDM_ANOMALY_PKG_DEV} \
-#"
-#EXTRA_PACKAGES:append:am65xx = " \
-#                             ${PDM_ANOMALY_PKG_DEV} \
-#"
 
 IPCDEV = " \
 	ti-ipc-dev \

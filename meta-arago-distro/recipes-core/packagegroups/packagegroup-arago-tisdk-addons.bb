@@ -85,10 +85,8 @@ EXTRA_PACKAGES:omapl138 = " \
     protobuf \
 "
 
-# acontis-atemsys
 #EXTRA_PACKAGES:append:am335x-evm = " pruss-lld-apps"
 #EXTRA_PACKAGES:append:am437x-evm = " pruss-lld-apps"
-# acontis-atemsys
 #EXTRA_PACKAGES:append:am57xx-evm = " pruss-lld-apps"
 
 RDEPENDS:${PN} = "\
