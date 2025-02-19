@@ -23,10 +23,6 @@ branch: scarthgap
 revision: HEAD
 layers: meta-oe, meta-networking, meta-python
 
-URI: https://github.com/meta-qt5/meta-qt5
-branch: scarthgap
-revision: HEAD
-
 URI: git://git.yoctoproject.org/meta-arago
 branch: scarthgap
 revision: HEAD
