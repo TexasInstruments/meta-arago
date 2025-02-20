@@ -63,6 +63,7 @@ TI_TEST_EXTRAS = " \
     piglit \
     python3-numpy \
     wayland-utils \
+    opencl-cts \
 "
 
 TI_TEST_BASE:append:armv7a = " \
