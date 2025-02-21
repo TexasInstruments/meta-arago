@@ -1,0 +1,35 @@
+From 577192caa67660f857f2869896d01db3611b4128 Mon Sep 17 00:00:00 2001
+From: Chirag Shilwant <c-shilwant@ti.com>
+Date: Thu, 13 Feb 2025 14:45:46 +0530
+Subject: [PATCH 3/3] CMakeLists: Fix build issues observed in TFlite v2.18
+
+- Improve regular expression for filtering neon and sse
+related sources. The improved expression avoids missing files
+in case the absolute path contains the terms neon or sse.
+
+- Fixes [1]
+
+[1]: https://github.com/tensorflow/tensorflow/issues/70730
+
+Upstream-Status: Backport from master
+
+Signed-off-by: Chirag Shilwant <c-shilwant@ti.com>
+---
+ tensorflow/lite/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tensorflow/lite/CMakeLists.txt b/tensorflow/lite/CMakeLists.txt
+index 92b05e42446..737f754621f 100644
+--- a/tensorflow/lite/CMakeLists.txt
++++ b/tensorflow/lite/CMakeLists.txt
+@@ -605,7 +605,7 @@ populate_tflite_source_vars("kernels/internal/reference/sparse_ops"
+ )
+ populate_tflite_source_vars("kernels/internal/optimized/4bit"
+   TFLITE_KERNEL_INTERNAL_OPT_4BIT_SRCS
+-  FILTER "(.*neon.*|.*sse.*)\\.(cc|h)"
++  FILTER "(.*neon_.*|.*sse_.*)\\.(cc|h)"
+ )
+ set(TFLITE_PROFILER_SRCS
+   ${TFLITE_SOURCE_DIR}/profiling/platform_profiler.cc
+--
+2.34.1
