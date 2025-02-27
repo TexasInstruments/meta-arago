@@ -12,6 +12,12 @@ SRCREV = "3ed70c005559d409feff2c578a1a39cf8fec8804"
 
 S = "${WORKDIR}/git"
 
+# Only compatible with armv7a, armv7ve, and aarch64
+COMPATIBLE_MACHINE = "(^$)"
+COMPATIBLE_MACHINE:aarch64 = "(.*)"
+COMPATIBLE_MACHINE:armv7a = "${@bb.utils.contains("TUNE_FEATURES","neon","(.*)","(^$)",d)}"
+COMPATIBLE_MACHINE:armv7ve = "${@bb.utils.contains("TUNE_FEATURES","neon","(.*)","(^$)",d)}"
+
 inherit cmake
 inherit pkgconfig
 
