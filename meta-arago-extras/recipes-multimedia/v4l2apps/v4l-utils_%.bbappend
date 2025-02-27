@@ -1,7 +1,4 @@
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
+V4L_UTILS_ARAGO = ""
+V4L_UTILS_ARAGO:arago = "v4l-utils-arago.inc"
 
-SRC_URI:append = " \
-    file://0001-media-ctl-add-support-for-RGBIr-bayer-formats.patch \
-"
-
-PR:append = ".arago0"
+require ${V4L_UTILS_ARAGO}
