@@ -32,6 +32,12 @@ SRCREV_nsync = "13de152c2a1cd73ff4df97bd2c406b6d15d34af3"
 
 S = "${WORKDIR}/git"
 
+# Only compatible with armv7a, armv7ve, and aarch64
+COMPATIBLE_MACHINE = "(^$)"
+COMPATIBLE_MACHINE:aarch64 = "(.*)"
+COMPATIBLE_MACHINE:armv7a = "${@bb.utils.contains("TUNE_FEATURES","neon","(.*)","(^$)",d)}"
+COMPATIBLE_MACHINE:armv7ve = "${@bb.utils.contains("TUNE_FEATURES","neon","(.*)","(^$)",d)}"
+
 DEPENDS += "\
 	onnx \
 	abseil-cpp \
