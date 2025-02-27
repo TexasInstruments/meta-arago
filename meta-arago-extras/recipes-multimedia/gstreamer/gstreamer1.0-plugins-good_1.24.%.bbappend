@@ -1,10 +1,4 @@
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
+GSTREAMER1p0_PLUGINS_GOOD_1p24_ARAGO = ""
+GSTREAMER1p0_PLUGINS_GOOD_1p24_ARAGO:arago = "gstreamer1.0-plugins-good_1.24-arago.inc"
 
-SRC_URI:append = " \
-    file://0002-Adding-support-for-bayer-formats-with-IR-component.patch \
-    file://0003-v4l2-Changes-for-DMA-Buf-import-j721s2.patch \
-    file://0004-v4l2-Give-preference-to-contiguous-format-if-support.patch \
-    file://0005-HACK-gstv4l2object-Increase-min-buffers-for-CSI-capt.patch \
-"
-
-PR:append = ".arago0"
+require ${GSTREAMER1p0_PLUGINS_GOOD_1p24_ARAGO}
