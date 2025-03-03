@@ -8,8 +8,8 @@ inherit packagegroup
 
 EXTRA_FILES = ""
 EXTRA_FILES:ti43x = "tisdk-uenv"
-EXTRA_FILES:omap-a15 = "tisdk-readme tisdk-uenv"
-EXTRA_FILES:k3 = "tisdk-readme tisdk-uenv"
+EXTRA_FILES:omap-a15 = "tisdk-uenv"
+EXTRA_FILES:k3 = "tisdk-uenv"
 
 RDEPENDS:${PN} = "\
     ${EXTRA_FILES} \
