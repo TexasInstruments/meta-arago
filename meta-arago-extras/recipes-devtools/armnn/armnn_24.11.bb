@@ -22,12 +22,6 @@ DEPENDS = " \
     arm-compute-library \
 "
 
-RDEPENDS:${PN} = " \
-    arm-compute-library \
-    protobuf \
-    boost \
-"
-
 PACKAGECONFIG += "unit-tests tests ref"
 PACKAGECONFIG += "${@bb.utils.contains('TARGET_ARCH', 'aarch64', 'neon', '', d)}"
 PACKAGECONFIG += "${@bb.utils.contains('TARGET_ARCH', 'arm', 'neon', '', d)}"
