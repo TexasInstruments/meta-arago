@@ -3,19 +3,19 @@ DESCRIPTION = "Netopeer2 is based on the new generation of the NETCONF and YANG 
 LICENSE = "BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=41daedff0b24958b2eba4f9086d782e1"
 
-SRC_URI = "git://github.com/CESNET/Netopeer2.git;protocol=https;branch=devel \
+SRC_URI = "git://github.com/CESNET/Netopeer2.git;protocol=https;branch=master \
           ${@bb.utils.contains('DISTRO_FEATURES', 'sysvinit', \
 	        'file://netopeer2-server', '', d)} \
           ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', \
 	        'file://netopeer2-serverd.service', '', d)} \
           "
 
-PV = "2.1.59+git"
-SRCREV = "b81788d9a81770313a0eb7f88d4224726b3d6e15"
+PV = "2.2.35+git"
+SRCREV = "6d1cb61ef3ce2274a91dc9cbc51318bcd0b54697"
 
 S = "${WORKDIR}/git"
 
-DEPENDS = "libyang libnetconf2 sysrepo curl"
+DEPENDS = "libyang libnetconf2 sysrepo systemd"
 RDEPENDS:${PN} += "bash curl"
 
 FILES:${PN} += "${datadir}/yang* ${datadir}/netopeer2/* ${libdir}/sysrepo-plugind/*"

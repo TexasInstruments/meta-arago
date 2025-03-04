@@ -3,9 +3,9 @@ Upstream-Status: Inappropriate [arago specific]
 
 diff --git a/scripts/setup.sh b/scripts/setup.sh
 index 7bba711..4a98e66 100755
---- a/scripts/setup.sh
-+++ b/scripts/setup.sh
-@@ -41,6 +41,12 @@ MODULES=(
+--- a/scripts/common.sh
++++ b/scripts/common.sh
+@@ -12,6 +12,12 @@ NP2_MODULES=(
  "ietf-network-instance@2019-01-21.yang"
  "ietf-subscribed-notifications@2019-09-09.yang -e encode-xml -e replay -e subtree -e xpath"
  "ietf-yang-push@2019-09-09.yang -e on-change"
@@ -16,5 +16,5 @@ index 7bba711..4a98e66 100755
 +"ieee802-dot1q-sched@2022-08-18.yang"
 +"ieee802-dot1q-sched-bridge@2022-08-18.yang"
  )
-
- CMD_INSTALL=
+ 
+ LN2_MODULES=(
