@@ -18,7 +18,7 @@ SRCREV = "32bcced2af7feea6969dd1d22e58d0718dc488e3"
 
 S = "${WORKDIR}/git"
 
-# Only compatible with armv7, armv7ve, and aarch64
+# Only compatible with armv7a, armv7ve, and aarch64
 COMPATIBLE_MACHINE = "(^$)"
 COMPATIBLE_MACHINE:aarch64 = "(.*)"
 COMPATIBLE_MACHINE:armv7a = "${@bb.utils.contains("TUNE_FEATURES","neon","(.*)","(^$)",d)}"
