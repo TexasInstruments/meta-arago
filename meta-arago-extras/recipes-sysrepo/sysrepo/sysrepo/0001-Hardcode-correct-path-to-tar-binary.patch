@@ -17,8 +17,8 @@ diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 22c95420..2ba1f44e 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -402,10 +402,7 @@ check_symbol_exists(mkstemps "stdlib.h" SR_HAVE_MKSTEMPS)
- unset(CMAKE_REQUIRED_DEFINITIONS)
+@@ -558,10 +558,7 @@ target_link_libraries(sysrepo ${CMAKE_THREAD_LIBS_INIT})
+ set(CMAKE_REQUIRED_LIBRARIES pthread)
 
  # tar
 -find_program(TAR_BINARY "tar")
