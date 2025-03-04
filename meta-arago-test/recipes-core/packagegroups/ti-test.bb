@@ -60,6 +60,8 @@ TI_TEST_BASE = "\
 "
 
 TI_TEST_EXTRAS = " \
+    python3-pillow \
+    pytesseract \
     piglit \
     python3-numpy \
     wayland-utils \
