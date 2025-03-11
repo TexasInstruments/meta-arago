@@ -1,6 +1,4 @@
-# Recipe created by recipetool
 SUMMARY = "TSN based YANG models"
-DESCRIPTION = ""
 LICENSE = "BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://README.md;md5=a89040f014c0c9c9360e29ddf88bf4a7"
 
