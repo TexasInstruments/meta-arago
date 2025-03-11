@@ -1,0 +1,23 @@
+From 3e2db769c1579010cb83d90f4a63ed256ddda4b8 Mon Sep 17 00:00:00 2001
+From: Ravi Gunasekaran <r-gunasekaran@ti.com>
+Date: Tue, 27 Jun 2023 17:20:59 +0000
+Subject: [PATCH] so version
+
+Upstream-Status: Inappropriate [arago specific]
+
+---
+ CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index dc4e5d4..5b04b51 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -37,6 +37,7 @@ include_directories(${LIBYANG_INCLUDE_DIRS})
+ include_directories(${SYSREPO_INCLUDE_DIRS})
+
+ add_library(${PROJECT_NAME} SHARED ${SRPC_SOURCES})
++set_target_properties(${PROJECT_NAME} PROPERTIES VERSION 1.0.0 SOVERSION 1)
+
+ # project version
+ set_target_properties(${PROJECT_NAME}
