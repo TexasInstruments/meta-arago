@@ -11,16 +11,10 @@ GFX_WAYLAND = "\
     weston-examples \
 "
 
-GFX_UTILS = ""
-GFX_UTILS:append:omap-a15  = "\
-    glsdk-util-scripts \
-"
-
 RDEPENDS:${PN} = "\
     libegl \
     glmark2 \
     kmscube \
     ${@bb.utils.contains('MACHINE_FEATURES', 'gc320', 'ti-gc320-tests', '', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'wayland', "${GFX_WAYLAND}", '', d)} \
-    ${GFX_UTILS} \
 "
