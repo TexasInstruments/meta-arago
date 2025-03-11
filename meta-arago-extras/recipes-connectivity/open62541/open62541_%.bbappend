@@ -27,6 +27,7 @@ do_install:append() {
 }
 
 PACKAGES =+ "${PN}-examples ${PN}-tests"
+FILES:${PN} += "${bindir}"
 FILES:${PN}-dev += "${libdir}/cmake/* ${datadir}/${BPN}/tools"
 FILES:${PN}-examples += "${datadir}/${BPN}/examples"
 FILES:${PN}-tests += "${datadir}/${BPN}/tests"
