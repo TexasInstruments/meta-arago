@@ -7,4 +7,5 @@ REQUIRED_DISTRO_FEATURES = "opencl"
 
 RDEPENDS:${PN} = "\
     clinfo \
+    clpeak \
 "
