@@ -8,7 +8,8 @@ DEPENDS = "ti-gc320-libs"
 BRANCH = "ti-${PV}"
 
 SRC_URI = "git://git.ti.com/git/graphics/ti-gc320-test.git;protocol=https;branch=${BRANCH} \
-file://0001-makefile.linux.def-relax-assignment-of-CC-and-other-.patch \
+    file://0001-makefile.linux.def-relax-assignment-of-CC-and-other-.patch \
+    file://0001-galUtil-Fix-compile-error.patch \
 "
 SRCREV = "53207f8e360a3336276b62066a1d8a9e923de17e"
 PR = "r2"
