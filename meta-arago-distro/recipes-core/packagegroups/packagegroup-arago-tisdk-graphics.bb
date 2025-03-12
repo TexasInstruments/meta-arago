@@ -7,7 +7,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 inherit packagegroup
 
 GFX_WAYLAND = "\
-    weston-init \
+    weston-init-arago \
     weston-examples \
 "
 
