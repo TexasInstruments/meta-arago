@@ -10,6 +10,7 @@ SRCREV = "279bf455bc3dec69f374d46a8225687935f4323a"
 SRC_URI = "git://git.ti.com/git/glsdk/statcol.git;protocol=${PROTOCOL};branch=${BRANCH}"
 
 DEPENDS = "ti-rpmsg-char websocketd"
+
 RDEPENDS:${PN} = "bash"
 
 S = "${WORKDIR}/git"
@@ -21,3 +22,5 @@ do_install() {
 }
 
 INSANE_SKIP:${PN} = "ldflags"
+
+COMPATIBLE_MACHINE = "^(k3)$"
