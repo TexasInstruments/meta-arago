@@ -38,7 +38,6 @@ TI_TEST_BASE = "\
     mstpd \
     mtd-utils \
     mtd-utils-ubifs \
-    mtd-utils-ubifs-tests \
     nbench-byte \
     netperf \
     openntpd \
@@ -57,6 +56,10 @@ TI_TEST_BASE = "\
     tcpdump \
     v4l-utils \
     yavta \
+"
+
+TI_TEST_BASE:ti-soc:append = " \
+    mtd-utils-ubifs-tests \
 "
 
 TI_TEST_EXTRAS = " \
