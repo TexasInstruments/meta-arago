@@ -1,0 +1,25 @@
+#!/bin/sh
+
+PIDFILE=/var/run/emptty.pid
+
+# source function library
+. /etc/init.d/functions
+
+case "$1" in
+	start)
+		echo "Starting display manager: emptty"
+		start-stop-daemon -S -p $PIDFILE -x /usr/bin/emptty
+		;;
+	stop)
+		echo "Stopping display manager: emptty"
+		start-stop-daemon -S -p $PIDFILE -x /usr/bin/emptty
+		;;
+	restart)
+		start-stop-daemon -K -p $PIDFILE --oknodo -x /usr/bin/emptty
+		sleep 2
+		start-stop-daemon -S -p $PIDFILE -x /usr/bin/emptty
+		;;
+	*)
+		echo "usage: $0 { start | stop | restart }"
+		;;
+esac
