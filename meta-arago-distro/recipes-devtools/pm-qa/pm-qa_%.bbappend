@@ -1,10 +1,6 @@
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
-# Bump to 0.5.0+
-SRCREV = "e66966ef6a08cd3b491ee1df5c6c5d33baaf1f1c"
+PM_QA_ARAGO = ""
+PM_QA_ARAGO:arago = "pm-qa-arago.inc"
 
-SRC_URI += " \
-	file://0001-Return-non-zero-value-on-test-failure.patch \
-	file://0002-cpuidle-Avoid-relative-paths.patch"
+require ${PM_QA_ARAGO}
 
-PR:append = ".arago0"
