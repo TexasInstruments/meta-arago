@@ -10,12 +10,8 @@ SRCREV = "a399310d99b61eec4d3c0677573ab5dddcf9395d"
 
 S = "${WORKDIR}/git"
 
-# NOTE: if this software is not capable of being built in a separate build directory
-# from the source, you should replace autotools with autotools-brokensep in the
-# inherit line
 inherit python3native autotools
 
-# Specify any options you want to pass to the configure script using EXTRA_OECONF:
-EXTRA_OECONF = " --without-rbgen "
+EXTRA_OECONF = "--without-rbgen"
 
 BBCLASSEXTEND = "native nativesdk"
