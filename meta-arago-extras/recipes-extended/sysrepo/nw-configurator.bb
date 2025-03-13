@@ -1,4 +1,4 @@
-DESCRIPTION = "Sysrepo based repo to configure EST"
+SUMMARY = "Sysrepo based repo to configure EST"
 
 LICENSE = "BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://nw-configurator.c;beginline=1;endline=33;md5=3538caaf9bfb8372347877ad393660fa"
@@ -6,8 +6,6 @@ LIC_FILES_CHKSUM = "file://nw-configurator.c;beginline=1;endline=33;md5=3538caaf
 SRC_URI = "file://nw-configurator.c"
 
 S = "${WORKDIR}"
-
-FILES_${PN}-dev = "${includedir}"
 
 DEPENDS = "sysrepo"
 
