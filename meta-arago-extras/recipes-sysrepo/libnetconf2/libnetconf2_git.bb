@@ -11,7 +11,9 @@ SRCREV = "91cd6d75722c65de5c005d908f6d645b48cee89b"
 
 S = "${WORKDIR}/git"
 
-DEPENDS = "libssh openssl libyang libxcrypt libpam"
+DEPENDS = "libssh openssl libyang libxcrypt \
+    ${@bb.utils.contains('DISTRO_FEATURES','pam','libpam','',d)} \
+"
 
 FILES:${PN} += "${datadir}/yang/modules/libnetconf2/*"
 
