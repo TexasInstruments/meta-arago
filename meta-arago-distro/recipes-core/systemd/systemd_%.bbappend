@@ -10,7 +10,6 @@ SRC_URI:append = " \
     file://15-eth.network \
     file://30-wlan.network \
     file://60-usb.network \
-    file://sync-clocks.service \
     file://timesyncd.conf \
     file://37-can-j7.rules \
     file://37-can-am62.rules \
@@ -31,10 +30,6 @@ do_install:append() {
     install -m 0644 ${UNPACKDIR}/15-eth.network ${D}${sysconfdir}/systemd/network/
     install -m 0644 ${UNPACKDIR}/30-wlan.network ${D}${sysconfdir}/systemd/network/
     install -m 0644 ${UNPACKDIR}/60-usb.network ${D}${sysconfdir}/systemd/network/
-
-    install -d ${D}${sysconfdir}/systemd/system/sysinit.target.wants
-    install -m 0644 ${UNPACKDIR}/sync-clocks.service ${D}${sysconfdir}/systemd/system/
-    ln -sf ../sync-clocks.service ${D}${sysconfdir}/systemd/system/sysinit.target.wants/sync-clocks.service
 
     # Allow automount from udev
     install -m 0644 ${D}${systemd_system_unitdir}/systemd-udevd.service ${D}${sysconfdir}/systemd/system/
