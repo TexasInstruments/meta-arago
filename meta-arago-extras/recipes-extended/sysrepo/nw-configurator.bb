@@ -9,7 +9,7 @@ S = "${WORKDIR}"
 
 DEPENDS = "sysrepo"
 
-inherit autotools pkgconfig
+inherit pkgconfig
 
 do_compile() {
 	${CC} ${CFLAGS} ${LDFLAGS} -I=${STAGING_INCDIR}	${WORKDIR}/nw-configurator.c -o nw-configurator -lsysrepo
