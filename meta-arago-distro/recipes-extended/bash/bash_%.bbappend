@@ -1,3 +1,4 @@
-PR:append = ".arago0"
+BASH_ARAGO = ""
+BASH_ARAGO:arago = "bash-arago.inc"
 
-EXTRA_OECONF += " --disable-command-timing"
+require ${BASH_ARAGO}
