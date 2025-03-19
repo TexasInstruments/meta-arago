@@ -1,4 +1,4 @@
-# look for files in this layer first
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
+BASE_FILES_ARAGO = ""
+BASE_FILES_ARAGO:arago = "base-files-arago.inc"
 
-PR:append = ".arago5"
+require ${BASE_FILES_ARAGO}
