@@ -1,18 +1,4 @@
-PR:append = ".arago4"
-FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+STRONGSWAN_ARAGO = ""
+STRONGSWAN_ARAGO:arago = "strongswan-arago.inc"
 
-PACKAGECONFIG = "charon curl openssl stroke sqlite3 \
-        ${@bb.utils.filter('DISTRO_FEATURES', 'ldap', d)} \
-"
-
-EXTRA_OECONF += " \
-        --enable-ctr \
-        --enable-pkcs11 \
-        --enable-mgf1 \
-"
-
-SRC_URI += "file://pkcs11_plugin.conf"
-
-do_install:append () {
-	install -m 0644 ${UNPACKDIR}/pkcs11_plugin.conf ${D}${sysconfdir}/strongswan.d/
-}
+require ${STRONGSWAN_ARAGO}
