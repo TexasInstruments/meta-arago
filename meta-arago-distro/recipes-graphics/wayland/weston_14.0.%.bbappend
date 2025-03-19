@@ -1,7 +1,4 @@
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
+WESTON_ARAGO = ""
+WESTON_ARAGO:arago = "weston-arago.inc"
 
-PR:append = ".arago1"
-
-SRC_URI += " \
-        file://0001-Revert-require-GL_EXT_unpack_subimage-commit.patch \
-"
+require ${WESTON_ARAGO}
