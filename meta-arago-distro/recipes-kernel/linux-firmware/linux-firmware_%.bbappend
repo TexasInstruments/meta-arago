@@ -1,6 +1,4 @@
-PR:append = ".arago2"
+LINUX_FIRMWARE_ARAGO = ""
+LINUX_FIRMWARE_ARAGO:arago = "linux-firmware-arago.inc"
 
-do_install:append() {
-	rm -rf  ${D}/lib/firmware/ti-connectivity/
-	rm -rf  ${D}/lib/firmware/cadence/
-}
+require ${LINUX_FIRMWARE_ARAGO}
