@@ -19,7 +19,6 @@ UTILS = " \
 	 libdrm-tests \
 	 rt-tests \
 	 iozone3 \
-	 mtd-utils-ubifs-tests \
 	 net-tools \
 	 ethtool  \
 	 pciutils \
@@ -29,6 +28,10 @@ UTILS = " \
 	 usbutils \
 	 devmem2 \
 	 phytool \
+"
+	 
+UTILS:append:ti-soc = " \
+    mtd-utils-ubifs-tests \
 "
 
 UTILS:append:ti33x = " \
