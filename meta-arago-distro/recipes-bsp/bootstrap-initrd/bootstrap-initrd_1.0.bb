@@ -2,6 +2,8 @@ SUMMARY = "Prebuilt initramfs with apps for bootstraping new board"
 
 LICENSE = "MIT"
 
+COMPATIBLE_MACHINE = "ti-soc"
+
 CLEANBROKEN = "1"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
