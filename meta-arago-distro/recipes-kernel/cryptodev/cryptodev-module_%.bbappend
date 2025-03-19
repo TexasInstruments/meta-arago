@@ -1,3 +1,4 @@
-PR:append = ".arago0"
+CRYPTODEV_MODULE_ARAGO = ""
+CRYPTODEV_MODULE_ARAGO:arago = "cryptodev-module-arago.inc"
 
-KERNEL_MODULE_AUTOLOAD += "cryptodev"
+require ${CRYPTODEV_MODULE_ARAGO}
