@@ -1,7 +1,4 @@
-PR:append = ".arago6"
+IPROUTE2_ARAGO = ""
+IPROUTE2_ARAGO:arago = "iproute2-arago.inc"
 
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
-
-SRC_URI:append = " \
-    file://0014-iplink-hsr-prp-add-support-for-vlan-tagged-supervisi.patch \
-"
+require ${IPROUTE2_ARAGO}
