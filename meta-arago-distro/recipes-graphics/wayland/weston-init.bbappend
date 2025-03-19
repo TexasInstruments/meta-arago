@@ -1,14 +1,4 @@
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
+WESTON_INIT_ARAGO = ""
+WESTON_INIT_ARAGO:arago = "weston-init-arago.inc"
 
-PR:append = ".arago12"
-
-SRC_URI:append = " \
-    file://weston.ini \
-    file://weston-launch-calibrator.sh \
-"
-
-do_install:append() {
-    install -Dm755 weston-launch-calibrator.sh ${D}/${bindir}/weston-launch-calibrator
-}
-
-FILES:${PN}:append = "${bindir}/weston-launch-calibrator"
+require ${WESTON_INIT_ARAGO}
