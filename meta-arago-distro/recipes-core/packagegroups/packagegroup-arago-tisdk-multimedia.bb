@@ -7,11 +7,11 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 inherit packagegroup
 
 MULTIMEDIA = " \
-    ffmpeg \
     libcamera \
     libcamera-gst \
-    mpv \
 "
+
+MULTIMEDIA:append:arago = " ffmpeg mpv"
 
 MULTIMEDIA:omapl138 = ""
 
