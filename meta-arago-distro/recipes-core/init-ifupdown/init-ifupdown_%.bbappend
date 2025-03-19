@@ -1,4 +1,4 @@
-# look for files in this layer first
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
+INIT_IFUPDOWN_ARAGO = ""
+INIT_IFUPDOWN_ARAGO:arago = "init-ifupdown-arago.inc"
 
-PR:append = ".arago1"
+require ${INIT_IFUPDOWN_ARAGO}
