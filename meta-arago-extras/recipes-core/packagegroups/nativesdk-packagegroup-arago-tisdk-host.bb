@@ -10,9 +10,12 @@ PACKAGEGROUP_DISABLE_COMPLEMENTARY = "1"
 EXTRA_TI_TOOLS = " \
     nativesdk-ti-cgt6x \
     nativesdk-ti-cgt-pru \
+    nativesdk-gcc-arm-baremetal \
+"
+
+UTILS:append:arago = " \
     nativesdk-open62541-examples \
     nativesdk-open62541-tests \
-    nativesdk-gcc-arm-baremetal \
 "
 
 RDEPENDS:${PN} = "\
