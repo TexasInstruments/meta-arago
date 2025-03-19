@@ -1,4 +1,4 @@
-PR:append = ".arago0"
+TIFF_ARAGO = ""
+TIFF_ARAGO:arago = "tiff-arago.inc"
 
-# Remove xz/lzma support to avoid pulling in additional GPLv3 licenses
-PACKAGECONFIG:remove = "lzma"
+require ${TIFF_ARAGO}
