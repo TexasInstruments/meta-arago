@@ -1,3 +1,4 @@
-PR:append = ".arago0"
+FREETYPE_ARAGO = ""
+FREETYPE_ARAGO:arago = "freetype-arago.inc"
 
-LICENSE = "GPL-2.0-or-later"
+require ${FREETYPE_ARAGO}
