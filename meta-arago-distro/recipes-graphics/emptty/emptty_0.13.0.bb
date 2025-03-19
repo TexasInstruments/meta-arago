@@ -16,23 +16,25 @@ SRCREV_pam = "50ded1b0e7864b9bf75005eb945a8ec826bcf69d"
 
 SRCREV_FORMAT .= "_pam"
 
-PACKAGES:append = " ${PN}-conf"
+PACKAGES += "${PN}-conf"
 
 PACKAGECONFIG ?= "${@bb.utils.filter('DISTRO_FEATURES', 'pam x11', d)}"
-PACKAGECONFIG[pam] = ",,libpam"
+PACKAGECONFIG[pam] = ",,libpam,pam-plugin-succeed-if"
 PACKAGECONFIG[x11] = ",,virtual/libx11"
+
+DEPENDS += "${@bb.utils.contains('PACKAGECONFIG', 'pam', '', 'libxcrypt', d)}"
 
 GO_TAGS = ""
 GO_TAGS:append = "${@bb.utils.contains('PACKAGECONFIG', 'pam', '', ',nopam', d)}"
 GO_TAGS:append = "${@bb.utils.contains('PACKAGECONFIG', 'x11', '', ',noxlib', d)}"
 
-GOBUILDFLAGS:append = " -tags=${GO_TAGS}"
+GOBUILDFLAGS += "-tags=${GO_TAGS}"
 
 export GO111MODULE="off"
 
 inherit go update-rc.d systemd
 
-DEPENDS:append = " gzip"
+DEPENDS += "gzip-native"
 
 do_install () {
     # general collateral
@@ -64,11 +66,11 @@ FILES:${PN} = "\
     ${sysconfdir}/pam.d/emptty \
 "
 
-FILES:${PN}-conf:append = " ${sysconfdir}/emptty/conf"
-CONFFILES:${PN}-conf:append = " ${sysconfdir}/emptty/conf"
-RPROVIDES:${PN}-conf:append = " virtual-emptty-conf"
+FILES:${PN}-conf += "${sysconfdir}/emptty/conf"
+CONFFILES:${PN}-conf += "${sysconfdir}/emptty/conf"
+RPROVIDES:${PN}-conf += "virtual-emptty-conf"
 
-RDEPENDS:${PN}:append = " virtual-emptty-conf pam-plugin-succeed-if"
+RDEPENDS:${PN} += "virtual-emptty-conf"
 
 SYSTEMD_SERVICE:${PN} = "emptty.service"
 
