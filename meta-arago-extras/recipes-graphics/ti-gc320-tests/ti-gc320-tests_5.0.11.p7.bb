@@ -12,7 +12,7 @@ BRANCH = "ti-${PV}"
 SRC_URI = "git://git.ti.com/git/graphics/ti-gc320-test.git;protocol=https;branch=${BRANCH} \
 file://0001-makefile.linux.def-relax-assignment-of-CC-and-other-.patch \
 "
-SRCREV = "53207f8e360a3336276b62066a1d8a9e923de17e"
+SRCREV = "3c334f2004c718c9bb4321213c362e65c491efe6"
 PR = "r2"
 
 S = "${WORKDIR}/git"
