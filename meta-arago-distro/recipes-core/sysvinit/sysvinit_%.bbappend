@@ -1,10 +1,4 @@
-PR:append = ".arago1"
+SYSVINIT_ARAGO = ""
+SYSVINIT_ARAGO:arago = "sysvinit-arago.inc"
 
-PACKAGES =+ "${PN}-initramfs"
-
-do_install:append() {
-	[ ! -e ${D}/init ] && ln -s ${base_sbindir}/init ${D}/init
-}
-
-FILES:${PN}-initramfs = "/init"
-RDEPENDS:${PN}-initramfs = "${PN}"
+require ${SYSVINIT_ARAGO}
