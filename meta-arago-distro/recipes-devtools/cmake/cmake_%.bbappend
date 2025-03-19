@@ -1,3 +1,4 @@
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
+CMAKE_ARAGO = ""
+CMAKE_ARAGO:arago = "cmake-arago.inc"
 
-FILES:${PN}-doc += "${datadir}/cmake-${CMAKE_MAJOR_VERSION}/Help/"
+require ${CMAKE_ARAGO}
