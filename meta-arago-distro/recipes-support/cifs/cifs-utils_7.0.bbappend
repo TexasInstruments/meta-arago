@@ -1,4 +1,4 @@
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
+CIFS_UTILS_ARAGO = ""
+CIFS_UTILS_ARAGO:arago = "cifs-utils-arago.inc"
 
-SRC_URI += "file://0001-cifs-utils-Make-automake-treat-sbin-as-exec-not-data.patch"
-
+require ${CIFS_UTILS_ARAGO}
