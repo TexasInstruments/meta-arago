@@ -9,6 +9,7 @@ SRC_URI = "\
     git://${GO_IMPORT}.git;protocol=https;branch=master \
     git://${GO_IMPORT_pam}.git;protocol=https;branch=master;name=pam;destsuffix=${S}/src/${GO_IMPORT_pam} \
     file://pamconf \
+    file://init \
     "
 SRCREV = "4046552b6f5cc1cf76ce8bf333e04e16c59febca"
 SRCREV_pam = "50ded1b0e7864b9bf75005eb945a8ec826bcf69d"
@@ -29,7 +30,7 @@ GOBUILDFLAGS:append = " -tags=${GO_TAGS}"
 
 export GO111MODULE="off"
 
-inherit go systemd
+inherit go update-rc.d systemd
 
 DEPENDS:append = " gzip"
 
@@ -72,7 +73,5 @@ RDEPENDS:${PN}:append = " virtual-emptty-conf pam-plugin-succeed-if"
 SYSTEMD_SERVICE:${PN} = "emptty.service"
 
 INITSCRIPT_NAME = "emptty"
-INITSCRIPT_PARAMS = "start 9 5 2 . stop 20 0 1 6 ."
+INITSCRIPT_PARAMS = "start 10 5 2 . stop 20 0 1 6 ."
 INHIBIT_UPDATERCD_BBCLASS = "${@oe.utils.conditional('VIRTUAL-RUNTIME_init_manager', 'systemd', '1', '', d)}"
-
-inherit update-rc.d systemd
