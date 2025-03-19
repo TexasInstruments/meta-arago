@@ -1,4 +1,4 @@
-PR:append = ".arago0"
+ALSA_STATE_ARAGO = ""
+ALSA_STATE_ARAGO:arago = "alsa-state-arago.inc"
 
-# look for files in this layer first
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
+require ${ALSA_STATE_ARAGO}
