@@ -1,4 +1,4 @@
-# look for files in this layer first
-FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+TSLIB_ARAGO = ""
+TSLIB_ARAGO:arago = "tslib-arago.inc"
 
-PR:append = ".arago1"
+require ${TSLIB_ARAGO}
