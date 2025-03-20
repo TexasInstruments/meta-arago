@@ -36,7 +36,6 @@ ARAGO_EXTRA = "\
     kms++-python \
     can-utils \
     docker \
-    dbus-broker \
     expat \
     glib-2.0 \
     libxml2 \
@@ -50,6 +49,10 @@ ARAGO_EXTRA = "\
     cifs-utils \
     phytool \
     lldpd \
+"
+
+ARAGO_EXTRA:append:arago = "\
+    dbus-broker \
 "
 
 OPTEE_PKGS = " \
