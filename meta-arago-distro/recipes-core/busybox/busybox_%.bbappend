@@ -1,8 +1,4 @@
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
+BUSYBOX_ARAGO = ""
+BUSYBOX_ARAGO:arago = "busybox-arago.inc"
 
-SRC_URI += " \
-	file://network.cfg \
-	file://utils.cfg \
-"
-
-PR:append = ".arago22"
+require ${BUSYBOX_ARAGO}
