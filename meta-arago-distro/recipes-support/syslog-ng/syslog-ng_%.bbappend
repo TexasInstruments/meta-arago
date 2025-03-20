@@ -1,2 +1,4 @@
-PR:append = ".arago0"
-FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+SYSLOG_NG_ARAGO = ""
+SYSLOG_NG_ARAGO:arago = "syslog-ng-arago.inc"
+
+require ${SYSLOG_NG_ARAGO}
