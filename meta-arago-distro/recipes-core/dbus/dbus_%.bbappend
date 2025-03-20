@@ -1,3 +1,4 @@
-PR:append = ".arago1"
+DBUS_ARAGO = ""
+DBUS_ARAGO:arago = "dbus-arago.inc"
 
-LICENSE = "GPL-2.0-or-later"
+require ${DBUS_ARAGO}
