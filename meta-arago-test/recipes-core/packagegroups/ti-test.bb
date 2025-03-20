@@ -58,7 +58,7 @@ TI_TEST_BASE = "\
     yavta \
 "
 
-TI_TEST_BASE:ti-soc:append = " \
+TI_TEST_BASE:append:ti-soc = " \
     mtd-utils-ubifs-tests \
 "
 
