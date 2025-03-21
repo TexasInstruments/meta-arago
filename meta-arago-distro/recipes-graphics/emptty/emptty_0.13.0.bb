@@ -28,7 +28,7 @@ GO_TAGS = ""
 GO_TAGS:append = "${@bb.utils.contains('PACKAGECONFIG', 'pam', '', ',nopam', d)}"
 GO_TAGS:append = "${@bb.utils.contains('PACKAGECONFIG', 'x11', '', ',noxlib', d)}"
 
-GOBUILDFLAGS += "-tags=${GO_TAGS}"
+GOBUILDFLAGS:append = " -tags=${GO_TAGS}"
 
 export GO111MODULE="off"
 
