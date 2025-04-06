@@ -1,0 +1,4 @@
+GSTREAMER1p0_PLUGINS_GOOD_1p26_ARAGO = ""
+GSTREAMER1p0_PLUGINS_GOOD_1p26_ARAGO:arago = "gstreamer1.0-plugins-good_1.26-arago.inc"
+
+require ${GSTREAMER1p0_PLUGINS_GOOD_1p26_ARAGO}

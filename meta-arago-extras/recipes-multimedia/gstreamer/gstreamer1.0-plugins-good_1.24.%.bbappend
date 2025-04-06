@@ -1,4 +1,0 @@
-GSTREAMER1p0_PLUGINS_GOOD_1p24_ARAGO = ""
-GSTREAMER1p0_PLUGINS_GOOD_1p24_ARAGO:arago = "gstreamer1.0-plugins-good_1.24-arago.inc"
-
-require ${GSTREAMER1p0_PLUGINS_GOOD_1p24_ARAGO}

@@ -39,24 +39,24 @@ diff --git a/sys/v4l2/gstv4l2object.c b/sys/v4l2/gstv4l2object.c
 index 472a24ef55..9fe5dcc528 100644
 --- a/sys/v4l2/gstv4l2object.c
 +++ b/sys/v4l2/gstv4l2object.c
-@@ -195,6 +195,16 @@ static const GstV4L2FormatDesc gst_v4l2_formats[] = {
-   {MAP_FMT (SGRBG16, ENCODED),  GST_V4L2_BAYER},
-   {MAP_FMT (SRGGB16, ENCODED),  GST_V4L2_BAYER},
+@@ -215,6 +215,16 @@ static const GstV4L2FormatDesc gst_v4l2_formats[] = {
+   {MAP_ENC_FMT (SGRBG16, ENCODED),  GST_V4L2_BAYER},
+   {MAP_ENC_FMT (SRGGB16, ENCODED),  GST_V4L2_BAYER},
  
 +  /* Bayer formats - with IR component */
-+  {MAP_FMT (SRGGI10, ENCODED),  GST_V4L2_BAYER},
-+  {MAP_FMT (SGRIG10, ENCODED),  GST_V4L2_BAYER},
-+  {MAP_FMT (SBGGI10, ENCODED),  GST_V4L2_BAYER},
-+  {MAP_FMT (SGBIG10, ENCODED),  GST_V4L2_BAYER},
-+  {MAP_FMT (SGIRG10, ENCODED),  GST_V4L2_BAYER},
-+  {MAP_FMT (SIGGR10, ENCODED),  GST_V4L2_BAYER},
-+  {MAP_FMT (SGIBG10, ENCODED),  GST_V4L2_BAYER},
-+  {MAP_FMT (SIGGB10, ENCODED),  GST_V4L2_BAYER},
++  {MAP_ENC_FMT (SRGGI10, ENCODED),  GST_V4L2_BAYER},
++  {MAP_ENC_FMT (SGRIG10, ENCODED),  GST_V4L2_BAYER},
++  {MAP_ENC_FMT (SBGGI10, ENCODED),  GST_V4L2_BAYER},
++  {MAP_ENC_FMT (SGBIG10, ENCODED),  GST_V4L2_BAYER},
++  {MAP_ENC_FMT (SGIRG10, ENCODED),  GST_V4L2_BAYER},
++  {MAP_ENC_FMT (SIGGR10, ENCODED),  GST_V4L2_BAYER},
++  {MAP_ENC_FMT (SGIBG10, ENCODED),  GST_V4L2_BAYER},
++  {MAP_ENC_FMT (SIGGB10, ENCODED),  GST_V4L2_BAYER},
 +
    /* compressed formats */
-   {MAP_FMT (MJPEG, ENCODED),        GST_V4L2_CODEC},
-   {MAP_FMT (JPEG, ENCODED),         GST_V4L2_CODEC},
-@@ -1194,6 +1204,14 @@ gst_v4l2_object_format_get_rank (const struct v4l2_fmtdesc *fmt)
+   {MAP_ENC_FMT (MJPEG, ENCODED),        GST_V4L2_CODEC},
+   {MAP_ENC_FMT (JPEG, ENCODED),         GST_V4L2_CODEC},
+@@ -1215,6 +1225,14 @@ gst_v4l2_object_format_get_rank (const struct v4l2_fmtdesc *fmt)
      case V4L2_PIX_FMT_SGBRG16:
      case V4L2_PIX_FMT_SGRBG16:
      case V4L2_PIX_FMT_SRGGB16:
@@ -71,7 +71,7 @@ index 472a24ef55..9fe5dcc528 100644
        rank = BAYER_BASE_RANK;
        break;
  
-@@ -1574,6 +1592,24 @@ gst_v4l2_object_v4l2fourcc_to_bare_struct (guint32 fourcc)
+@@ -1642,6 +1660,24 @@ gst_v4l2_object_v4l2fourcc_to_bare_struct (guint32 fourcc)
      case V4L2_PIX_FMT_SRGGB16:
        bayer_format = "rggb16le";
        break;
@@ -96,7 +96,7 @@ index 472a24ef55..9fe5dcc528 100644
      case V4L2_PIX_FMT_SN9C10X:
        structure = gst_structure_new_empty ("video/x-sonix");
        break;
-@@ -1952,6 +1988,22 @@ gst_v4l2_object_get_caps_info (GstV4l2Object * v4l2object, GstCaps * caps,
+@@ -2063,6 +2099,22 @@ gst_v4l2_object_get_caps_info (GstV4l2Object * v4l2object, GstCaps * caps,
          fourcc = V4L2_PIX_FMT_SGRBG16;
        else if (!g_ascii_strcasecmp (format, "rggb16le"))
          fourcc = V4L2_PIX_FMT_SRGGB16;
