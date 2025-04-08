@@ -1,5 +1,5 @@
 TOOLCHAIN_HOST_TASK ?= "nativesdk-packagegroup-sdk-host"
-TOOLCHAIN_HOST_TASK:append = " nativesdk-buildtools-perl-dummy"
+TOOLCHAIN_HOST_TASK:append = " nativesdk-sdk-provides-dummy nativesdk-buildtools-perl-dummy"
 TOOLCHAIN_HOST_TASK:append = " packagegroup-cross-canadian-${MACHINE}"
 TOOLCHAIN_TARGET_TASK ?= "packagegroup-arago-standalone-sdk-target"
 TOOLCHAIN_SUFFIX ?= "-sdk"
