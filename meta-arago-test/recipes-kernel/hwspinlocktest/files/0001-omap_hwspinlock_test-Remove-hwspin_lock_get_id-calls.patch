@@ -1,0 +1,69 @@
+From fb986ed355cd488da64da9eb94d0f260bb329d5b Mon Sep 17 00:00:00 2001
+From: Ryan Eatmon <reatmon@ti.com>
+Date: Fri, 11 Apr 2025 13:49:11 -0500
+Subject: [PATCH] omap_hwspinlock_test: Remove hwspin_lock_get_id() calls
+
+The hwspin_lock_get_id() function was removed in the most recent
+kernel [1].  We can safely stop using this function even for older kernels,
+so go ahead and take these changes.
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=fec04edb74126f21ac628c7be763c97deb49f69d
+
+Upstream-Status: Inactive-Upstream [private repo]
+
+Signed-off-by: Ryan Eatmon <reatmon@ti.com>
+---
+ omap_hwspinlock_test.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/omap_hwspinlock_test.c b/omap_hwspinlock_test.c
+index b180138..f3e0912 100644
+--- a/omap_hwspinlock_test.c
++++ b/omap_hwspinlock_test.c
+@@ -26,12 +26,12 @@ struct hwspinlock_data {
+	const unsigned int max_locks;
+ };
+
+-static int hwspin_lock_test(struct hwspinlock *hwlock)
++static int hwspin_lock_test(struct hwspinlock *hwlock, int lock_num)
+ {
+	int i;
+	int ret;
+
+-	pr_err("\nTesting lock %d\n", hwspin_lock_get_id(hwlock));
++	pr_err("\nTesting lock %d\n", lock_num);
+	for (i = 0; i < count; i++) {
+		ret = hwspin_trylock(hwlock);
+		if (ret) {
+@@ -82,7 +82,7 @@ static int hwspin_lock_test_all_locks(unsigned int max_locks)
+			continue;
+		}
+
+-		ret1 = hwspin_lock_test(hwlock);
++		ret1 = hwspin_lock_test(hwlock, i);
+		if (ret1) {
+			pr_err("hwspinlock tests failed on lock %d\n", i);
+			ret = ret1;
+@@ -147,17 +147,17 @@ static int hwspin_lock_test_all_phandle_locks(unsigned int max_locks)
+			continue;
+		}
+
+-		ret1 = hwspin_lock_test(hwlock);
++		ret1 = hwspin_lock_test(hwlock, i);
+		if (ret1) {
+			pr_err("hwspinlock test failed on DT lock %d, ret = %d\n",
+-			       hwspin_lock_get_id(hwlock), ret1);
++			       hwlock_id, ret1);
+			ret = ret1;
+		}
+
+		ret1 = hwspin_lock_free(hwlock);
+		if (ret1) {
+			pr_err("hwspin_lock_free failed on lock %d\n",
+-			       hwspin_lock_get_id(hwlock));
++			       hwlock_id);
+			ret = ret1;
+		}
+	}
+--
+2.17.1
