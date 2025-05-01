@@ -27,8 +27,8 @@ TI_TEST_BASE = "\
     iperf3 \
     kernel-modules \
     kernel-selftest \
-    kms++ \
-    kms++-python \
+    kmsxx \
+    kmsxx-python \
     libdrm-tests \
     linuxptp \
     lmbench \
