@@ -32,8 +32,8 @@ ARAGO_EXTRA = "\
     parted \
     dropbear \
     openssh-sftp-server \
-    kms++ \
-    kms++-python \
+    kmsxx \
+    kmsxx-python \
     can-utils \
     docker \
     expat \
