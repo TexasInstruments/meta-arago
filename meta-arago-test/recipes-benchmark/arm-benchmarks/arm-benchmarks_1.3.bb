@@ -15,7 +15,7 @@ S = "${WORKDIR}/git"
 
 do_compile() {
 	export CROSS_COMPILE=${TARGET_PREFIX}
-	export CFLAGS='${TARGET_CC_ARCH}'
+	export CFLAGS='${TARGET_CC_ARCH} -std=gnu11'
 	# build the release version
 	oe_runmake release CC="${CC}"
 }
