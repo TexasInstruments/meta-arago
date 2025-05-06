@@ -14,7 +14,8 @@ SRC_URI = "git://github.com/ptitiano/cpuloadgen.git;protocol=https;branch=${BRAN
 
 S = "${WORKDIR}/git"
 
-EXTRA_OEMAKE = "DESTDIR=${D}${bindir} CROSS_COMPILE=${TARGET_PREFIX} CC="${CC}""
+EXTRA_OEMAKE = "DESTDIR=${D}${bindir} CROSS_COMPILE=${TARGET_PREFIX} CC="${CC}" CFLAGS="${CFLAGS}""
+CFLAGS += "-fpermissive -std=gnu11"
 
 do_install () {
     install -d ${D}${bindir}
