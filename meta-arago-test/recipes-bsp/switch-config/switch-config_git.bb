@@ -13,6 +13,8 @@ SRCREV:aarch64 = "0f52dcb3c4e3678e96427d546d6c2e1fabc2ad91"
 
 SRC_URI = "git://git.ti.com/git/switch-config/switch-config.git;protocol=https;branch=${BRANCH}"
 
+SRC_URI += "file://0001-Use-proper-definition-of-boolean-type.patch"
+
 S = "${WORKDIR}/git"
 
 EXTRA_OEMAKE = "CROSS_COMPILE=${TARGET_PREFIX} CC="${CC}""
