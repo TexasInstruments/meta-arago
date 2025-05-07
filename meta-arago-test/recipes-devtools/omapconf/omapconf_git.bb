@@ -13,6 +13,8 @@ SRCREV = "ff07b6992bacb1e1586c72b7d2be469caee4a347"
 
 SRC_URI = "git://github.com/omapconf/omapconf.git;protocol=https;branch=${BRANCH}"
 
+SRC_URI += "file://0001-Use-proper-definition-of-boolean-type.patch"
+
 S = "${WORKDIR}/git"
 
 do_compile () {
