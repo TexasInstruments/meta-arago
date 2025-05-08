@@ -17,3 +17,6 @@ PREFERRED_PROVIDER_nativesdk-llvm = "nativesdk-clang"
 PROVIDES:pn-clang = "llvm"
 PROVIDES:pn-clang-native = "llvm-native"
 PROVIDES:pn-nativesdk-clang = "nativesdk-llvm"
+
+# Bump mesa-demos to include some patches not in a tagged release
+PREFERRED_VERSION_mesa-demos = "9.0.0+git"
