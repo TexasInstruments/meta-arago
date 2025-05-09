@@ -14,7 +14,7 @@ DEFAULT_PREFERENCE = "-1"
 PR = "r6"
 
 inherit update-rc.d pkgconfig
-INITSCRIPT_NAME="hostapd"
+INITSCRIPT_NAME = "hostapd"
 
 CONFFILES:${PN} += "${sysconfdir}/hostapd.conf"
 
