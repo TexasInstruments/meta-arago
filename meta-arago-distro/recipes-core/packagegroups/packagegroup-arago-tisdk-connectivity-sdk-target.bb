@@ -1,4 +1,4 @@
-DESCRIPTION = "Task to install wireless headers and libraries into the SDK"
+SUMMARY = "Task to install wireless headers and libraries into the SDK"
 LICENSE = "MIT"
 PR = "r9"
 

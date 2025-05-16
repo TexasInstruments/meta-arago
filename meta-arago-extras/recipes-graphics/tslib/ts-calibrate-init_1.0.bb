@@ -1,6 +1,6 @@
 # This recipe installs an init script that can be used to invoke ts_calibrate
 # on systems that need this done during the boot sequence.
-DESCRIPTION = "TS calibration init script"
+SUMMARY = "TS calibration init script"
 RDEPENDS:${PN} += "tslib"
 
 LICENSE = "GPL-2.0-only"

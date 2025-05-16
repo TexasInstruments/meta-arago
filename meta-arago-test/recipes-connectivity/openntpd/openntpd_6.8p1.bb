@@ -1,5 +1,5 @@
-DESCRIPTION = "OpenNTPD is a FREE, easy to use implementation of the \
-Network Time Protocol."
+SUMMARY = "OpenNTPD is an implementation of the Network Time Protocol."
+DESCRIPTION = "OpenNTPD is a FREE, easy to use implementation of the Network Time Protocol."
 HOMEPAGE = "http://www.openntpd.org/"
 SECTION = "console/network"
 LICENSE = "BSD-3-Clause & ISC"

@@ -1,3 +1,5 @@
+SUMMARY = "Standalone toolchain/devkit for generic Arago Project use"
+
 TOOLCHAIN_HOST_TASK ?= "nativesdk-packagegroup-sdk-host"
 TOOLCHAIN_HOST_TASK:append = " nativesdk-sdk-provides-dummy nativesdk-buildtools-perl-dummy"
 TOOLCHAIN_HOST_TASK:append = " packagegroup-cross-canadian-${MACHINE}"

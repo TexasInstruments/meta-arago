@@ -1,4 +1,4 @@
-DESCRIPTION = "Initscripts for telnetd"
+SUMMARY = "Initscripts for telnetd"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://telnetd;beginline=2;endline=18;md5=d134d0d385c53f9201a270fef8448f29"
 PR  = "r1"

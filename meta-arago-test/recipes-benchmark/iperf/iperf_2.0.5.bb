@@ -1,3 +1,4 @@
+SUMMARY = "Tool to measure maximum TCP bandwidth and allow parameter tuning"
 DESCRIPTION = "Iperf is a tool to measure maximum TCP bandwidth, allowing the tuning of various parameters and UDP characteristics"
 HOMEPAGE = "http://dast.nlanr.net/Projects/Iperf/"
 SECTION = "console/network"

@@ -1,4 +1,4 @@
-DESCRIPTION = "Utilities for the Linux input drivers"
+SUMMARY = "Utilities for the Linux input drivers"
 HOMEPAGE = "http://packages.tanglu.org/source/aequorea/input-utils"
 
 LICENSE = "GPL-2.0-only"

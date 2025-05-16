@@ -1,4 +1,4 @@
-DESCRIPTION = "Task to install crypto packages into target FS"
+SUMMARY = "Task to install crypto packages into target FS"
 LICENSE = "MIT"
 PR = "r13"
 

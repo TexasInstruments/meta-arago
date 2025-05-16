@@ -1,4 +1,4 @@
-DESCRIPTION = "Task to add Gtk embedded related packages"
+SUMMARY = "Task to add Gtk embedded related packages"
 LICENSE = "MIT"
 PR = "r2"
 

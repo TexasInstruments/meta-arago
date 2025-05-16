@@ -1,3 +1,4 @@
+SUMMARY = "Virtual Tunnels over TCP/IP networks"
 DESCRIPTION = "Virtual Tunnels over TCP/IP networks with traffic shaping, compression and encryption."
 HOMEPAGE = "http://vtun.sourceforge.net/"
 SECTION = "console/network"

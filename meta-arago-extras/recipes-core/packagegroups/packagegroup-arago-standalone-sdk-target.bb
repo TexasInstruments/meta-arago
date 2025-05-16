@@ -1,4 +1,4 @@
-DESCRIPTION = "Target packages for the standalone SDK"
+SUMMARY = "Target packages for the standalone SDK"
 PR = "r13"
 LICENSE = "MIT"
 

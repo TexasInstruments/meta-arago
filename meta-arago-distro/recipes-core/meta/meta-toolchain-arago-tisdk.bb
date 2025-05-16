@@ -1,3 +1,5 @@
+SUMMARY = "Standalone toolchain/devkit for TI-SDK products"
+
 TOOLCHAIN_SUFFIX ?= "-tisdk"
 LICENSE = "MIT"
 

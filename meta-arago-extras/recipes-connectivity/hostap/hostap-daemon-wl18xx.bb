@@ -1,5 +1,6 @@
-# This is a TI specific version of the hostap-daemon recipe for use with the
-# wl18xx wlan and bluetooth module.
+SUMMARY = "TI specfic version of the hostap-daemon recipe."
+DESCRIPTION = "This is a TI specific version of the hostap-daemon recipe \
+for use with the wl18xx wlan and bluetooth module."
 
 require hostap.inc
 
