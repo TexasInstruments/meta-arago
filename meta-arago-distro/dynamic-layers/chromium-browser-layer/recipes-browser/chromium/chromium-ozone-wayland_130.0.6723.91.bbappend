@@ -1,7 +1,4 @@
-PR:append = ".arago0"
+CHROMIUM_ARAGO = ""
+CHROMIUM_ARAGO:arago = "chromium-ozone-wayland-arago.inc"
 
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}-${PV}:"
-
-SRC_URI:append = " \
-                  file://0001-chromium-gpu-sandbox-allow-access-to-PowerVR-GPU-fro.patch \
-                  "
+require ${CHROMIUM_ARAGO}
