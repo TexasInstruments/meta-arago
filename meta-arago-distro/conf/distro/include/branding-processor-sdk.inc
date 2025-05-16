@@ -10,7 +10,7 @@ The below commit is used for this local branch and is the one used by\\n\
 this sdk:\\n\
 ${SRCREV}."
 
-SRCIPK_SHALLOW_GIT_COMMIT_MESSAGE ="${SRCIPK_GIT_COMMIT_MESSAGE}\\n\\n\
+SRCIPK_SHALLOW_GIT_COMMIT_MESSAGE = "${SRCIPK_GIT_COMMIT_MESSAGE}\\n\\n\
 To reduce the size of the SDK installer only a portion of the git commit\\n\
 history has been preserved. Also links to remote branches and tags do\\n\
 not exist in this copy of the repository.\\n\
