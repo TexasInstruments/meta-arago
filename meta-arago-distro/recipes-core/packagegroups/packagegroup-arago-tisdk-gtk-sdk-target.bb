@@ -1,4 +1,4 @@
-DESCRIPTION = "Task to install Gtk dev packages in SDK"
+SUMMARY = "Task to install Gtk dev packages in SDK"
 LICENSE = "MIT"
 PR = "r2"
 

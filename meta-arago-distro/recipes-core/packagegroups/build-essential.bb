@@ -1,4 +1,4 @@
-# This is just an alias between debian and OE names
+SUMMARY = "This is just an alias between debian and OE names"
 
 LICENSE = "MIT"
 

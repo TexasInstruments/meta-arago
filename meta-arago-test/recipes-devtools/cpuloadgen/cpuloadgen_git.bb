@@ -1,4 +1,4 @@
-DESCRIPTION = "Utility to generate specified CPU Load"
+SUMMARY = "Utility to generate specified CPU Load"
 HOMEPAGE = "https://github.com/ptitiano/cpuloadgen"
 
 LICENSE = "BSD-3-Clause"

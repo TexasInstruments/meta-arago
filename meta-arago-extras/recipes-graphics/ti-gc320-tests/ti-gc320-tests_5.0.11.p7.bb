@@ -1,4 +1,4 @@
-DESCRIPTION = "Test application for GC320 2D API"
+SUMMARY = "Test application for GC320 2D API"
 
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://dra7x-sdk-ti-gc320-tests_manifest.html;md5=22a001855467f373c47f45de5330e3c9"

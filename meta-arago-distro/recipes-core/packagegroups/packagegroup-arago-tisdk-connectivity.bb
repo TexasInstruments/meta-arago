@@ -1,4 +1,4 @@
-DESCRIPTION = "Task to install wireless packages into the target FS"
+SUMMARY = "Task to install wireless packages into the target FS"
 LICENSE = "MIT"
 PR = "r42"
 

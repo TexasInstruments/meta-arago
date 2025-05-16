@@ -1,4 +1,4 @@
-DESCRIPTION = "Task to install additional utilities/demos for SDKs"
+SUMMARY = "Task to install additional utilities/demos for SDKs"
 LICENSE = "MIT"
 PR = "r80"
 

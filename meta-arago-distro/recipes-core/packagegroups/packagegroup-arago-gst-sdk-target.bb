@@ -1,4 +1,4 @@
-DESCRIPTION = "Task to build and install header and libs in sdk"
+SUMMARY = "Task to build and install header and libs in sdk"
 LICENSE = "MIT"
 PR = "r15"
 

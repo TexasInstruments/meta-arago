@@ -1,4 +1,4 @@
-DESCRIPTION = "OProfile Example"
+SUMMARY = "OProfile Example"
 HOMEPAGE = "https://gitorious.org/oprofile-example"
 LICENSE = "BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://signal_parent.c;beginline=1;endline=37;md5=3c72149bb458105db5d2e6fbcb2da66e"

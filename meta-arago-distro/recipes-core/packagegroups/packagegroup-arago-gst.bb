@@ -1,4 +1,4 @@
-DESCRIPTION = "Task to add gstreamer and gstreamer plugins"
+SUMMARY = "Task to add gstreamer and gstreamer plugins"
 LICENSE = "MIT"
 PR = "r18"
 

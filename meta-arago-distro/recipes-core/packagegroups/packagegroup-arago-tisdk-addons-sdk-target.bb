@@ -1,4 +1,4 @@
-DESCRIPTION = "Task to install headers and libraries related to addons into the SDK"
+SUMMARY = "Task to install headers and libraries related to addons into the SDK"
 LICENSE = "MIT"
 PR = "r44"
 

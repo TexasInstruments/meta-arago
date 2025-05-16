@@ -1,4 +1,4 @@
-DESCRIPTION = "Extended task to get more basic and console apps"
+SUMMARY = "Extended task to get more basic and console apps"
 LICENSE = "MIT"
 PR = "r14"
 
