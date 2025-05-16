@@ -1,3 +1,4 @@
-# Include the examples for Qt6 related tests
+QTBASE_TI = ""
+QTBASE_TI:ti-soc = "qtbase-ti.inc"
 
-PACKAGECONFIG:append = " examples"
+require ${QTBASE_TI}
