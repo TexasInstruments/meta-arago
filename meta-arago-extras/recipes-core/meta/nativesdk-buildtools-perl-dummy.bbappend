@@ -1,7 +1,4 @@
-DUMMYPROVIDES += "\
-    nativesdk-perl-dev \
-    nativesdk-perl-module-feature \
-    nativesdk-perl-module-file-spec-unix \
-    nativesdk-perl-module-integer \
-    nativesdk-perl-module-symbol \
-"
+NATIVESDK_BUILDTOOLS_PERL_DUMMY_ARAGO = ""
+NATIVESDK_BUILDTOOLS_PERL_DUMMY_ARAGO:arago = "nativesdk-buildtools-perl-dummy-arago.inc"
+
+require ${NATIVESDK_BUILDTOOLS_PERL_DUMMY_ARAGO}
