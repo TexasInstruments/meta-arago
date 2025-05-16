@@ -11,4 +11,4 @@ do_install:append() {
     install -Dm755 weston-launch-calibrator.sh ${D}/${bindir}/weston-launch-calibrator
 }
 
-FILES:${PN}:append = "${bindir}/weston-launch-calibrator"
+FILES:${PN}:append = " ${bindir}/weston-launch-calibrator"
