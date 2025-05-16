@@ -55,6 +55,7 @@ TI_TEST_BASE = "\
     stress-ng \
     tcpdump \
     v4l-utils \
+    xdp-tools-arago \
     yavta \
 "
 
