@@ -1,0 +1,27 @@
+{
+    "APPEND-1" : {
+        "skip_vars" : [ "FILES", "RDEPENDS" ]
+    },
+    "APPEND-2" : {
+        "skip_vars" : [ "PR", "PV" ],
+        "files" : {
+            "meta-arago-distro/conf/distro/include/arago-prefs.inc" : {
+                "skip_vars": [ "PREFERRED_PROVIDER_virtual/kernel" ]
+            }
+        }
+    },
+    "GUARD-1" : {
+        "skip_files" : [
+            "meta-arago-distro/dynamic-layers/chromium-browser-layer/recipes-core/images/tisdk-default-image.bbappend",
+            "meta-arago-distro/dynamic-layers/selinux/recipes-core/images/tisdk-default-image.bbappend",
+            "meta-arago-distro/dynamic-layers/selinux/recipes-kernel/linux/linux-ti-staging_%.bbappend",
+            "meta-arago-extras/recipes-extended/sysrepo/libyang_%.bbappend",
+            "meta-arago-test/dynamic-layers/qt6-layer/recipes-core/packagegroups/ti-test.bbappend",
+            "meta-arago-test/recipes-benchmark/stream/stream_%.bbappend",
+            "meta-arago-test/recipes-extended/bc/bc_%.bbappend"
+        ]
+    },
+    "GUARD-2" : {
+        "skip_vars" : [ "arago" , "ti-soc" ]
+    }
+}
