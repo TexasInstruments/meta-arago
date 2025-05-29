@@ -11,7 +11,6 @@ RDEPENDS:${PN} = "\
     libgl-dev \
     libgles1-dev \
     libgles2-dev \
-    libgles3-dev \
     libdrm-dev \
     wayland-dev \
     weston-dev \
