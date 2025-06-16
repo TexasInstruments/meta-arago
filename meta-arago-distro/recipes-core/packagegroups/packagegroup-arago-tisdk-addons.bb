@@ -53,6 +53,7 @@ UTILS:append:omap-a15 = " mmc-utils \
 UTILS:append:k3 = " mmc-utils \
                     switch-config \
                     irqbalance \
+                    ti-librpmsg-dma \
                     ti-rpmsg-char \
                     ti-rpmsg-char-examples \
                     statcol \

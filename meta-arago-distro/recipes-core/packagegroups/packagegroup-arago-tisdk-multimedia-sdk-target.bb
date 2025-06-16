@@ -13,7 +13,13 @@ MULTIMEDIA:append:dra7xx = " \
     hevc-arm-decoder-staticdev \
 "
 
+AUDIO = " \
+    fftw-dev \
+    libsndfile1-dev \
+"
+
 RDEPENDS:${PN} = "\
+    ${AUDIO} \
     ${MULTIMEDIA} \
     packagegroup-arago-gst-sdk-target \
 "
