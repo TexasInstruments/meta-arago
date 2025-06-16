@@ -11,6 +11,11 @@ MULTIMEDIA = " \
     libcamera-gst \
 "
 
+AUDIO = " \
+    fftw \
+    libsndfile1 \
+"
+
 MULTIMEDIA:append:arago = " ffmpeg mpv"
 
 MULTIMEDIA:omapl138 = ""
@@ -31,6 +36,7 @@ ACCEL_MM:append:omap-a15 = " \
 "
 
 RDEPENDS:${PN} = "\
+    ${AUDIO} \
     packagegroup-arago-gst \
     ${MULTIMEDIA} \
     ${@bb.utils.contains('MACHINE_FEATURES', 'mmip', '${ACCEL_MM}', '', d)} \
