@@ -11,7 +11,6 @@ SRC_URI = "https://cdn.openbsd.org/pub/OpenBSD/OpenNTPD/${P}.tar.gz"
 SRC_URI[md5sum] = "7c68ce2627b2ea13f2b95db1ef4fcfc5"
 SRC_URI[sha256sum] = "8582db838a399153d4a17f2a76518b638cc3020f58028575bf54127518f55a46"
 
-S = "${WORKDIR}/openntpd-${PV}"
 inherit autotools
 
 LDFLAGS += "-lrt"
