@@ -13,7 +13,7 @@ SRC_URI = "http://libloki.sourcearchive.com/downloads/${PV}-3/${BPN}_${PV}.orig.
 SRC_URI[md5sum] = "af532c24a7f2e12d0829be8201934d92"
 SRC_URI[sha256sum] = "0c2094ce916b106731c8be61c32f538a22e1c0f8398bd5d6295b13d08e0c41a3"
 
-S = "${WORKDIR}/${BPN}-${PV}.orig"
+S = "${UNPACKDIR}/${BPN}-${PV}.orig"
 
 do_configure () {
     sed -i -e 's|^prefix.*$|prefix := ${D}${prefix}|g' ${S}/Makefile.common
