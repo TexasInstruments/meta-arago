@@ -7,8 +7,6 @@ SRC_URI = "git://git.ideasonboard.org/uvc-gadget.git;branch=master"
 PV = "1.1+git"
 SRCREV = "aa82df887ab995473cd83c89777cdf4bc4685dd0"
 
-S = "${WORKDIR}/git"
-
 EXTRA_OEMAKE = 'CC="${CC}" CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" KERNEL_INCLUDE=""'
 
 do_compile () {

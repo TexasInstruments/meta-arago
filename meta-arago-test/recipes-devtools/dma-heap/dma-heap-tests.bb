@@ -11,6 +11,4 @@ SRCREV = "334fc8ec8056badc9c6667e6f1328705cb973ab4"
 
 DEPENDS = "googletest"
 
-S = "${WORKDIR}/git"
-
 inherit cmake pkgconfig

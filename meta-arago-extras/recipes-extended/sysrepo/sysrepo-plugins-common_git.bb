@@ -8,8 +8,6 @@ SRC_URI += "file://0001-so-version.patch"
 PV = "0.1+git"
 SRCREV = "20885de0d3bb95a05610fdb3a0f83d8f7c370fad"
 
-S = "${WORKDIR}/git"
-
 DEPENDS = "libyang sysrepo"
 
 inherit cmake pkgconfig

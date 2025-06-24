@@ -11,8 +11,6 @@ SRC_URI = "git://git.ti.com/git/processor-sdk/gst-plugin-hevc.git;protocol=https
 "
 SRCREV = "e4ea007d0ddeb95ae01742293454ef3c87a6e84c"
 
-S = "${WORKDIR}/git"
-
 DEPENDS += "gstreamer1.0 gstreamer1.0-plugins-base hevc-arm-decoder gettext-native"
 
 inherit autotools-brokensep pkgconfig gettext

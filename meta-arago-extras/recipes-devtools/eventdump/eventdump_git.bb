@@ -10,8 +10,6 @@ SRCREV = "5db45a36a05a78ea44a4cb25312ed5ee3c2bd76d"
 SRC_URI = "git://github.com/TI-ECS/eventdump.git;protocol=https;branch=master \
 	file://0001-PATCH_Makefile_Play_nicer_with_bitbake-OpenEmbedded.patch"
 
-S = "${WORKDIR}/git"
-
 EXTRA_OEMAKE = "CROSS_COMPILE=${TARGET_PREFIX} DEST_DIR=${D} BIN_DIR=${bindir} CC="${CC}""
 
 do_install() {

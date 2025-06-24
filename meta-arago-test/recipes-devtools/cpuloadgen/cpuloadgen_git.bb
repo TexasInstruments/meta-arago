@@ -12,8 +12,6 @@ SRCREV ?= "dd2052b581ae7c2e0e06344887885fd6cd66eebb"
 
 SRC_URI = "git://github.com/ptitiano/cpuloadgen.git;protocol=https;branch=${BRANCH}"
 
-S = "${WORKDIR}/git"
-
 EXTRA_OEMAKE = "DESTDIR=${D}${bindir} CROSS_COMPILE=${TARGET_PREFIX} CC="${CC}" CFLAGS="${CFLAGS}""
 CFLAGS += "-fpermissive -std=gnu11"
 

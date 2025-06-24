@@ -14,8 +14,6 @@ SRC_URI = " \
 PV = "2.2.35+git"
 SRCREV = "6d1cb61ef3ce2274a91dc9cbc51318bcd0b54697"
 
-S = "${WORKDIR}/git"
-
 DEPENDS = "libyang libnetconf2 sysrepo sysrepo-native"
 RDEPENDS:${PN} += "bash curl"
 

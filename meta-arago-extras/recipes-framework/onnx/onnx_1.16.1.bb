@@ -11,8 +11,6 @@ SRC_URI += "\
 "
 SRCREV = "595228d99e3977ac27cb79d5963adda262af99ad"
 
-S = "${WORKDIR}/git"
-
 DEPENDS += "\
 	abseil-cpp \
 	protobuf \

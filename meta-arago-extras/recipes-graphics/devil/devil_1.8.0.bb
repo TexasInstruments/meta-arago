@@ -12,7 +12,6 @@ SRC_URI = "git://github.com/dentonw/devil.git;protocol=https;branch=master \
 SRCREV = "e34284a7e07763769f671a74b4fec718174ad862"
 
 PR = "r1"
-S = "${WORKDIR}/git"
 
 # Build only DevIL
 OECMAKE_SOURCEPATH = "${S}/DevIL"

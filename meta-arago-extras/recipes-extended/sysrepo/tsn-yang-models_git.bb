@@ -7,8 +7,6 @@ SRC_URI = "git://github.com/YangModels/yang.git;protocol=https;branch=main"
 PV = "1.0+git"
 SRCREV = "d3f6ca02ec9ce7c96b55066d209d08adbe851897"
 
-S = "${WORKDIR}/git"
-
 FILES:${PN} += "${datadir}/yang/*"
 
 do_install:append () {

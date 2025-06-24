@@ -58,8 +58,6 @@ SRCREV_kleidiai = "cddf991af5de49fd34949fa39690e4e906e04074"
 SRCREV_psimd = "072586a71b55b7f8c584153d223e95687148a900"
 SRCREV_protobuf = "4a2aef570deb2bfb8927426558701e8bfc26f2a4"
 
-S = "${WORKDIR}/git"
-
 inherit setuptools3 cmake
 
 DEPENDS = " \

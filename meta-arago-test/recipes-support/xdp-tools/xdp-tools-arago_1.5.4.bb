@@ -19,8 +19,6 @@ SRC_URI = "git://github.com/xdp-project/xdp-tools.git;protocol=https;branch=main
 
 SRCREV = "e78d8d23bb80f221dd6b6970ff5a44aaf4717114"
 
-S = "${WORKDIR}/git"
-
 inherit pkgconfig
 
 EXTRA_OEMAKE += " PREFIX=${D}${prefix} LIBDIR=${D}${libdir} BUILD_STATIC_ONLY=1 PRODUCTION=1 V=1"

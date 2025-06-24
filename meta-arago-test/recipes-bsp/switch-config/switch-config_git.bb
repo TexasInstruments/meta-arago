@@ -15,8 +15,6 @@ SRC_URI = "git://git.ti.com/git/switch-config/switch-config.git;protocol=https;b
 
 SRC_URI += "file://0001-Use-proper-definition-of-boolean-type.patch"
 
-S = "${WORKDIR}/git"
-
 EXTRA_OEMAKE = "CROSS_COMPILE=${TARGET_PREFIX} CC="${CC}""
 
 do_configure() {

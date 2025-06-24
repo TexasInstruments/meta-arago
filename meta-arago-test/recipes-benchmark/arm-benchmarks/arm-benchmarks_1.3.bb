@@ -11,8 +11,6 @@ SRCREV = "fefaf9bdd6f36ab0cebaab8dbf34e5beb50f471c"
 
 SRC_URI = "git://git.ti.com/git/apps/arm_benchmarks.git;protocol=https;branch=${BRANCH}"
 
-S = "${WORKDIR}/git"
-
 do_compile() {
 	export CROSS_COMPILE=${TARGET_PREFIX}
 	export CFLAGS='${TARGET_CC_ARCH} -std=gnu11'

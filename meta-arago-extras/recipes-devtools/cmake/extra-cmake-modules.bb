@@ -8,7 +8,6 @@ SRCREV = "8dc36cfa882f07a60b3ebdf16d9aac57871bd382"
 SRC_URI = " \
     git://anongit.kde.org/extra-cmake-modules;protocol=git;branch=master \
 "
-S = "${WORKDIR}/git"
 
 EXTRA_OECMAKE += "-DBUILD_TESTING=off"
 

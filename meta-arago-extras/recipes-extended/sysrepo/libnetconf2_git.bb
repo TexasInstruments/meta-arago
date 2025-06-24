@@ -10,8 +10,6 @@ SRC_URI = "git://github.com/CESNET/libnetconf2.git;protocol=https;branch=devel"
 PV = "3.5.5+git"
 SRCREV = "4c7858c9c41f1ac04d2b15c032291e335fc0f5f5"
 
-S = "${WORKDIR}/git"
-
 DEPENDS = "libssh openssl libyang libxcrypt mbedtls curl \
     ${@bb.utils.contains('DISTRO_FEATURES','pam','libpam','',d)} \
 "

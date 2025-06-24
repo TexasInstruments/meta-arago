@@ -15,8 +15,6 @@ SRC_URI = "git://git.ti.com/git/graphics/ti-gc320-test.git;protocol=https;branch
 SRCREV = "3c334f2004c718c9bb4321213c362e65c491efe6"
 PR = "r2"
 
-S = "${WORKDIR}/git"
-
 EXTRA_OEMAKE += "AQROOT=${S}/tests/src -f makefile.linux TOOLCHAIN_PATH=${TOOLCHAIN_PATH} CROSS_COMPILE=${TARGET_PREFIX} ARCH_TYPE=${TARGET_ARCH} CPU_TYPE=cortex-a15 VIVANTE_SDK_INC=${S}/sdk/include VIVANTE_SDK_LIB=${STAGING_DIR_TARGET}/usr/lib DESTDIR=${D} TARGET_PRODUCT=${TARGET_PRODUCT} LIBDIR=${libdir} SDK_DIR=${S}/build/tests/ EGL_API_FB=1"
 
 do_install() {

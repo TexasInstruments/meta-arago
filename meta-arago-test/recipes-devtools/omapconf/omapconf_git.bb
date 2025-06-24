@@ -15,8 +15,6 @@ SRC_URI = "git://github.com/omapconf/omapconf.git;protocol=https;branch=${BRANCH
 
 SRC_URI += "file://0001-Use-proper-definition-of-boolean-type.patch"
 
-S = "${WORKDIR}/git"
-
 do_compile () {
     oe_runmake CC="${CC}" all
 }

@@ -13,8 +13,6 @@ SRCREV_FORMAT = "default"
 SRCREV_nnshark = "bcee91b23a98c981b87051fe1b2ad545991c4aa2"
 SRCREV_common = "b64f03f6090245624608beb5d2fff335e23a01c0"
 
-S = "${WORKDIR}/git"
-
 DEPENDS = "\
     gtk-doc-native \
     gstreamer1.0 \

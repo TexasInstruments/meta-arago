@@ -7,8 +7,6 @@ SRC_URI = "git://github.com/nnstreamer/nnstreamer.git;branch=main;protocol=https
 PV = "2.4.0+git"
 SRCREV = "7c57c288250578cad598f065b6fda6c0ff720cf9"
 
-S = "${WORKDIR}/git"
-
 # Only compatible with armv7a, armv7ve, and aarch64
 COMPATIBLE_MACHINE = "(^$)"
 COMPATIBLE_MACHINE:aarch64 = "(.*)"

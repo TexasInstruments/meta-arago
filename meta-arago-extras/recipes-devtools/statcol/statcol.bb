@@ -13,8 +13,6 @@ DEPENDS = "ti-rpmsg-char websocketd"
 
 RDEPENDS:${PN} = "bash"
 
-S = "${WORKDIR}/git"
-
 EXTRA_OEMAKE += "SYSROOT=${STAGING_DIR_TARGET} CROSS_COMPILE=${TARGET_PREFIX}"
 
 do_install() {

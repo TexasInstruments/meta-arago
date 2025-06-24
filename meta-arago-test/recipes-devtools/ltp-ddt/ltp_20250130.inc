@@ -30,8 +30,6 @@ SRC_URI = "git://github.com/linux-test-project/ltp.git;branch=master;protocol=ht
            file://0001-Remove-OOM-tests-from-runtest-mm.patch \
            "
 
-S = "${WORKDIR}/git"
-
 inherit autotools-brokensep pkgconfig
 
 # Version 20220527 added KVM test infrastructure which currently fails to build with lld due to

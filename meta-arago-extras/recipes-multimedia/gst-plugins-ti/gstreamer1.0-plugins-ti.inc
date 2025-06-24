@@ -7,8 +7,6 @@ inherit autotools-brokensep pkgconfig gettext
 
 INC_PR = "r2"
 
-S = "${WORKDIR}/git"
-
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 do_configure() {

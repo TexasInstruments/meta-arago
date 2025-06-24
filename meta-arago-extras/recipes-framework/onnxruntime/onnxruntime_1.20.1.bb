@@ -30,8 +30,6 @@ SRCREV_safeint = "4cafc9196c4da9c817992b20f5253ef967685bf8"
 SRCREV_eigen = "e7248b26a1ed53fa030c5c459f7ea095dfd276ac"
 SRCREV_nsync = "13de152c2a1cd73ff4df97bd2c406b6d15d34af3"
 
-S = "${WORKDIR}/git"
-
 # Only compatible with armv7a, armv7ve, and aarch64
 COMPATIBLE_MACHINE = "(^$)"
 COMPATIBLE_MACHINE:aarch64 = "(.*)"

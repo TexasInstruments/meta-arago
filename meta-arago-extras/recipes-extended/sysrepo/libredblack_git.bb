@@ -8,8 +8,6 @@ SRC_URI = "git://github.com/sysrepo/libredblack.git;protocol=https;branch=master
 PV = "1.0+git"
 SRCREV = "a399310d99b61eec4d3c0677573ab5dddcf9395d"
 
-S = "${WORKDIR}/git"
-
 inherit python3native autotools
 
 EXTRA_OECONF = "--without-rbgen"

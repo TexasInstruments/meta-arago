@@ -6,8 +6,6 @@ BRANCH = "ti-linux-5.10.y"
 SRCREV = "73aa709ca10103b61fba3a07471dbb4dcb56db45"
 SRC_URI = "git://git.ti.com/git/ti-linux-kernel/ti-linux-kernel.git;protocol=https;branch=${BRANCH}"
 
-S = "${WORKDIR}/git"
-
 do_compile () {
 	cd ${S}/tools/pci
 	${CC} ${CFLAGS} ${LDFLAGS} -o pcitest pcitest.c

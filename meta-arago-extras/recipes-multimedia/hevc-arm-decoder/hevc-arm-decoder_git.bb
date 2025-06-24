@@ -16,8 +16,6 @@ SRCREV = "4004c553e672538d0c3b5fa2ea0490ec095d0060"
 
 PV = "01.00.00.01"
 
-S = "${WORKDIR}/git"
-
 do_configure() {
     sed "s/-lpthread/-pthread/g" -i ${S}/Client/Build/ARM/makefile
 }

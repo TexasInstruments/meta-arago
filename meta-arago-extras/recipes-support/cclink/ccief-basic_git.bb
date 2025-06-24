@@ -16,8 +16,6 @@ SRC_URI = "${CCIEF-BASIC_GIT_URI};protocol=${CCIEF-BASIC_GIT_PROTOCOL};branch=${
 
 SRCREV = "${CCIEF-BASIC_SRCREV}"
 
-S = "${WORKDIR}/git"
-
 TARGET_CC_ARCH += "${LDFLAGS}"
 
 EXTRA_OEMAKE = "CC="${CC} -fpermissive""

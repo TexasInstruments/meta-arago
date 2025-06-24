@@ -13,8 +13,6 @@ SRC_URI = "git://github.com/GENIVI/${BPN}.git;protocol=https;branch=master \
            file://03-ivi-id-agent-update-dependencies-to-build-on-weston-8.patch \
     "
 
-S = "${WORKDIR}/git"
-
 DEPENDS = "weston virtual/libgles2 pixman wayland-native"
 
 inherit cmake

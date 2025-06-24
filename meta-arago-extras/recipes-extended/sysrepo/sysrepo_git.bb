@@ -12,8 +12,6 @@ SRC_URI = " \
 PV = "3.3.10+git"
 SRCREV = "ef93a1253cc97f13671759f6e7790cbf729a5ae9"
 
-S = "${WORKDIR}/git"
-
 DEPENDS = "libyang protobuf protobuf-c protobuf-c-native libredblack libev libnetconf2"
 
 FILES:${PN} += "${datadir}/yang/* ${libdir}/sysrepo-plugind/* ${bindir}/*"

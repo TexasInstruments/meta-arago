@@ -10,8 +10,6 @@ SRC_URI += "file://0001-Fix-type-casting-for-32bit-builds.patch"
 # v24.11
 SRCREV = "3ed70c005559d409feff2c578a1a39cf8fec8804"
 
-S = "${WORKDIR}/git"
-
 # Only compatible with armv7a, armv7ve, and aarch64
 COMPATIBLE_MACHINE = "(^$)"
 COMPATIBLE_MACHINE:aarch64 = "(.*)"
