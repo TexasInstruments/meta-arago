@@ -9,8 +9,7 @@ SRC_URI = "\
 PR = "r3"
 PV = "1.0"
 
-S = "${WORKDIR}/sources"
-UNPACKDIR = "${S}"
+S = "${UNPACKDIR}"
 
 do_install () {
     install -d ${D}/board-support/prebuilt-images

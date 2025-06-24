@@ -5,8 +5,7 @@ PR  = "r1"
 
 SRC_URI = "file://telnetd"
 
-S = "${WORKDIR}/sources"
-UNPACKDIR = "${S}"
+S = "${UNPACKDIR}"
 
 INITSCRIPT_NAME = "telnetd"
 INITSCRIPT_PARAMS = "defaults 10"

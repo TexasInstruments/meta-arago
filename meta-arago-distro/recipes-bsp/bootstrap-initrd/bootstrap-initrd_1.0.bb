@@ -8,9 +8,6 @@ CLEANBROKEN = "1"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-S = "${WORKDIR}/sources"
-UNPACKDIR = "${S}"
-
 BOOSTRAP_IMAGE = "tisdk-bootstrap-base-image"
 
 TARGET = "bootstrap-rootfs-${MACHINE}.cpio"

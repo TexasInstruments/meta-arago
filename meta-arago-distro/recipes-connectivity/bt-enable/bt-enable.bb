@@ -9,8 +9,7 @@ SRC_URI = " \
 
 PR = "r1"
 
-S = "${WORKDIR}/sources"
-UNPACKDIR = "${S}"
+S = "${UNPACKDIR}"
 
 INITSCRIPT_NAME = "bt-enable.sh"
 INITSCRIPT_PARAMS = "defaults 99"

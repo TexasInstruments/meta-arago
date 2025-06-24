@@ -8,9 +8,6 @@ LIC_FILES_CHKSUM = "file://init;beginline=2;endline=11;md5=4b2e3b15f01cf63d2cb79
 
 PR = "r4"
 
-S = "${WORKDIR}/sources"
-UNPACKDIR = "${S}"
-
 INITSCRIPT_NAME = "ts-calibrate"
 
 # Start this init script early enough for other processes to be started later
@@ -22,6 +19,8 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 inherit update-rc.d
 
 SRC_URI = "file://init"
+
+S = "${UNPACKDIR}"
 
 do_install(){
 	# Install the init script

@@ -24,8 +24,7 @@ SRC_URI[openssl_gen_sha1hash.sha256sum] = "f338f8c3067ebb1c5710b16b91e8b9e38685b
 SRC_URI[openssl_start_server.sha256sum] = "e23499210f701ef831d39a8c732f34f4b06fb3ba2d069c4a95ef25ae59f3c93e"
 SRC_URI[license.sha256sum] = "7febd1df714fa4b1e44fe0b0f73ceac7f9b9f97326695a0cc7074bd6c8d263e3"
 
-S = "${WORKDIR}/sources"
-UNPACKDIR = "${S}"
+S = "${UNPACKDIR}"
 
 do_install() {
     install -d ${D}${bindir}
