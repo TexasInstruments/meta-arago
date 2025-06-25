@@ -45,3 +45,5 @@ TEST_LIST += "\
     vDSO \
     watchdog \
 "
+
+INSANE_SKIP:${PN} += "staticdev"
