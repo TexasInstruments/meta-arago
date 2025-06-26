@@ -18,6 +18,7 @@ TI_TEST_BASE = "\
     evtest \
     fio \
     git \
+    gst-devtools \
     hwspinlocktest \
     hdparm \
     i2c-tools \
