@@ -1,6 +1,3 @@
-# Use the latest version of ltp-ddt for kernel versions 3.8+
-PREFERRED_PROVIDER_ltp-ddt = "ltp-ddt"
-
 PREFERRED_PROVIDER_virtual/gettext = "gettext"
 
 PREFERRED_PROVIDER_virtual/kernel:append = "${ARAGO_KERNEL_SUFFIX}"
