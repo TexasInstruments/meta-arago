@@ -25,10 +25,6 @@ MULTIMEDIA:append:dra7xx = " \
     hevc-arm-decoder \
 "
 
-MULTIMEDIA:append:omap5-evm = " \
-    abefw \
-"
-
 ACCEL_MM = ""
 
 ACCEL_MM:append:omap-a15 = " \
