@@ -1,12 +1,15 @@
 {
     "APPEND-1" : {
-        "skip_vars" : [ "FILES", "RDEPENDS" ]
+        "skip_vars" : [ "FILES", "RDEPENDS", "RPROVIDES" ]
     },
     "APPEND-2" : {
         "skip_vars" : [ "PR", "PV" ],
         "files" : {
             "meta-arago-distro/conf/distro/include/arago-prefs.inc" : {
                 "skip_vars": [ "PREFERRED_PROVIDER_virtual/kernel" ]
+            },
+            "meta-arago-distro/recipes-graphics/emptty/emptty_0.13.0.bb" : {
+                "skip_vars" : [ "GO_TAGS" ]
             }
         }
     },
