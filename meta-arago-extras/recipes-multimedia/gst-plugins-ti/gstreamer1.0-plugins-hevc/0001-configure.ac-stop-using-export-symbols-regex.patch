@@ -7,6 +7,8 @@ The old regex is no longer correct for GStreamer 1.14.
 
 Bug-Debian: https://bugs.debian.org/894642
 
+Upstream-Status: Inappropriate [arago specific]
+
 Signed-off-by: Denys Dmytriyenko <denys@ti.com>
 ---
  configure.ac | 2 +-

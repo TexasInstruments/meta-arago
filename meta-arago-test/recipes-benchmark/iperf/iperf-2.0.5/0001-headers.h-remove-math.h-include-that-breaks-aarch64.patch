@@ -18,6 +18,8 @@ Content-Transfer-Encoding: 8bit
 |      struct __is_integer<bool>
 |             ^~~~~~~~~~~~~~~~~~
 
+Upstream-Status: Inappropriate [oe specific]
+
 Signed-off-by: Denys Dmytriyenko <denys@ti.com>
 ---
  include/headers.h | 1 -

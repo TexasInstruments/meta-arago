@@ -1,3 +1,6 @@
+
+Upstream-Status: Inappropriate [arago specific]
+
 diff --git a/ivi-layermanagement-examples/EGLWLMockNavigation/src/OpenGLES2App.cpp b/ivi-layermanagement-examples/EGLWLMockNavigation/src/OpenGLES2App.cpp
 index 2e65864..e14dbc0 100644
 --- a/ivi-layermanagement-examples/EGLWLMockNavigation/src/OpenGLES2App.cpp

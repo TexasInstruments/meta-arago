@@ -4,6 +4,8 @@ Date: Mon, 14 Nov 2016 19:41:28 -0500
 Subject: [PATCH] include/loki/Threads.h: return-statement with a value, in
  function returning 'void'
 
+Upstream-Status: Pending
+
 Signed-off-by: Denys Dmytriyenko <denys@ti.com>
 ---
  include/loki/Threads.h | 4 ++--

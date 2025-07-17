@@ -5,6 +5,8 @@ Subject: [PATCH] gstducati: configure.ac stop using -export-symbols-regex
 
 The old regex is no longer correct for GStreamer 1.14.
 
+Upstream-Status: Inappropriate [arago specific]
+
 Signed-off-by: Ramprasad N <x0038811@ti.com>
 ---
  configure.ac | 2 +-

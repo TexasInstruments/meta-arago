@@ -7,6 +7,8 @@ Add Screen_ID as a argument to handle multiple screens.
 Removed choose_screen function as it is redundant
 after this change
 
+Upstream-Status: Inappropriate [arago specific]
+
 Signed-off-by: Ramprasad N <x0038811@ti.com>
 Reviewed-by: Karthik Ramanan <a0393906@ti.com>
 ---

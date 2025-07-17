@@ -5,6 +5,8 @@ Subject: [PATCH] hostapd change conf file for better oob startup
 
 Changed some of the default parameters
 
+Upstream-Status: Inappropriate [configuration change] 		
+
 Signed-off-by: Yaniv Mahani <yanivma@ti.com>
 ---
  hostapd/hostapd.conf |  724 ++++++--------------------------------------------

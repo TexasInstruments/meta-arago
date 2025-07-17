@@ -1,3 +1,6 @@
+
+Upstream-Status: Inappropriate [arago specific]
+
 diff --git a/DevIL/CMakeLists.txt b/DevIL/CMakeLists.txt
 index e342f93d..fae40167 100644
 --- a/DevIL/CMakeLists.txt

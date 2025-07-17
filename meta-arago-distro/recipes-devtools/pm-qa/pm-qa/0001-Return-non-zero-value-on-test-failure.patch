@@ -4,6 +4,8 @@ Date: Thu, 13 Aug 2015 15:03:00 -0400
 
 By convention Linux tools return non-zero value on error/failure.
 
+Upstream-Status: Inactive-Upstream
+
 Signed-off-by: Carlos Hernandez <ceh@ti.com>
 ---
  include/functions.sh | 1 +

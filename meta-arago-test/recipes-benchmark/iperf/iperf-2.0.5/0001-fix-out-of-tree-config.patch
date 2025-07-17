@@ -7,6 +7,8 @@ header is not found due to the hard path.
 We now make the path for package header relative to our 'srcdir' so it is
 found appropriately.
 
+Upstream-Status: Inappropriate [oe specific]
+
 Signed-off-by: Awais Belal <awais_belal@mentor.com>
 ---
 diff --git a/configure.ac b/configure.ac

@@ -4,6 +4,8 @@ Date: Mon, 14 Nov 2016 19:55:08 -0500
 Subject: [PATCH] test/Function/FunctionTest.cpp: reference to
  'bad_function_call' is ambiguous
 
+Upstream-Status: Pending
+
 Signed-off-by: Denys Dmytriyenko <denys@ti.com>
 ---
  test/Function/FunctionTest.cpp | 2 +-

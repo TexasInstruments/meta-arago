@@ -1,3 +1,6 @@
+
+Upstream-Status: Inappropriate [arago specific]
+
 --- vtun-3.0.3/configure.orig
 +++ vtun-3.0.3/configure
 @@ -5680,7 +5680,7 @@

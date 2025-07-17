@@ -6,6 +6,8 @@ Subject: [PATCH] autoconf: fix for cross compilation for ARM
 * Based on changes from Yebio Mesfin fixup the input-utils to
   cross compile for ARM.
 
+Upstream-Status: Inappropriate [oe specific]
+
 Signed-off-by: Chase Maupin <Chase.Maupin@ti.com>
 ---
  mk/Autoconf.mk  |    8 ++++++--

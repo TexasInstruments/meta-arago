@@ -6,6 +6,8 @@ Subject: [PATCH 2/2] layer-add-surfaces: surface-layer management
 This patch prevents surfaces from getting added to a new layer
 if they are already registered to an existing layer.
 
+Upstream-Status: Inappropriate [arago specific]
+
 Signed-off-by: Ramprasad N <x0038811@ti.com>
 Reviewed-by: Karthik Ramanan <a0393906@ti.com>
 ---

@@ -4,6 +4,8 @@ Date: Mon, 13 Feb 2023 13:11:16 -0600
 Subject: [PATCH] include/loki/SmallObj.h: ISO C++17 does not allow dynamic
  exception specifications
 
+Upstream-Status: Pending
+
 Signed-off-by: Andrew Davis <afd@ti.com>
 ---
  include/loki/SmallObj.h | 15 ++-------------

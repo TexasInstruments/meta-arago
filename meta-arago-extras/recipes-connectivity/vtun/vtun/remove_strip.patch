@@ -1,3 +1,6 @@
+
+Upstream-Status: Inappropriate [arago specific]
+
 --- vtun-3.0.3/Makefile.orig.in
 +++ vtun-3.0.3/Makefile.in
 @@ -99,6 +99,5 @@

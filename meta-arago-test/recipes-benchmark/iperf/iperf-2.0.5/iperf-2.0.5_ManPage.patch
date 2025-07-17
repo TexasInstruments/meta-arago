@@ -1,3 +1,5 @@
+Upstream-Status: Inappropriate [arago specific]
+
 diff --git iperf-2.0.5/man/Makefile.am iperf-2.0.5/man/Makefile.am
  index ed97bc6..728873f 100644
 --- iperf-2.0.5/man/Makefile.am

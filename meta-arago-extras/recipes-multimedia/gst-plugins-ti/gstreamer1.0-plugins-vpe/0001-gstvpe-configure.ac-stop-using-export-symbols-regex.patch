@@ -12,6 +12,8 @@ undefined symbol as --export-symbols option is no more supported.
 Rename PACKAGE to vpe to get the expected symbol
 gst_plugin_vpe_get_desc
 
+Upstream-Status: Inappropriate [arago specific]
+
 Signed-off-by: Ramprasad N <x0038811@ti.com>
 ---
  configure.ac | 2 +-
