@@ -1,4 +1,4 @@
-DESCRIPTION = "Configuration files for SoftAP with udhcpd"
+SUMMARY = "Configuration files for SoftAP with udhcpd"
 SECTION = "console/network"
 HOMEPAGE = "http://udhcp.busybox.net/"
 LICENSE = "GPL-2.0-only & BSD-4-Clause"
