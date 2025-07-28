@@ -33,7 +33,3 @@ TARGET_IMAGES = "tisdk-base-image tisdk-default-image tisdk-thinlinux-image tisd
 
 TISDK_TOOLCHAIN = "meta-toolchain-arago-tisdk"
 TOOLCHAIN_SUFFIX = "-tisdk"
-
-IMAGE_INSTALL = "\
-    packagegroup-arago-tisdk-amsdk-sdk-host \
-"
