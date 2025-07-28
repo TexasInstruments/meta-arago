@@ -179,6 +179,12 @@ tisdk_image_build () {
         return 1
     fi
 
+    # Copy the U-Boot uEnv.txt file if is exists
+    if [ -e ${DEPLOY_DIR_IMAGE}/uEnv.txt ]
+    then
+        cp ${DEPLOY_DIR_IMAGE}/uEnv.txt ${prebuilt_dir}/
+    fi
+
     # Copy the Kernel image if it exists
     if [ -e ${DEPLOY_DIR_IMAGE}/zImage-${MACHINE}.bin ]
     then
