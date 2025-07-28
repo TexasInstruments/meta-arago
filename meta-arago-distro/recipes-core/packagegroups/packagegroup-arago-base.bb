@@ -58,7 +58,6 @@ ARAGO_EXTRA:append:arago = "\
 OPTEE_PKGS = " \
     optee-os \
     optee-client \
-    optee-test \
     optee-examples \
 "
 
@@ -68,7 +67,7 @@ RDEPENDS:${PN} = "\
     ${@bb.utils.contains('MACHINE_FEATURES', 'alsa', '${ARAGO_ALSA_BASE}', '',d)} \
     ${ARAGO_BASE} \
     ${ARAGO_EXTRA} \
-    ${@bb.utils.contains_any('OPTEEOUTPUTMACHINE', 'ti', "${OPTEE_PKGS}", "", d)} \
+    ${@"${OPTEE_PKGS}" if d.getVar('OPTEEMACHINE') else ""} \
 "
 
 RDEPENDS:${PN}:append:k3 = " ${OPTEE_PKGS}"
