@@ -33,6 +33,7 @@ RDEPENDS:${PN} += "\
     pm-qa \
     serialcheck \
     memtester \
+    libgpiod-tools \
 "
 
 do_install:prepend() {
