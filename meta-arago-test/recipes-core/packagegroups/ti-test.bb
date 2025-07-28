@@ -42,6 +42,7 @@ TI_TEST_BASE = "\
     nbench-byte \
     netperf \
     openntpd \
+    ${@"optee-test" if d.getVar('OPTEEMACHINE') else ""} \
     pcitest \
     perf \
     powertop \
@@ -54,6 +55,7 @@ TI_TEST_BASE = "\
     stream \
     stress \
     stress-ng \
+    strongswan \
     tcpdump \
     v4l-utils \
     xdp-tools-arago \
