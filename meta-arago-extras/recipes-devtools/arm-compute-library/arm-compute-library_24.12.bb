@@ -4,7 +4,7 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSES/MIT.txt;md5=35f8944fae972976691f3483b0ac9dba"
 
 SRC_URI = " \
-    git://github.com/ARM-software/ComputeLibrary.git;branch=main;protocol=https \
+    git://github.com/ARM-software/ComputeLibrary.git;branch=archived-releases;protocol=https \
     file://0001-fix-Fix-indention-in-cmake-generator-script.patch \
     file://0002-Use-ARM_COMPUTE_ENABLE_NEON-in-code-for-checking-NEO.patch \
     file://0003-Use-ARM_COMPUTE_ENABLE_SVE-in-code-for-checking-SVE-.patch \
