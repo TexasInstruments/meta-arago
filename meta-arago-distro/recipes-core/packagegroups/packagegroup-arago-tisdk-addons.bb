@@ -48,6 +48,7 @@ UTILS:append:omap-a15 = " mmc-utils \
                           stream-openmp \
                           pru-icss \
                           ti-ipc-rtos-fw \
+                          ti-rtos-messageq-test-fw \
 "
 
 UTILS:append:k3 = " mmc-utils \
