@@ -1,0 +1,55 @@
+From 99c59368f9cdd43638dd30c2ea867a950a54b648 Mon Sep 17 00:00:00 2001
+From: Thorsten Lannynd <t-lannynd@ti.com>
+Date: Fri, 8 Aug 2025 23:05:18 -0500
+Subject: [PATCH] chromium: gpu: sandbox: Allow GPU sandbox access to V4L2
+ devices
+
+Upstream-Status: Pending
+
+This patch modifies the Chromium GPU sandbox configuration to allow
+access to V4L2 (Video4Linux2) devices. This is necessary to enable
+hardware-accelerated video decoding and encoding on systems that rely on
+Chromium with V4L2 for video processing.
+
+Signed-off-by: Thorsten Lannynd <t-lannynd@ti.com>
+---
+ content/common/gpu_pre_sandbox_hook_linux.cc | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/content/common/gpu_pre_sandbox_hook_linux.cc b/content/common/gpu_pre_sandbox_hook_linux.cc
+index 2a3abc9775..1865246fa8 100644
+--- a/content/common/gpu_pre_sandbox_hook_linux.cc
++++ b/content/common/gpu_pre_sandbox_hook_linux.cc
+@@ -140,8 +140,13 @@ void AddV4L2GpuPermissions(
+     static constexpr size_t MAX_V4L2_DECODERS = 5;
+     static const base::FilePath::CharType kDevicePath[] =
+         FILE_PATH_LITERAL("/dev/");
++#if BUILDFLAG(IS_LINUX)
++    static const base::FilePath::CharType kVideoDecBase[] = "video";
++    static const base::FilePath::CharType kMediaDecBase[] = "";
++#else
+     static const base::FilePath::CharType kVideoDecBase[] = "video-dec";
+     static const base::FilePath::CharType kMediaDecBase[] = "media-dec";
++#endif
+     for (size_t i = 0; i < MAX_V4L2_DECODERS; i++) {
+       std::ostringstream decoderPath;
+       decoderPath << kDevicePath << kVideoDecBase << i;
+@@ -516,11 +521,14 @@ std::vector<BrokerFilePermission> FilePermissionsForGpu(
+       AddDrmGpuPermissions(&permissions);
+   }
+
++  if (UseV4L2Codec(options)) {
++      // Add V4L2 permissions for video decode/encode.
++      AddV4L2GpuPermissions(&permissions, options);
++  }
++
+   if (IsChromeOS()) {
+     // Permissions are additive, there can be multiple GPUs in the system.
+     AddStandardChromeOsPermissions(&permissions);
+-    if (UseV4L2Codec(options))
+-      AddV4L2GpuPermissions(&permissions, options);
+     if (IsArchitectureArm()) {
+       AddImgPvrGpuPermissions(&permissions);
+       AddArmGpuPermissions(&permissions);
+--
+2.34.1
