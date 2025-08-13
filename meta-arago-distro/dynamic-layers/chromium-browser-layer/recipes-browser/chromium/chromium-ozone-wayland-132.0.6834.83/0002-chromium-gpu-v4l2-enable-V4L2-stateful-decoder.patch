@@ -1,0 +1,34 @@
+From c9a81537eb0bc1f11ea902cb9abe4d98b7be74a9 Mon Sep 17 00:00:00 2001
+From: Thorsten Lannynd <t-lannynd@ti.com>
+Date: Thu, 7 Aug 2025 14:48:31 -0500
+Subject: [PATCH] chromium: gpu: v4l2: enable V4L2 stateful decoder
+
+Upstream-Status: Pending
+
+Setting the video device path to /dev/video0 for linux allows
+Chromium to find the decoder and also check that it is stateful.
+This patch setups the correct V4L2 pipeline.
+
+Signed-off-by: Thorsten Lannynd <t-lannynd@ti.com>
+---
+ media/gpu/v4l2/v4l2_utils.cc | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/media/gpu/v4l2/v4l2_utils.cc b/media/gpu/v4l2/v4l2_utils.cc
+index 9646e8be73..8bc88e938f 100644
+--- a/media/gpu/v4l2/v4l2_utils.cc
++++ b/media/gpu/v4l2/v4l2_utils.cc
+@@ -633,7 +633,11 @@ std::optional<SupportedVideoDecoderConfigs> GetSupportedV4L2DecoderConfigs() {
+ }
+
+ bool IsV4L2DecoderStateful() {
++#if BUILDFLAG(IS_LINUX)
++  constexpr char kVideoDeviceDriverPath[] = "/dev/video0";
++#else
+   constexpr char kVideoDeviceDriverPath[] = "/dev/video-dec0";
++#endif
+   base::ScopedFD device_fd(HANDLE_EINTR(
+       open(kVideoDeviceDriverPath, O_RDWR | O_NONBLOCK | O_CLOEXEC)));
+   if (!device_fd.is_valid()) {
+--
+2.34.1
