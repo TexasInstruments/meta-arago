@@ -1,7 +1,7 @@
 # add a config to point piglit at the default install location for deqp tests
 # if they are selected
 
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/piglit:"
 
 PACKAGECONFIG[deqp-gles] = ",,,opengl-es-cts"
 PACKAGECONFIG[deqp-vk] = ",,,vulkan-cts"
