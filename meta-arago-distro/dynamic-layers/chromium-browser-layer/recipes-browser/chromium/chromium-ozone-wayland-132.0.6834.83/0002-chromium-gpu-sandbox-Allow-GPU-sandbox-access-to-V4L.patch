@@ -20,20 +20,6 @@ diff --git a/content/common/gpu_pre_sandbox_hook_linux.cc b/content/common/gpu_p
 index 2a3abc9775..1865246fa8 100644
 --- a/content/common/gpu_pre_sandbox_hook_linux.cc
 +++ b/content/common/gpu_pre_sandbox_hook_linux.cc
-@@ -140,8 +140,13 @@ void AddV4L2GpuPermissions(
-     static constexpr size_t MAX_V4L2_DECODERS = 5;
-     static const base::FilePath::CharType kDevicePath[] =
-         FILE_PATH_LITERAL("/dev/");
-+#if BUILDFLAG(IS_LINUX)
-+    static const base::FilePath::CharType kVideoDecBase[] = "video";
-+    static const base::FilePath::CharType kMediaDecBase[] = "";
-+#else
-     static const base::FilePath::CharType kVideoDecBase[] = "video-dec";
-     static const base::FilePath::CharType kMediaDecBase[] = "media-dec";
-+#endif
-     for (size_t i = 0; i < MAX_V4L2_DECODERS; i++) {
-       std::ostringstream decoderPath;
-       decoderPath << kDevicePath << kVideoDecBase << i;
 @@ -516,11 +521,14 @@ std::vector<BrokerFilePermission> FilePermissionsForGpu(
        AddDrmGpuPermissions(&permissions);
    }

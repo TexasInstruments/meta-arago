@@ -19,6 +19,9 @@ during video decoding initialization.
 the raw output frames are in the correct pixel format and picture
 size.
 
+These changes rely on appropriate udev rules when running on a generic
+Linux distribution to set the correct device node names.
+
 Signed-off-by: Thorsten Lannynd <t-lannynd@ti.com>
 ---
  media/gpu/v4l2/v4l2_stateful_video_decoder.cc | 40 ++++++++++++++-----
@@ -29,18 +32,6 @@ diff --git a/media/gpu/v4l2/v4l2_stateful_video_decoder.cc b/media/gpu/v4l2/v4l2
 index e5069a3acf..6d11ea7e0f 100644
 --- a/media/gpu/v4l2/v4l2_stateful_video_decoder.cc
 +++ b/media/gpu/v4l2/v4l2_stateful_video_decoder.cc
-@@ -308,7 +308,11 @@ void V4L2StatefulVideoDecoder::Initialize(const VideoDecoderConfig& config,
-   }
-
-   if (!device_fd_.is_valid()) {
-+#if BUILDFLAG(IS_LINUX)
-+    constexpr char kVideoDeviceDriverPath[] = "/dev/video0";
-+#else
-     constexpr char kVideoDeviceDriverPath[] = "/dev/video-dec0";
-+#endif
-     device_fd_.reset(HANDLE_EINTR(
-         open(kVideoDeviceDriverPath, O_RDWR | O_NONBLOCK | O_CLOEXEC)));
-     if (!device_fd_.is_valid()) {
 @@ -410,10 +414,6 @@ void V4L2StatefulVideoDecoder::Initialize(const VideoDecoderConfig& config,
      std::move(init_cb).Run(DecoderStatus::Codes::kFailedToCreateDecoder);
      return;
@@ -94,30 +85,32 @@ index e5069a3acf..6d11ea7e0f 100644
    // If our |client_| has a VideoFramePool to allocate buffers for us, we'll
    // use it, otherwise we have to ask the driver.
    const bool use_v4l2_allocated_buffers = !client_->GetVideoFramePool();
-@@ -1185,7 +1203,11 @@ int V4L2StatefulVideoDecoder::GetMaxNumDecoderInstances() {
-   if (!base::FeatureList::IsEnabled(media::kLimitConcurrentDecoderInstances)) {
-     return std::numeric_limits<int>::max();
-   }
-+#if BUILDFLAG(IS_LINUX)
-+  constexpr char kVideoDeviceDriverPath[] = "/dev/video0";
-+#else
-   constexpr char kVideoDeviceDriverPath[] = "/dev/video-dec0";
-+#endif
-   base::ScopedFD device_fd(HANDLE_EINTR(
-       open(kVideoDeviceDriverPath, O_RDWR | O_NONBLOCK | O_CLOEXEC)));
-   if (!device_fd.is_valid()) {
 diff --git a/media/gpu/v4l2/v4l2_utils.cc b/media/gpu/v4l2/v4l2_utils.cc
-index 8bc88e938f..b79ff3e832 100644
+index 9646e8be73..6a7feb49c9 100644
 --- a/media/gpu/v4l2/v4l2_utils.cc
 +++ b/media/gpu/v4l2/v4l2_utils.cc
-@@ -577,7 +577,7 @@ std::optional<SupportedVideoDecoderConfigs> GetSupportedV4L2DecoderConfigs() {
-   candidate_paths.push_back(kVideoDevicePattern);
- #else
-   constexpr char kVideoDevicePattern[] = "/dev/video";
+@@ -572,18 +572,10 @@ std::optional<SupportedVideoDecoderConfigs> GetSupportedV4L2DecoderConfigs() {
+   SupportedVideoDecoderConfigs supported_media_configs;
+   std::vector<std::string> candidate_paths;
+
+-#if BUILDFLAG(IS_CHROMEOS)
+-  constexpr char kVideoDevicePattern[] = "/dev/video-dec0";
+-  candidate_paths.push_back(kVideoDevicePattern);
+-#else
+-  constexpr char kVideoDevicePattern[] = "/dev/video";
 -  constexpr int kMaxDevices = 256;
-+  constexpr int kMaxDevices = 2;
-   candidate_paths.reserve(kMaxDevices);
-   for (int i = 0; i < kMaxDevices; ++i) {
-     candidate_paths.push_back(
+-  candidate_paths.reserve(kMaxDevices);
+-  for (int i = 0; i < kMaxDevices; ++i) {
+-    candidate_paths.push_back(
+-        base::StringPrintf("%s%d", kVideoDevicePattern, i));
+-  }
+-#endif
++  constexpr char kVideoDevicePattern0[] = "/dev/video-dec0";
++  constexpr char kVideoDevicePattern1[] = "/dev/video-dec1";
++  candidate_paths.push_back(kVideoDevicePattern0);
++  candidate_paths.push_back(kVideoDevicePattern1);
+
+   for (const auto& path : candidate_paths) {
+     base::ScopedFD device_fd(
 --
 2.34.1
