@@ -1,0 +1,7 @@
+SRCREV  = "0bdbbfe5ecda42cff50c96cc5e33527f42fcbd45"
+PV = "2024.05.08"
+
+DEPENDS = "opencl-headers"
+
+EXTRA_OECMAKE:append = " -DOPENCL_CLHPP_BUILD_TESTING=OFF \
+			 -DBUILD_TESTING=OFF"
