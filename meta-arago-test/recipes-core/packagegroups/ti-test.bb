@@ -67,6 +67,7 @@ TI_TEST_BASE:append:ti-soc = " \
 "
 
 TI_TEST_EXTRAS = " \
+    libsdl2-tests \
     python3-pillow \
     pytesseract \
     piglit \
