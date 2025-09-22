@@ -73,7 +73,7 @@ TI_TEST_EXTRAS = " \
     python3-numpy \
     wayland-utils \
     offscreendemo \
-    opencl-cts \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'opencl', 'opencl-cts', '', d)} \
 "
 
 TI_TEST_BASE:append:armv7a = " \
