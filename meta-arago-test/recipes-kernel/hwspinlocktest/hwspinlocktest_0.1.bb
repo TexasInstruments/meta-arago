@@ -10,7 +10,7 @@ SRC_URI = "\
     file://0001-Fix-Makefile-for-to-build-with-yocto.patch \
 "
 
-SRCREV = "a8297c7a2ca9e127929095045228dd4761121d56"
+SRCREV = "1d154fbe5b56ef81045763f574c2098a35d6a8b8"
 
 S = "${WORKDIR}/git"
 
