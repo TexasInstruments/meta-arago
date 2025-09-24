@@ -4,11 +4,11 @@
     },
     "APPEND-2" : {
         "skip_vars" : [ "PR", "PV" ],
-        "files" : {
-            "meta-arago-distro/conf/distro/include/arago-prefs.inc" : {
+        "file_regex" : {
+            "meta-arago-distro\\/conf\\/distro\\/include\\/arago-prefs\\.inc" : {
                 "skip_vars": [ "PREFERRED_PROVIDER_virtual/kernel" ]
             },
-            "meta-arago-distro/recipes-graphics/emptty/emptty_0.13.0.bb" : {
+            "meta-arago-distro\\/recipes-graphics\\/emptty\\/emptty_\\S+\\.bb" : {
                 "skip_vars" : [ "GO_TAGS" ]
             }
         }
