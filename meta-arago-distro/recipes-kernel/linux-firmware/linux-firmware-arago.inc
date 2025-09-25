@@ -1,6 +1,7 @@
-PR:append = ".arago2"
+PR:append = ".arago3"
 
+# meta-ti-bsp packages newer versions on these
 do_install:append() {
-	rm -rf  ${D}/lib/firmware/ti-connectivity/
-	rm -rf  ${D}/lib/firmware/cadence/
+	rm -rf  ${D}${nonarch_base_libdir}/firmware/ti-connectivity/
+	rm -rf  ${D}${nonarch_base_libdir}/firmware/cadence/
 }
