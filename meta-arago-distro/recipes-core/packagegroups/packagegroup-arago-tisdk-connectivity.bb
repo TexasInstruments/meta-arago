@@ -63,8 +63,11 @@ CONNECTIVITY_RDEPENDS = " \
     ${WLAN_COMMON} \
     ${WLAN_TI} \
     ${BT_COMMON} \
-    ${BT_TI} \
 "
+
+CONNECTIVITY_RDEPENDS:append:ti33x = " ${BT_TI}"
+CONNECTIVITY_RDEPENDS:append:ti43x = " ${BT_TI}"
+CONNECTIVITY_RDEPENDS:append:am57xx = " ${BT_TI}"
 
 RDEPENDS:${PN} = "\
     ${CONNECTIVITY_RDEPENDS} \
