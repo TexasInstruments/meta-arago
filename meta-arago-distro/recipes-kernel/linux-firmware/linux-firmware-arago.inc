@@ -1,4 +1,4 @@
-PR:append = ".arago1"
+PR:append = ".arago2"
 
 PACKAGES =+ "${PN}-ibt-18"
 
@@ -8,7 +8,8 @@ FILES:${PN}-ibt-18 = "${nonarch_base_libdir}/firmware/intel/ibt-18-*.sfi ${nonar
 
 RDEPENDS:${PN}-ibt-18 += "${PN}-ibt-license"
 
+# meta-ti-bsp packages newer versions on these
 do_install:append() {
-	rm -rf  ${D}/lib/firmware/ti-connectivity/
-	rm -rf  ${D}/lib/firmware/cadence/
+	rm -rf  ${D}${nonarch_base_libdir}/firmware/ti-connectivity/
+	rm -rf  ${D}${nonarch_base_libdir}/firmware/cadence/
 }
