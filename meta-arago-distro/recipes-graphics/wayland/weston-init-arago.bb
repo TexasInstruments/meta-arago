@@ -65,7 +65,7 @@ FILES:${PN} += "\
     "
 
 CONFFILES:${PN} += "${sysconfdir}/xdg/weston/weston.ini ${sysconfdir}/emptty/conf"
-RPROVIDES:${PN}:append = " virtual-emptty-conf"
+RPROVIDES:${PN}:append = " virtual-emptty-conf weston-init"
 RCONFLICTS:${PN} += "weston-init"
 
 USERADD_PARAM:${PN} = "--home /home/weston --shell /bin/sh --user-group -G video,input,render,nopasswdlogin weston"
