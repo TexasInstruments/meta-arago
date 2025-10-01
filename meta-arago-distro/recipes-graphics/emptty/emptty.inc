@@ -19,6 +19,7 @@ SRC_URI = "\
     git://${GO_IMPORT_pam}.git;protocol=https;branch=master;name=pam;destsuffix=src/${GO_IMPORT_pam} \
     file://pamconf \
     file://emptty.tab \
+    file://0001-handleInterrupt-handle-unruly-applications.patch;patchdir=src/${GO_IMPORT} \
     "
 SRCREV = "d162bef75fadc8ae1d8e33dbb3de5e2795a196e0"
 SRCREV_pam = "50ded1b0e7864b9bf75005eb945a8ec826bcf69d"

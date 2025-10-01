@@ -1,0 +1,51 @@
+From cce0e23719f30a362dc5de69eb92d9a1c0859403 Mon Sep 17 00:00:00 2001
+From: Randolph Sapp <rs@ti.com>
+Date: Tue, 30 Sep 2025 20:05:05 -0500
+Subject: [PATCH] handleInterrupt: handle unruly applications
+
+Emptty cannot currently exit via an external signal if the session
+process exits abnormally. This conflicts with the expected behavior of
+systemd, which expects that the service will always respect signals.
+
+This has the added benefit of allowing users to use ^C to restart the
+login process at any point in the menu system.
+
+
+Upstream-Status: Backport [https://github.com/tvrzna/emptty/commit/d875bac9ce22c2739dfd4644880371b6e16a1cb6]
+Signed-off-by: Randolph Sapp <rs@ti.com>
+---
+ src/emptty.go | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
+
+diff --git a/src/emptty.go b/src/emptty.go
+index b5bc735..97d00f0 100644
+--- a/src/emptty.go
++++ b/src/emptty.go
+@@ -61,14 +61,19 @@ func handleInterrupt(c chan os.Signal, h *sessionHandle) {
+	setTerminalEcho(os.Stdout.Fd(), true)
+	if h.session != nil && h.session.cmd != nil {
+		h.session.interrupted = true
+-		h.session.cmd.Process.Signal(os.Interrupt)
+-		h.session.cmd.Wait()
+-	} else {
+-		if h.auth != nil {
+-			h.auth.closeAuth()
++		if err := h.session.cmd.Process.Signal(os.Interrupt); err != nil {
++			logPrint("Application not responding to signal")
++		} else {
++			// Only attempt clean shutdown if cmd is still
++			// responsive
++			h.session.cmd.Wait()
+		}
+-		os.Exit(1)
+	}
++	// Always attempt to close active auth instances before exit
++	if h.auth != nil {
++		h.auth.closeAuth()
++	}
++	os.Exit(1)
+ }
+
+ // Process core arguments for help and version, because they don't require any further application run
+--
+2.51.0
