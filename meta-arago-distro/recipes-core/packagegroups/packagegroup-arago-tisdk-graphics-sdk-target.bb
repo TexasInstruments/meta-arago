@@ -15,4 +15,6 @@ RDEPENDS:${PN} = "\
     wayland-dev \
     weston-dev \
     ${@bb.utils.contains('MACHINE_FEATURES', 'gc320', 'ti-gc320-libs-dev', '', d)} \
+    libsdl2-dev \
+    ktx-software-dev \
 "
