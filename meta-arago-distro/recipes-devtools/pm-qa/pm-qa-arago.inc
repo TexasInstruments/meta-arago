@@ -8,4 +8,6 @@ SRC_URI += " \
 	file://0002-cpuidle-Avoid-relative-paths.patch \
 "
 
+PATCHTOOL = "git"
+
 PR:append = ".arago0"
