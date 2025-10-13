@@ -22,7 +22,6 @@ MULTIMEDIA:omapl138 = ""
 
 MULTIMEDIA:append:dra7xx = " \
     vis \
-    hevc-arm-decoder \
 "
 
 ACCEL_MM = ""
