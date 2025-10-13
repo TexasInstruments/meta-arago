@@ -6,13 +6,6 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit packagegroup
 
-MULTIMEDIA = ""
-
-MULTIMEDIA:append:dra7xx = " \
-    hevc-arm-decoder-dev \
-    hevc-arm-decoder-staticdev \
-"
-
 AUDIO = " \
     fftw-dev \
     libsndfile1-dev \
@@ -20,6 +13,5 @@ AUDIO = " \
 
 RDEPENDS:${PN} = "\
     ${AUDIO} \
-    ${MULTIMEDIA} \
     packagegroup-arago-gst-sdk-target \
 "
