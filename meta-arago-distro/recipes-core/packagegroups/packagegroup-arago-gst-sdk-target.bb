@@ -15,10 +15,6 @@ GSTREAMER_DEPS = " \
 
 GSTREAMER_DEPS:append:arago = " gstreamer1.0-libav-dev"
 
-#    gstreamer1.0-plugins-hevc-dev 
-GSTREAMER_DEPS:append:dra7xx = " \
-"
-
 RDEPENDS:${PN} = " \
     ${GSTREAMER_DEPS} \
 "
