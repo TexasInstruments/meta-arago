@@ -1,0 +1,48 @@
+From 8542b683ca6a0774a452eb3d7cadc834d4f41436 Mon Sep 17 00:00:00 2001
+From: Alexandros Frantzis <alexandros.frantzis@collabora.com>
+Date: Wed, 11 Jun 2025 11:07:05 +0300
+Subject: [PATCH] media/gpu/v4l2: Avoid placing incomplete H264 access units in
+ buffers
+
+Upstream-Status: Pending
+
+Don't place SPS, PPS, etc NALUs in their own separate buffers
+unconditionally, as they are not full access units by themselves,
+and may confuse the decoder.
+---
+ media/gpu/v4l2/v4l2_stateful_video_decoder.cc | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/media/gpu/v4l2/v4l2_stateful_video_decoder.cc b/media/gpu/v4l2/v4l2_stateful_video_decoder.cc
+index 422cc72a34a83..61ab2f5bf1ab2 100644
+--- a/media/gpu/v4l2/v4l2_stateful_video_decoder.cc
++++ b/media/gpu/v4l2/v4l2_stateful_video_decoder.cc
+@@ -1340,7 +1340,7 @@ H264FrameReassembler::FindFrameBoundary(const uint8_t* const data,
+           return std::nullopt;
+         }
+         previous_slice_header_.reset();
+-        return FrameBoundaryInfo{.is_whole_frame = true,
++        return FrameBoundaryInfo{.is_whole_frame = false,
+                                  .is_start_of_new_frame = true,
+                                  .nalu_size = nalu_size};
+       case H264NALU::kPPS:
+@@ -1350,7 +1350,7 @@ H264FrameReassembler::FindFrameBoundary(const uint8_t* const data,
+           return std::nullopt;
+         }
+         previous_slice_header_.reset();
+-        return FrameBoundaryInfo{.is_whole_frame = true,
++        return FrameBoundaryInfo{.is_whole_frame = false,
+                                  .is_start_of_new_frame = true,
+                                  .nalu_size = nalu_size};
+       case H264NALU::kNonIDRSlice:
+@@ -1389,7 +1389,7 @@ H264FrameReassembler::FindFrameBoundary(const uint8_t* const data,
+       case H264NALU::kReserved18:
+         // Anything else than SPS, PPS and Non/IDRs marks a new frame boundary.
+         previous_slice_header_.reset();
+-        return FrameBoundaryInfo{.is_whole_frame = true,
++        return FrameBoundaryInfo{.is_whole_frame = false,
+                                  .is_start_of_new_frame = true,
+                                  .nalu_size = nalu_size};
+       default:
+--
+GitLab
