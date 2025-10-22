@@ -30,6 +30,5 @@ RDEPENDS:${PN} = "\
     libusb1-dev \
     zlib-dev \
     ncurses-dev \
-    opkg-dev \
     util-linux-dev \
 "
