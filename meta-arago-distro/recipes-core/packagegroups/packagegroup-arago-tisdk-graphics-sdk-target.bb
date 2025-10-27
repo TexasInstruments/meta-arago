@@ -18,4 +18,5 @@ RDEPENDS:${PN} = "\
     libsdl2-dev \
     ktx-software-dev \
     nlohmann-json-dev \
+    stb-dev \
 "
