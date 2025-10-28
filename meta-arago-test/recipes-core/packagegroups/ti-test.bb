@@ -44,6 +44,7 @@ TI_TEST_BASE = "\
     openntpd \
     ${@"optee-test" if d.getVar('OPTEEMACHINE') else ""} \
     pcitest \
+    pciutils \
     perf \
     powertop \
     procps \
