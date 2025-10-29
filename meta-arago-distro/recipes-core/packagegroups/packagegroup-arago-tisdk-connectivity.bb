@@ -47,8 +47,9 @@ BT_COMMON = "\
     pulseaudio-module-bluez5-discover \
     pulseaudio-lib-bluez5-util \
     sbc \
-    linux-firmware-ibt-18 \
 "
+
+BT_COMMON:append:arago = " linux-firmware-ibt-18"
 
 BT_TI = "\
     bt-enable \
