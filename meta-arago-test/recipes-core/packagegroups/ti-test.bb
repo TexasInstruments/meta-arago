@@ -68,7 +68,6 @@ TI_TEST_BASE:append:ti-soc = " \
 "
 
 TI_TEST_EXTRAS = " \
-    libsdl2-tests \
     python3-pillow \
     pytesseract \
     piglit \
@@ -77,6 +76,8 @@ TI_TEST_EXTRAS = " \
     offscreendemo \
     opencl-cts \
 "
+
+TI_TEST_EXTRAS:append:ti-soc = " libsdl2-tests"
 
 TI_TEST_BASE:append:armv7a = " \
     cpuburn-neon \
