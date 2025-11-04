@@ -1,0 +1,50 @@
+From a3b4b0a7d996dc6bade0454ecf0e56d80fce399a Mon Sep 17 00:00:00 2001
+From: Ryan Eatmon <reatmon@ti.com>
+Date: Tue, 4 Nov 2025 16:33:03 -0600
+Subject: [PATCH] examples: Move to python3
+
+The examples are hard coded to look for /usr/bin/python, but we only
+have /usr/bin/python3.
+
+Upstream-Status: Inappropriate [oe specific]
+
+Signed-off-by: Ryan Eatmon <reatmon@ti.com>
+---
+ examples/python/count.py    | 2 +-
+ examples/python/dump-env.py | 2 +-
+ examples/python/greeter.py  | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/github.com/joewalnes/websocketd/examples/python/count.py b/src/github.com/joewalnes/websocketd/examples/python/count.py
+index 8023750..3bd43a9 100755
+--- a/src/github.com/joewalnes/websocketd/examples/python/count.py
++++ b/src/github.com/joewalnes/websocketd/examples/python/count.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/python3
+ 
+ # Copyright 2013 Joe Walnes and the websocketd team.
+ # All rights reserved.
+diff --git a/src/github.com/joewalnes/websocketd/examples/python/dump-env.py b/src/github.com/joewalnes/websocketd/examples/python/dump-env.py
+index 2962468..b88b25d 100755
+--- a/src/github.com/joewalnes/websocketd/examples/python/dump-env.py
++++ b/src/github.com/joewalnes/websocketd/examples/python/dump-env.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/python3
+ 
+ # Copyright 2013 Joe Walnes and the websocketd team.
+ # All rights reserved.
+diff --git a/src/github.com/joewalnes/websocketd/examples/python/greeter.py b/src/github.com/joewalnes/websocketd/examples/python/greeter.py
+index dddf24e..464c021 100755
+--- a/src/github.com/joewalnes/websocketd/examples/python/greeter.py
++++ b/src/github.com/joewalnes/websocketd/examples/python/greeter.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/python3
+ 
+ # Copyright 2013 Joe Walnes and the websocketd team.
+ # All rights reserved.
+-- 
+2.17.1
+

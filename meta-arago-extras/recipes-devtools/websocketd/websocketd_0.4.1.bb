@@ -3,21 +3,23 @@ HOMEPAGE = "http://websocketd.com/"
 LICENSE = "BSD-2-Clause"
 LIC_FILES_CHKSUM = "file://src/${GO_IMPORT}/LICENSE;md5=a14d7befdbee1290ac5c472cd85d66f2"
 
-inherit go-mod
+S = "${WORKDIR}"
+
+SRC_URI = "\
+    git://${GO_IMPORT}.git;protocol=https;branch=master;destsuffix=src/${GO_IMPORT} \
+    git://${GO_IMPORT_websocket}.git;protocol=https;branch=main;name=websocket;destsuffix=src/${GO_IMPORT_websocket} \
+    file://0001-examples-Move-to-python3.patch \
+"
+
+SRCREV = "035c18cc3e6962dabd5ea2ad8845260726a4a99e"
+SRCREV_websocket = "66b9c49e59c6c48f0ffce28c2d8b8a5678502c6d"
+
+SRCREV_FORMAT .= "_websocket"
 
 GO_IMPORT = "github.com/joewalnes/websocketd"
+GO_IMPORT_websocket = "github.com/gorilla/websocket"
 
-export GOPROXY = "https://proxy.golang.org,direct"
+export GO111MODULE = "off"
+inherit go
 
-SRC_URI = "git://${GO_IMPORT};protocol=https;branch=master"
-SRCREV = "035c18cc3e6962dabd5ea2ad8845260726a4a99e"
-
-# bitbake only exports proxy variables during fetching, but go handles
-# module fetching on its own during compile and needs proxy settings
-# along with network access for the task
-export http_proxy
-export https_proxy
-do_compile[network] = "1"
-
-# Development package contains all the examples in different languages
-INSANE_SKIP:${PN}-dev = "file-rdeps"
+RDEPENDS:${PN}-dev = "bash perl php-cli python3-core ruby"
