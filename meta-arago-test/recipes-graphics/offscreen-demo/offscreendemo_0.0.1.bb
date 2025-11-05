@@ -13,4 +13,6 @@ S = "${WORKDIR}/git"
 
 DEPENDS += "virtual/egl virtual/libgles2"
 
-inherit pkgconfig meson
+inherit pkgconfig meson features_check
+
+REQUIRED_DISTRO_FEATURES = "opengl"
