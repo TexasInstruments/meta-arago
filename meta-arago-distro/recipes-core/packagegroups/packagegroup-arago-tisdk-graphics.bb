@@ -11,10 +11,14 @@ GFX_WAYLAND = "\
     weston-examples \
 "
 
-RDEPENDS:${PN} = "\
+OPENGL_PKGS = "\
     libegl \
     glmark2 \
     kmscube \
-    ${@bb.utils.contains('MACHINE_FEATURES', 'gc320', 'ti-gc320-tests', '', d)} \
+"
+
+RDEPENDS:${PN} = "\
+    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', "${OPENGL_PKGS}", '', d)} \
     ${@bb.utils.contains('DISTRO_FEATURES', 'wayland', "${GFX_WAYLAND}", '', d)} \
+    ${@bb.utils.contains('MACHINE_FEATURES', 'gc320', 'ti-gc320-tests', '', d)} \
 "
