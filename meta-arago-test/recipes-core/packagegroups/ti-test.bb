@@ -67,14 +67,22 @@ TI_TEST_BASE:append:ti-soc = " \
     mtd-utils-ubifs-tests \
 "
 
+TI_TEST_EXTRAS_OPENGL = " \
+    piglit \
+    offscreendemo \
+"
+
+TI_TEST_EXTRAS_OPENCL = " \
+    opencl-cts \
+"
+
 TI_TEST_EXTRAS = " \
     python3-pillow \
     pytesseract \
-    piglit \
     python3-numpy \
     wayland-utils \
-    offscreendemo \
-    opencl-cts \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', '${TI_TEST_EXTRAS_OPENGL}', '', d)} \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'opencl', '${TI_TEST_EXTRAS_OPENCL}', '', d)} \
 "
 
 TI_TEST_EXTRAS:append:ti-soc = " libsdl2-tests"
