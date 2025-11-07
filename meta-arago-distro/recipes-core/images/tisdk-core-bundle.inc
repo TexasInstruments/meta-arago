@@ -18,9 +18,8 @@ TOOLCHAIN_CLEANUP_PACKAGES = "libgnutls-dev libgnutls-extra26 libgnutls-openssl2
 # picking up DTB files for devices with no DTB support.
 DTB_FILTER = "unknown"
 DTB_FILTER:ti33x = "am335x"
-DTB_FILTER:dra7xx-evm = "dra7"
-DTB_FILTER:am57xx-evm = "am57xx"
-DTB_FILTER:am57xx-hs-evm = "${DTB_FILTER:am57xx-evm}"
+DTB_FILTER:dra7xx = "dra7"
+DTB_FILTER:am57xx = "am57xx"
 DTB_FILTER:ti43x = "am43"
 DTB_FILTER:omapl138 = "da850"
 DTB_FILTER:am65xx = "am65"
