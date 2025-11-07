@@ -20,7 +20,7 @@ MULTIMEDIA:append:arago = " ffmpeg mpv"
 
 MULTIMEDIA:omapl138 = ""
 
-MULTIMEDIA:append:dra7xx = " \
+MULTIMEDIA:append:am57xx = " \
     vis \
 "
 

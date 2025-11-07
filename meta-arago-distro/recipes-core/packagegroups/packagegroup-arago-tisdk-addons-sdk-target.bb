@@ -15,7 +15,7 @@ UTILS = " \
 
 UTILS:append:ti33x = " can-utils-dev"
 UTILS:append:ti43x = " can-utils-dev"
-UTILS:append:dra7xx = " can-utils-dev \
+UTILS:append:am57xx = " can-utils-dev \
                         elfutils-dev \
                         elfutils-staticdev \
 "
@@ -26,7 +26,7 @@ UTILS:append:k3 = "\
 "
 
 EXTRA_LIBS = ""
-EXTRA_LIBS:append:dra7xx = " libulm-dev \
+EXTRA_LIBS:append:am57xx = " libulm-dev \
                              libulm-staticdev \
                              gdbserver-c6x-dev \
 "
