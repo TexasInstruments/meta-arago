@@ -114,7 +114,7 @@ TI_TEST_TI_TOOLS:append:ti43x = " \
     switch-config \
 "
 
-TI_TEST_TI_TOOLS:append:omap-a15 = " \
+TI_TEST_TI_TOOLS:append:am57xx = " \
     omapconf \
     pru-icss \
     switch-config \

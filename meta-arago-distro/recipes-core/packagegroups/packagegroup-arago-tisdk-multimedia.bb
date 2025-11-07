@@ -26,7 +26,7 @@ MULTIMEDIA:append:dra7xx = " \
 
 ACCEL_MM = ""
 
-ACCEL_MM:append:omap-a15 = " \
+ACCEL_MM:append:am57xx = " \
     ipumm-fw \
 "
 

@@ -8,7 +8,7 @@ inherit packagegroup
 INSANE_SKIP:${PN} += "dev-deps"
 
 CHROMIUM = ""
-CHROMIUM:append:omap-a15 = "\
+CHROMIUM:append:am57xx = "\
     chromium-ozone-wayland \
 "
 CHROMIUM:append:k3 = "\

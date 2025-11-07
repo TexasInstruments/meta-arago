@@ -42,7 +42,7 @@ UTILS:append:ti43x = " mmc-utils \
                        pru-icss \
 "
 
-UTILS:append:omap-a15 = " mmc-utils \
+UTILS:append:am57xx = " mmc-utils \
                           switch-config \
                           libdrm-omap \
                           stream-openmp \
@@ -72,8 +72,8 @@ UTILS:append:j721e = " pru-icss"
 
 UTILS:append:omapl138 = " ti-ipc-rtos-fw"
 
-UTILS:append:dra7xx = " \
-                        ${UTILS_DSP} \
+UTILS:append:am57xx = " \
+    ${UTILS_DSP} \
 "
 
 EXTRA_PACKAGES = " \
@@ -86,7 +86,7 @@ EXTRA_PACKAGES:omapl138 = " \
     protobuf \
 "
 
-EXTRA_PACKAGES:append:omap-a15 = " ti-ipc-examples-linux"
+EXTRA_PACKAGES:append:am57xx = " ti-ipc-examples-linux"
 
 RDEPENDS:${PN} = "\
     ${UTILS} \

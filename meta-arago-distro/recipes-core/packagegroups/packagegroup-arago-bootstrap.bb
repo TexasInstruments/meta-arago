@@ -42,7 +42,7 @@ UTILS:append:ti43x = " \
     omapconf \
 "
 
-UTILS:append:omap-a15 = " \
+UTILS:append:am57xx = " \
     omapconf \
 "
 

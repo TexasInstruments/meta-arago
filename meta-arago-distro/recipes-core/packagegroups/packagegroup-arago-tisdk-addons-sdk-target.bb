@@ -38,7 +38,7 @@ IPCDEV = " \
 	ti-ipc-staticdev \
 "
 
-EXTRA_PACKAGES:append:omap-a15 = " ${IPCDEV}"
+EXTRA_PACKAGES:append:am57xx = " ${IPCDEV}"
 EXTRA_PACKAGES:append:omapl138 = " ${IPCDEV}"
 
 RDEPENDS:${PN} = "\
