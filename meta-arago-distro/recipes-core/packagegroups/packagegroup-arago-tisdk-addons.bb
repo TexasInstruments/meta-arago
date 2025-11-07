@@ -87,9 +87,6 @@ EXTRA_PACKAGES:omapl138 = " \
 "
 
 EXTRA_PACKAGES:append:omap-a15 = " ti-ipc-examples-linux"
-#EXTRA_PACKAGES:append:am335x-evm = " pruss-lld-apps"
-#EXTRA_PACKAGES:append:am437x-evm = " pruss-lld-apps"
-#EXTRA_PACKAGES:append:am57xx-evm = " pruss-lld-apps"
 
 RDEPENDS:${PN} = "\
     ${UTILS} \
