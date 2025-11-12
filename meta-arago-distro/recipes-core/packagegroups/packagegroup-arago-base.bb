@@ -22,6 +22,7 @@ ARAGO_BASE = "\
     bash \
     opkg-bash-completion \
     udev-extraconf \
+    udev-aragoconf \
     libgpiod \
     libgpiod-tools \
 "
