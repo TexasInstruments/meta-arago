@@ -49,6 +49,7 @@ ARAGO_EXTRA = "\
     cifs-utils \
     phytool \
     lldpd \
+    libp11 \
 "
 
 ARAGO_EXTRA:append:arago = "\
