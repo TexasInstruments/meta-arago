@@ -5,6 +5,8 @@ LICENSE = "GPL-2.0-only & LGPL-2.1-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=e1caa368743492879002ad032445fa97 \
                     file://COPYING.LESSER;md5=66c40c88533cd228b5b85936709801c8"
 
+PV = "0.6.1+git"
+
 SRC_URI = "git://github.com/nnstreamer/nnshark.git;protocol=https;branch=master;name=nnshark \
            git://github.com/GStreamer/common.git;protocol=https;branch=master;name=common;subdir=${S}/common \
 "
