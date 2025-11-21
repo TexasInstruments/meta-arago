@@ -4,8 +4,7 @@ LICENSE = "LGPL-2.1-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=c25e5c1949624d71896127788f1ba590"
 
 SRC_URI = "git://github.com/nnstreamer/nnstreamer.git;branch=main;protocol=https"
-PV = "2.4.0+git"
-SRCREV = "7c57c288250578cad598f065b6fda6c0ff720cf9"
+SRCREV = "3b32573bc104b4708af44837466b8b6c73f94869"
 
 # Only compatible with armv7a, armv7ve, and aarch64
 COMPATIBLE_MACHINE = "(^$)"
