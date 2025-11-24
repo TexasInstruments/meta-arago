@@ -96,6 +96,7 @@ TI_TEST_BASE:append:armv7ve = " \
 TI_TEST_TI_TOOLS = " \
     arm-benchmarks \
     arm-ddr-bandwidth \
+    coremark \
     input-utils \
     ltp-ddt \
     openssl-perf \
