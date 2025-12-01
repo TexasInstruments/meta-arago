@@ -3,7 +3,10 @@ SUMMARY = "The benchmark utility to measure the performance of CPU"
 LICENSE = "Coremark"
 LIC_FILES_CHKSUM = "file://LICENSE.md;md5=0a18b17ae63deaa8a595035f668aebe1"
 
-SRC_URI = "git://github.com/eembc/coremark.git;branch=main;protocol=https"
+SRC_URI = " \
+    git://github.com/eembc/coremark.git;branch=main;protocol=https \
+    file://0001-core_main-Remove-printing-compiler-flags.patch \
+"
 PV = "1.01+git"
 SRCREV = "1f483d5b8316753a742cbf5590caf5bd0a4e4777"
 
