@@ -21,7 +21,7 @@ diff --git a/tests/modetest/modetest.c b/tests/modetest/modetest.c
 index d9e761e..687f7a4 100644
 --- a/tests/modetest/modetest.c
 +++ b/tests/modetest/modetest.c
-@@ -1887,7 +1887,7 @@ static void clear_cursors(struct device *dev)
+@@ -1888,7 +1888,7 @@ static void clear_cursors(struct device *dev)
  		bo_destroy(dev->mode.cursor_bo);
  }
  
@@ -30,7 +30,7 @@ index d9e761e..687f7a4 100644
  {
  	unsigned int other_fb_id;
  	struct bo *other_bo;
-@@ -1945,7 +1945,7 @@ static void test_page_flip(struct device *dev, struct pipe_arg *pipes, unsigned
+@@ -1946,7 +1946,7 @@ static void test_page_flip(struct device *dev, struct pipe_arg *pipes, unsigned
  		fd_set fds;
  
  		FD_ZERO(&fds);
@@ -39,16 +39,16 @@ index d9e761e..687f7a4 100644
  		FD_SET(dev->fd, &fds);
  		ret = select(dev->fd + 1, &fds, NULL, NULL, &timeout);
  
-@@ -2179,7 +2179,7 @@ static void usage(char *name)
+@@ -2194,7 +2194,7 @@ static void usage(char *name)
  	exit(0);
  }
  
--static char optstr[] = "acdD:efF:M:P:ps:Cvrw:o:";
-+static char optstr[] = "acdD:efF:M:P:ps:Cvrw:o:t";
+-static char optstr[] = "acdD:efF:M:P:ps:Cvrw:o:S:";
++static char optstr[] = "acdD:efF:M:P:ps:Cvrw:o:S:t";
  
  int main(int argc, char **argv)
  {
-@@ -2196,6 +2196,7 @@ int main(int argc, char **argv)
+@@ -2208,6 +2208,7 @@ int main(int argc, char **argv)
  	char *module = NULL;
  	unsigned int i;
  	unsigned int count = 0, plane_count = 0;
@@ -56,7 +56,7 @@ index d9e761e..687f7a4 100644
  	unsigned int prop_count = 0;
  	struct pipe_arg *pipe_args = NULL;
  	struct plane_arg *plane_args = NULL;
-@@ -2299,6 +2300,9 @@ int main(int argc, char **argv)
+@@ -2314,6 +2315,9 @@ int main(int argc, char **argv)
  
  			prop_count++;
  			break;
@@ -66,7 +66,7 @@ index d9e761e..687f7a4 100644
  		default:
  			usage(argv[0]);
  			break;
-@@ -2449,7 +2453,7 @@ int main(int argc, char **argv)
+@@ -2464,7 +2468,7 @@ int main(int argc, char **argv)
  				set_cursors(&dev, pipe_args, count);
  
  			if (test_vsync)
