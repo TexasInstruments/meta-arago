@@ -1,11 +1,12 @@
 SUMMARY = "single-file public domain (or MIT licensed) libraries for C/C++"
 LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://README.md;md5=42144ce827adcfa5170032f0ea03c227"
+LIC_FILES_CHKSUM = "file://README.md;md5=b499fad62f2f8e336bbea84cc94d1e60"
 
-PV = "2.31"
+PV = "2.30"
+PE = "1"
 
 BRANCH = "master"
-SRCREV = "e6afb9cbae4064da8c3e69af3ff5c4629579c1d2"
+SRCREV = "f1c79c02822848a9bed4315b12c8c8f3761e1296"
 
 SRC_URI = " \
     git://github.com/nothings/stb.git;protocol=https;branch=${BRANCH} \
