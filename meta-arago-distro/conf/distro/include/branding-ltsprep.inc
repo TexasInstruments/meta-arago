@@ -1,1 +1,1 @@
-TI_PREFERRED_BSP = "ti-6_12"
+TI_PREFERRED_BSP = "ti-6_18"
