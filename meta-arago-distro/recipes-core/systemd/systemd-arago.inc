@@ -27,4 +27,9 @@ do_install:append() {
 
     install -d ${D}${sysconfdir}/systemd/
     install -m 0644 ${UNPACKDIR}/timesyncd.conf ${D}${sysconfdir}/systemd/
+
+    # Remove new prompt code that is polluting the testing output
+    rm ${D}/${nonarch_libdir}/tmpfiles.d/20-systemd-osc-context.conf
+    rm ${D}/${nonarch_libdir}/systemd/profile.d/80-systemd-osc-context.sh
+    rm ${D}/${sysconfdir}/profile.d/80-systemd-osc-context.sh
 }
