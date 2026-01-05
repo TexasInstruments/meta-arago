@@ -34,12 +34,12 @@ DEVTOOLS = " \
     linux-libc-headers-dev \
     build-essential \
     packagegroup-core-tools-debug \
+    packagegroup-core-tools-profile \
     git \
     dtc \
 "
 
 IMAGE_INSTALL += "\
     ${DEVTOOLS} \
-    ${@bb.utils.contains('TUNE_FEATURES', 'armv7a', 'valgrind', '', d)} \
     docker \
 "
