@@ -23,6 +23,7 @@ DEVTOOLS = " \
     linux-libc-headers-dev \
     build-essential \
     packagegroup-core-tools-debug \
+    packagegroup-core-tools-profile \
     git \
 "
 
@@ -40,7 +41,6 @@ RDEPENDS:${PN} = "\
     ${@bb.utils.contains('DISTRO_FEATURES','opengl','','packagegroup-arago-base-tisdk-server-extra',d)} \
     ${@bb.utils.contains("BBFILE_COLLECTIONS", "meta-python2", "${PYTHON2APPS}", "", d)} \
     ${DEVTOOLS} \
-    ${@bb.utils.contains('TUNE_FEATURES', 'armv7a', 'valgrind', '', d)} \
     packagegroup-arago-misc \
     ${PREFERRED_PROVIDER_virtual/docker} \
 "
