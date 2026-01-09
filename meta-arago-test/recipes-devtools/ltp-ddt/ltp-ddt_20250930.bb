@@ -1,10 +1,12 @@
 FILESEXTRAPATHS:prepend := "${COREBASE}/meta/recipes-extended/ltp/ltp:"
-FILESEXTRAPATHS:prepend := "${TITESTBASE}/recipes-extended/ltp/ltp:"
+FILESEXTRAPATHS:prepend := "${TITESTBASE}/recipes-devtools/ltp-ddt/ltp-ddt:"
 
 require ltp_${PV}.inc
 
 SUMMARY = "Embedded Linux Device Driver Tests based on Linux Test Project"
 HOMEPAGE = "https://git.ti.com/cgit/test-automation/ltp-ddt/"
+
+S = "${WORKDIR}/git"
 
 DEPENDS += "alsa-lib"
 
