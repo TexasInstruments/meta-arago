@@ -10,26 +10,27 @@ DESCRIPTION = "Image meant for basic boot of linux kernel. Intended as\
 
 LICENSE = "MIT"
 
-inherit core-image
-
-IMAGE_FEATURES:remove = "package-management"
-
 INITRAMFS_FSTYPES = "cpio cpio.xz"
 
-INITRAMFS_MAXSIZE = "200000"
-IMAGE_OVERHEAD_FACTOR = "1.3"
-
-IMAGE_FSTYPES = "${INITRAMFS_FSTYPES}"
-
-PACKAGE_INSTALL = "packagegroup-arago-initramfs"
+INITRAMFS_MAXSIZE = "65536"
 
 export IMAGE_BASENAME = "tisdk-tiny-initramfs${ARAGO_IMAGE_SUFFIX}"
 
-# To further reduce the size of the rootfs, remove the /boot directory from
-# the final image this is usually done by adding RDEPENDS_kernel-base = ""
-# in the configuration file. In our case we can't use this method. Instead we
-# just wipe out the content of "/boot" before creating the image.
-ROOTFS_POSTPROCESS_COMMAND += "empty_boot_dir; "
-empty_boot_dir () {
-	rm -rf ${IMAGE_ROOTFS}/boot/*
-}
+INITRAMFS_SCRIPTS ?= "initramfs-framework-base initramfs-module-udev"
+
+PACKAGE_INSTALL = "${INITRAMFS_SCRIPTS} ${VIRTUAL-RUNTIME_base-utils} base-passwd"
+
+# Ensure the initramfs only contains the bare minimum
+IMAGE_FEATURES = ""
+IMAGE_LINGUAS = ""
+
+# Don't allow the initramfs to contain a kernel, as kernel modules will depend
+# on the kernel image.
+PACKAGE_EXCLUDE = "kernel-image-*"
+
+IMAGE_FSTYPES = "${INITRAMFS_FSTYPES}"
+IMAGE_NAME_SUFFIX ?= ""
+IMAGE_ROOTFS_SIZE = "8192"
+IMAGE_ROOTFS_EXTRA_SPACE = "0"
+
+inherit image
