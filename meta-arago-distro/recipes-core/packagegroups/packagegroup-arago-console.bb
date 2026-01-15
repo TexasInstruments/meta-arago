@@ -6,20 +6,11 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit packagegroup
 
-# alsa-utils-alsamixer depends on ncurses
 ARAGO_ALSA_EXTRA = "\
     alsa-conf \
     alsa-conf-base \
     alsa-server \
     alsa-utils \
-    alsa-utils-aconnect \
-    alsa-utils-scripts \
-    alsa-utils-alsactl \
-    alsa-utils-alsamixer \
-    alsa-utils-amixer \
-    alsa-utils-iecset \
-    alsa-utils-midi \
-    alsa-utils-speakertest \
     alsa-state \
     "
 
