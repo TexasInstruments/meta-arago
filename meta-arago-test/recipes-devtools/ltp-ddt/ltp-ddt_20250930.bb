@@ -1,3 +1,5 @@
+FILESEXTRAPATHS:prepend := "${TITESTBASE}/recipes-devtools/ltp-ddt/ltp-ddt:"
+
 require ltp_${PV}.inc
 
 SUMMARY = "Embedded Linux Device Driver Tests based on Linux Test Project"
@@ -9,13 +11,11 @@ PE = "1"
 PR = "r1"
 PV:append = "+git"
 
-SRCREV = "d23395da4e67855a7d7ce476e44f79b8e604998e"
+SRCREV = "be5e3b1ceaf18498c4586e9806ff2783ab336072"
 BRANCH ?= "master"
 
 SRC_URI:remove = "git://github.com/linux-test-project/ltp.git;branch=master;protocol=https"
 SRC_URI:prepend = "git://git.ti.com/git/test-automation/ltp-ddt.git;protocol=https;branch=${BRANCH} "
-
-SRC_URI += "file://0001-listmount04-Update-for-6.18-kernel-headers.patch"
 
 export prefix = "/opt/ltp"
 export exec_prefix = "/opt/ltp"

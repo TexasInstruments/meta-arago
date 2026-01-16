@@ -24,11 +24,14 @@ TUNE_CCARGS:remove:x86-64 = "-mfpmath=sse"
 
 CFLAGS:append:powerpc64 = " -D__SANE_USERSPACE_TYPES__"
 CFLAGS:append:mipsarchn64 = " -D__SANE_USERSPACE_TYPES__"
-SRCREV = "a7c31dff7edc089a32e990765e12952cc4d7666a"
+SRCREV = "d2550ffbbcfe163212cd7e9c132db65ae0fa06ed"
 
 SRC_URI = "git://github.com/linux-test-project/ltp.git;branch=master;protocol=https \
            file://0001-Remove-OOM-tests-from-runtest-mm.patch \
-           "
+           file://0001-Add-__clear_cache-declaration-for-clang.patch \
+           file://0001-syscalls-semctl08-Skip-semctl08-when-__USE_TIME64_RE.patch \
+           file://2d066ead3d6ef504c82551b12306e751d23ddb45.patch \
+          "
 
 inherit autotools-brokensep pkgconfig
 
@@ -117,6 +120,8 @@ FILES:${PN} += "${prefix}/* ${prefix}/runtest/* ${prefix}/scenario_groups/* ${pr
 INHIBIT_PACKAGE_STRIP_FILES = "${prefix}/testcases/bin/nm01 ${prefix}/testcases/bin/ldd01"
 INSANE_SKIP:${PN} += "already-stripped staticdev"
 
+CACHED_CONFIGUREVARS:libc-musl = "ac_cv_type_struct_mnt_id_req=no ac_cv_type_struct_statmount=no"
+
 remove_broken_musl_sources() {
 	[ "${TCLIBC}" = "musl" ] || return 0
 
@@ -130,7 +135,8 @@ remove_broken_musl_sources() {
 		testcases/kernel/syscalls/getcontext/getcontext01.c \
 		testcases/kernel/syscalls/rt_tgsigqueueinfo/rt_tgsigqueueinfo01.c \
 		testcases/kernel/syscalls/timer_create/timer_create01.c \
-		testcases/kernel/syscalls/timer_create/timer_create03.c
+		testcases/kernel/syscalls/timer_create/timer_create03.c \
+		testcases/kernel/syscalls/statmount/statmount02.c
 }
 do_patch[postfuncs] += "remove_broken_musl_sources"
 
