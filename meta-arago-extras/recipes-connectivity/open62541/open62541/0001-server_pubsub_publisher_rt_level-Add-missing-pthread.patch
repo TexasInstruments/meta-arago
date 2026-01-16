@@ -1,0 +1,38 @@
+From 7af0f9a29ec011530a2b8c4b60e719e76ce0cdf0 Mon Sep 17 00:00:00 2001
+From: Ryan Eatmon <reatmon@ti.com>
+Date: Fri, 16 Jan 2026 16:40:07 -0600
+Subject: [PATCH] server_pubsub_publisher_rt_level: Add missing pthread.h
+
+Fix for errors:
+
+open62541-1.4.14/examples/pubsub_realtime/server_pubsub_publisher_rt_level.c:78:5: error: implicit declaration of function 'pthread_create' [-Wimplicit-function-declaration]
+   78 |     pthread_create(&pubSubELThread, NULL, runPubSubEL, NULL);
+      |     ^~~~~~~~~~~~~~
+open62541-1.4.14/examples/pubsub_realtime/server_pubsub_publisher_rt_level.c:78:5: warning: nested extern declaration of 'pthread_create' [-Wnested-externs]
+open62541-1.4.14/examples/pubsub_realtime/server_pubsub_publisher_rt_level.c:173:5: error: implicit declaration of function 'pthread_join'; did you mean 'pthread_kill'? [-Wimplicit-function-declaration]
+  173 |     pthread_join(pubSubELThread, NULL);
+      |     ^~~~~~~~~~~~
+      |     pthread_kill
+
+Upstream-Status: Pending
+
+Signed-off-by: Ryan Eatmon <reatmon@ti.com>
+---
+ examples/pubsub_realtime/server_pubsub_publisher_rt_level.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/examples/pubsub_realtime/server_pubsub_publisher_rt_level.c b/examples/pubsub_realtime/server_pubsub_publisher_rt_level.c
+index 0ec133d1f..caa440596 100644
+--- a/examples/pubsub_realtime/server_pubsub_publisher_rt_level.c
++++ b/examples/pubsub_realtime/server_pubsub_publisher_rt_level.c
+@@ -8,6 +8,7 @@
+ #include <open62541/types.h>
+ 
+ #include <signal.h>
++#include <pthread.h>
+ 
+ #define PUBSUB_CONFIG_PUBLISH_CYCLE_MS 100
+ #define PUBSUB_CONFIG_FIELD_COUNT 10
+-- 
+2.43.0
+

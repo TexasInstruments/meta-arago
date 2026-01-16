@@ -2,7 +2,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/open62541:"
 
 SRC_URI:append = " \
     file://0001-examples-client-allow-configurable-server.patch \
-    file://0001-examples-Remove-sys-io.h.patch \
+    file://0001-server_pubsub_publisher_rt_level-Add-missing-pthread.patch \
 "
 
 EXTRA_OECMAKE = "-DUA_BUILD_EXAMPLES=1"
