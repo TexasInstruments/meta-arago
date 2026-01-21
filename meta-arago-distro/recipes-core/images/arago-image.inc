@@ -4,9 +4,6 @@ LICENSE = "MIT"
 
 COMPATIBLE_MACHINE = "ti-soc"
 
-# 4KB per 1 inode should be enough
-EXTRA_IMAGECMD:ext2.gz += "-i 4096"
-
 IMAGE_INSTALL = " \
 	packagegroup-core-boot \
 	${CORE_IMAGE_EXTRA_INSTALL} \
