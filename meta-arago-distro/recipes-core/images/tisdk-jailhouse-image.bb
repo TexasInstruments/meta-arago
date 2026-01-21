@@ -10,5 +10,3 @@ require recipes-core/images/tisdk-default-image.bb
 COMPATIBLE_MACHINE = "am62xx|am62pxx|am62lxx"
 
 IMAGE_INSTALL += " jailhouse"
-
-export IMAGE_BASENAME = "tisdk-jailhouse-image${ARAGO_IMAGE_SUFFIX}"

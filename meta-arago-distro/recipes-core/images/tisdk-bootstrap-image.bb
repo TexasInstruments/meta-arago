@@ -20,5 +20,3 @@ IMAGE_INSTALL += " \
 	bootstrap-initrd \
 	${ARAGO_BOOTSTRAP_IMAGE_EXTRA_INSTALL} \
 "
-
-export IMAGE_BASENAME = "tisdk-bootstrap-image${ARAGO_IMAGE_SUFFIX}"

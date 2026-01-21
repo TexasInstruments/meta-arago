@@ -12,5 +12,3 @@ COMPATIBLE_MACHINE = "am62xx|am62pxx|am62lxx"
 IMAGE_FSTYPES += "cpio"
 
 PACKAGE_INSTALL += "jailhouse-inmate"
-
-export IMAGE_BASENAME = "tisdk-jailhouse-inmate${ARAGO_IMAGE_SUFFIX}"

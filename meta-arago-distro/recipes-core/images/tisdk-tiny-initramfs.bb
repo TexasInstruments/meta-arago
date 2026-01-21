@@ -14,8 +14,6 @@ INITRAMFS_FSTYPES = "cpio cpio.xz"
 
 INITRAMFS_MAXSIZE = "65536"
 
-export IMAGE_BASENAME = "tisdk-tiny-initramfs${ARAGO_IMAGE_SUFFIX}"
-
 INITRAMFS_SCRIPTS ?= "initramfs-framework-base initramfs-module-udev"
 
 PACKAGE_INSTALL = "${INITRAMFS_SCRIPTS} ${VIRTUAL-RUNTIME_base-utils} base-passwd"

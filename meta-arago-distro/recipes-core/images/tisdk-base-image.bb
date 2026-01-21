@@ -17,5 +17,3 @@ IMAGE_INSTALL += "\
     ${@oe.utils.conditional('ARAGO_BRAND', 'mainline', 'ti-test', '', d)} \
     ${ARAGO_BASE_IMAGE_EXTRA_INSTALL} \
 "
-
-export IMAGE_BASENAME = "tisdk-base-image${ARAGO_IMAGE_SUFFIX}"

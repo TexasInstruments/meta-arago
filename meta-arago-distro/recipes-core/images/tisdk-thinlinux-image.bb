@@ -22,5 +22,3 @@ IMAGE_INSTALL += "\
     docker \
     ${ARAGO_THIN_IMAGE_EXTRA_INSTALL} \
 "
-
-export IMAGE_BASENAME = "tisdk-thinlinux-image${ARAGO_IMAGE_SUFFIX}"
