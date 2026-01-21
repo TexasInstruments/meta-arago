@@ -8,7 +8,9 @@ DESCRIPTION = "Image meant for basic system verification of linux kernel.\
  maybe used for basic platform bringup (bootstrap) activities.\
 "
 
-require arago-tiny-image.inc
+require arago-image.inc
+
+IMAGE_FEATURES += "package-management"
 
 IMAGE_FSTYPES += "cpio cpio.xz"
 

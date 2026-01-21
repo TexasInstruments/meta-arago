@@ -5,6 +5,8 @@ DESCRIPTION = "Complete Arago TI SDK filesystem image containing complete\
 
 require arago-image.inc
 
+IMAGE_FEATURES += "package-management splash"
+
 ARAGO_DEFAULT_IMAGE_EXTRA_INSTALL ?= ""
 
 # we're assuming some display manager is being installed with opengl

@@ -5,6 +5,8 @@ DESCRIPTION = "Minimal bootable image with container to start the next\
 
 require arago-image.inc
 
+IMAGE_FEATURES += "package-management splash"
+
 # Allow users to tack on additional packages as interesting.
 ARAGO_THIN_IMAGE_EXTRA_INSTALL ?= ""
 

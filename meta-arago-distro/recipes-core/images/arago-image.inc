@@ -4,8 +4,6 @@ LICENSE = "MIT"
 
 COMPATIBLE_MACHINE = "ti-soc"
 
-IMAGE_FEATURES += "package-management splash"
-
 # 4KB per 1 inode should be enough
 EXTRA_IMAGECMD:ext2.gz += "-i 4096"
 

@@ -8,7 +8,9 @@ DESCRIPTION = "This image is a complete package containing a rootfs\
  content.\
 "
 
-require arago-tiny-image.inc
+require arago-image.inc
+
+IMAGE_FEATURES += "package-management"
 
 ARAGO_BOOTSTRAP_IMAGE_EXTRA_INSTALL ?= ""
 

@@ -5,6 +5,8 @@ DESCRIPTION = "Arago SDK base image suitable for initramfs containing\
 
 require arago-image.inc
 
+IMAGE_FEATURES += "package-management splash"
+
 IMAGE_FSTYPES += "cpio.xz"
 
 ARAGO_BASE_IMAGE_EXTRA_INSTALL ?= ""

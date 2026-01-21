@@ -10,9 +10,7 @@ DESCRIPTION = "Image meant for basic boot of linux kernel. Intended as\
 
 ARAGO_TINY_IMAGE_EXTRA_INSTALL ?= ""
 
-require arago-tiny-image.inc
-
-IMAGE_FEATURES:remove = "package-management"
+require arago-image.inc
 
 IMAGE_INSTALL += " \
 	${ARAGO_TINY_IMAGE_EXTRA_INSTALL} \
