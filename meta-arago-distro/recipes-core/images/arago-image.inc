@@ -24,4 +24,4 @@ BAD_RECOMMENDATIONS += " \
 "
 BAD_RECOMMENDATIONS += "${@oe.utils.conditional("INIT_MANAGER", "sysvinit", "", "busybox-syslog", d)}"
 
-inherit core-image remove-net-rules
+inherit core-image
