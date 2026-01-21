@@ -14,7 +14,7 @@ open62541-1.4.14/examples/pubsub_realtime/server_pubsub_publisher_rt_level.c:173
       |     ^~~~~~~~~~~~
       |     pthread_kill
 
-Upstream-Status: Pending
+Upstream-Status: Backport [3a02b5c59d267a8286c4fb72d4308adc8e0f3e4c]
 
 Signed-off-by: Ryan Eatmon <reatmon@ti.com>
 ---
