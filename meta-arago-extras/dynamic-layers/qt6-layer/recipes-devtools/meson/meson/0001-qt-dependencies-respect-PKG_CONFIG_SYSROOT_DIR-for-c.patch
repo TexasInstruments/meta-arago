@@ -1,0 +1,72 @@
+From 39f0e9c9b620b4289da61422022e507144a681b0 Mon Sep 17 00:00:00 2001
+From: Telukula Jeevan Kumar Sahu <j-sahu@ti.com>
+Date: Fri, 9 Jan 2026 17:44:57 +0530
+Subject: [PATCH] qt: respect PKG_CONFIG_SYSROOT_DIR for cross-compilation
+
+When cross-compiling with Yocto/OpenEmbedded, pkg-config returns paths
+without the sysroot prefix (e.g., /usr/include/QtCore), but the actual
+files are in the recipe-sysroot. The _qt_get_private_includes() function
+checks the host filesystem instead of the sysroot for Qt private headers.
+
+This patch adds PKG_CONFIG_SYSROOT_DIR support to prepend sysroot when
+checking directory existence and when returning paths. Changes only
+activate when PKG_CONFIG_SYSROOT_DIR is set, preserving native builds.
+
+Also fixes dirname assignment to use full path instead of basename.
+
+Related issue: https://github.com/mesonbuild/meson/issues/15456
+
+Upstream-Status: Inappropriate [Yocto-specific sysroot handling]
+
+Signed-off-by: Telukula Jeevan Kumar Sahu <j-sahu@ti.com>
+---
+ mesonbuild/dependencies/qt.py | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
+
+diff --git a/mesonbuild/dependencies/qt.py b/mesonbuild/dependencies/qt.py
+index c245e5c..a3846ec 100644
+--- a/mesonbuild/dependencies/qt.py
++++ b/mesonbuild/dependencies/qt.py
+@@ -42,16 +42,24 @@ def _qt_get_private_includes(mod_inc_dir: str, module: str, mod_version: str) ->
+     if int(mod_version.split('.')[0]) < 5:
+         return []
+
++    # Respect PKG_CONFIG_SYSROOT_DIR for cross-compilation
++    sysroot = os.environ.get('PKG_CONFIG_SYSROOT_DIR', '')
+     private_dir = os.path.join(mod_inc_dir, mod_version)
+     # fallback, let's try to find a directory with the latest version
+-    if os.path.isdir(mod_inc_dir) and not os.path.exists(private_dir):
+-        dirs = [filename for filename in os.listdir(mod_inc_dir)
+-                if os.path.isdir(os.path.join(mod_inc_dir, filename))]
++    # Check in sysroot for cross-compilation
++    check_mod_inc = os.path.join(sysroot, mod_inc_dir.lstrip('/')) if sysroot else mod_inc_dir
++    check_private = os.path.join(sysroot, private_dir.lstrip('/')) if sysroot else private_dir
++    if os.path.isdir(check_mod_inc) and not os.path.exists(check_private):
++        dirs = [filename for filename in os.listdir(check_mod_inc)
++                if os.path.isdir(os.path.join(check_mod_inc, filename))]
+
+         for dirname in sorted(dirs, reverse=True):
+             if len(dirname.split('.')) == 3:
+-                private_dir = dirname
++                private_dir = os.path.join(mod_inc_dir, dirname)
+                 break
++    # Prepend sysroot to returned paths for cross-compilation
++    if sysroot and not private_dir.startswith(sysroot):
++        private_dir = os.path.join(sysroot, private_dir.lstrip('/'))
+     return [private_dir, Path(private_dir, f'Qt{module}').as_posix()]
+
+
+@@ -192,7 +200,10 @@ class QtPkgConfigDependency(_QtBase, PkgConfigDependency, metaclass=abc.ABCMeta)
+             if self.private_headers:
+                 qt_inc_dir = mod.get_variable(pkgconfig='includedir')
+                 mod_private_dir = os.path.join(qt_inc_dir, 'Qt' + m)
+-                if not os.path.isdir(mod_private_dir):
++                # Check in sysroot for cross-compilation
++                sysroot = os.environ.get('PKG_CONFIG_SYSROOT_DIR', '')
++                check_dir = os.path.join(sysroot, mod_private_dir.lstrip('/')) if sysroot else mod_private_dir
++                if not os.path.isdir(check_dir):
+                     # At least some versions of homebrew don't seem to set this
+                     # up correctly. /usr/local/opt/qt/include/Qt + m_name is a
+                     # symlink to /usr/local/opt/qt/include, but the pkg-config
+--
+2.34.1
