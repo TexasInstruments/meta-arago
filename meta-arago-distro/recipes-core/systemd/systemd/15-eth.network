@@ -6,4 +6,5 @@ KernelCommandLine=!root=/dev/nfs
 RequiredForOnline=no
 
 [Network]
+LinkLocalAddressing=ipv4
 DHCP=yes
