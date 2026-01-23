@@ -53,6 +53,10 @@ BT_TI = "\
     bt-enable \
     bt-fw \
 "
+ZEROCONF_TI = "\
+	zeroconf \
+	avahi-autoipd \
+"
 
 CONNECTIVITY_RDEPENDS = " \
     htop \
@@ -68,6 +72,8 @@ CONNECTIVITY_RDEPENDS = " \
 CONNECTIVITY_RDEPENDS:append:ti33x = " ${BT_TI}"
 CONNECTIVITY_RDEPENDS:append:ti43x = " ${BT_TI}"
 CONNECTIVITY_RDEPENDS:append:am57xx = " ${BT_TI}"
+CONNECTIVITY_RDEPENDS:append:am62dxx = " ${ZEROCONF_TI}"
+
 
 RDEPENDS:${PN} = "\
     ${CONNECTIVITY_RDEPENDS} \
