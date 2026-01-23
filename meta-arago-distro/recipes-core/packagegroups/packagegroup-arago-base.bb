@@ -16,8 +16,6 @@ ARAGO_BASE = "\
     mtd-utils \
     mtd-utils-ubifs \
     curl \
-    initscript-telnetd \
-    systemd-telnetd \
     ethtool \
     bash \
     opkg-bash-completion \
