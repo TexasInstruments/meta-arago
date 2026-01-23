@@ -3,4 +3,5 @@ Name=eth0
 KernelCommandLine=!root=/dev/nfs
 
 [Network]
+LinkLocalAddressing=ipv4
 DHCP=yes
