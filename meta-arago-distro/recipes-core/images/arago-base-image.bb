@@ -1,4 +1,4 @@
-SUMMARY = "Arago TI SDK base image with test tools"
+SUMMARY = "Arago base image with test tools"
 
 DESCRIPTION = "Arago SDK base image suitable for initramfs containing\
  comprehensive test tools."

@@ -1,4 +1,4 @@
-SUMMARY = "Arago TI SDK Thin Linux image"
+SUMMARY = "Arago Thin Linux image"
 
 DESCRIPTION = "Minimal bootable image with container to start the next\
  complex system up."

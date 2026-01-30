@@ -1,4 +1,4 @@
-# This include is for the common setting used to build TISDK images.  These images
+# This include is for the common setting used to build Arago SDK images.  These images
 # include both host and target side content. 
 LICENSE = "MIT"
 
@@ -27,7 +27,7 @@ DTB_FILTER:j7200 = "j7200"
 DTB_FILTER:j721s2 = "j721s2"
 
 # List of target side images to build for the SDK
-TARGET_IMAGES = "tisdk-base-image tisdk-default-image tisdk-thinlinux-image tisdk-bootstrap-image"
+TARGET_IMAGES = "arago-base-image arago-default-image arago-thinlinux-image arago-bootstrap-image"
 
 TISDK_TOOLCHAIN = "meta-toolchain-arago-tisdk"
 TOOLCHAIN_SUFFIX = "-tisdk"
