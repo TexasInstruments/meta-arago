@@ -18,3 +18,5 @@ DEPLOY_IMAGES_NAME:append:am65xx-evm = " sysfw-am65x_sr2-gp-evm.itb"
 DEPLOY_IMAGES_NAME:append:am65xx-hs-evm = " sysfw-am65x_sr2-hs-evm.itb"
 DEPLOY_IMAGES_NAME:append:ti33x = " extlinux.conf"
 DEPLOY_IMAGES_NAME:append:ti43x = " extlinux.conf"
+
+export IMAGE_BASENAME = "${PN}${ARAGO_IMAGE_SUFFIX}"
