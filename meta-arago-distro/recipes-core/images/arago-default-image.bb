@@ -1,6 +1,6 @@
-SUMMARY = "Arago TI SDK full filesystem image"
+SUMMARY = "Arago full filesystem image"
 
-DESCRIPTION = "Complete Arago TI SDK filesystem image containing complete\
+DESCRIPTION = "Complete Arago filesystem image containing complete\
  applications and packages to entitle the SoC."
 
 require arago-image.inc

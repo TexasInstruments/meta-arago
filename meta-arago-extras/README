@@ -1,4 +1,4 @@
-meta-arago-extras provides additional TI SDK applications that are distro-agnostic
+meta-arago-extras provides additional TI applications that are distro-agnostic
 
 This layer works with the latest Yocto Project release (currently 2.2+) and tracks
 the stable/maintenance branches (currently "master") of the corresponding layers:

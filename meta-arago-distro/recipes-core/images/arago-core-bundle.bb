@@ -1,11 +1,11 @@
-SUMMARY = "Installer package for TI SDK - NOT for direct use on target"
+SUMMARY = "Installer package for Arago SDK - NOT for direct use on target"
 
 DESCRIPTION = "This creates an installer including all the default images\
  recommended including source, binaries, filesystems, etc.\
- for TI SDK. This is meant to be used on the host system.\
+ for Arago SDK. This is meant to be used on the host system.\
 "
 
-require tisdk-core-bundle.inc
+require arago-core-bundle.inc
 
 DEPLOY_SPL_NAME:omapl138 = ""
 DEPLOY_SPL_NAME:k3 = "tispl.bin tiboot3.bin"

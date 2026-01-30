@@ -1,4 +1,4 @@
-SUMMARY = "Arago TI SDK bootstrap image usable for board bringup"
+SUMMARY = "Arago bootstrap image usable for board bringup"
 
 DESCRIPTION = "This image is a complete package containing a rootfs\
  and an initrd with platform test utilities that can be used for new\

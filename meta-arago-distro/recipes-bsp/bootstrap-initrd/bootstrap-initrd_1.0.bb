@@ -8,7 +8,7 @@ CLEANBROKEN = "1"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-BOOSTRAP_IMAGE = "tisdk-bootstrap-base-image"
+BOOSTRAP_IMAGE = "arago-bootstrap-base-image"
 
 TARGET = "bootstrap-rootfs-${MACHINE}.cpio"
 

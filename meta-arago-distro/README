@@ -1,4 +1,4 @@
-meta-arago-distro provides Arago distribution configuration for TI SDK products
+meta-arago-distro provides Arago distribution configuration for TI products
 
 This layer works with the latest Yocto Project release (currently 2.2+) and tracks
 the stable/maintenance branches (currently "master") of the corresponding layers:

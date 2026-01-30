@@ -169,7 +169,7 @@ RDEPENDS:${PN} = "\
     ${TI_TEST_TI_TOOLS} \
 "
 
-# Package group for things that should only be present in tisdk-default-image
+# Package group for things that should only be present in arago-default-image
 PACKAGES += " ${PN}-extras"
 RDEPENDS:${PN}-extras = "\
     ${TI_TEST_EXTRAS} \

@@ -1,4 +1,4 @@
-SUMMARY = "Arago TI SDK bootstrap base image for initramfs"
+SUMMARY = "Arago bootstrap base image for initramfs"
 
 DESCRIPTION = "Image meant for basic system verification of linux kernel.\
  Intended as basic test system, this image does not package the kernel\

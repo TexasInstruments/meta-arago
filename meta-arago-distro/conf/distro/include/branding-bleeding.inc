@@ -35,5 +35,5 @@ DATEH := "${@time.strftime('%Y%m%d%H',time.gmtime())}"
 CORESDK_RTOS_FILE_PREFIX = "${DATEH}-"
 CORESDK_RTOS_FILE_SUFFIX = ";downloadfilename=${CORESDK_RTOS_FILE_PREFIX}${DEFAULT_FIRMWARE_FILE}"
 
-# Build and assemble TI-SDK, but don't package it
-IMAGE_FSTYPES:pn-tisdk-core-bundle = ""
+# Build and assemble Arago SDK, but don't package it
+IMAGE_FSTYPES:pn-arago-core-bundle = ""

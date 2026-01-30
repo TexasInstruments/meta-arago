@@ -1,4 +1,4 @@
-SUMMARY = "Arago TI SDK super minimal base image for initramfs"
+SUMMARY = "Arago super minimal base image for initramfs"
 
 DESCRIPTION = "Image meant for basic boot of linux kernel. Intended as\
  bare system, this image does not package the kernel in the\
