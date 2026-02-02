@@ -1,0 +1,33 @@
+From 438c30f5c8a37df7334769d345b6dff574961a22 Mon Sep 17 00:00:00 2001
+From: Ryan Eatmon <reatmon@ti.com>
+Date: Mon, 2 Feb 2026 09:52:27 -0600
+Subject: [PATCH] wdt_test_suite: Fix reproducible build issue
+
+The Makefile sets a value for CFLAGS that is not overridden by a value
+from an external build system (like Yocto) which adds the correct
+prefix_map options.  Change the settings of CFLAGS to += to allow for
+defaults from outside.
+
+Upstream-Status: Pending
+
+Signed-off-by: Ryan Eatmon <reatmon@ti.com>
+---
+ testcases/ddt/wdt_test_suite/Makefile | 2 +-
+ 1 file changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/testcases/ddt/wdt_test_suite/Makefile b/testcases/ddt/wdt_test_suite/Makefile
+index 3625ba373..11e40e8c3 100644
+--- a/testcases/ddt/wdt_test_suite/Makefile
++++ b/testcases/ddt/wdt_test_suite/Makefile
+@@ -12,7 +12,7 @@ UNWANTED_FILES          := Makefile
+ 
+ INSTALL_MODE            := 00755
+ 
+-CFLAGS		= -g -Wall -D__EXPORTED_HEADERS__
++CFLAGS		+= -g -Wall -D__EXPORTED_HEADERS__
+ LDFLAGS         += -g
+ INCLUDES        = -I $(KERNEL_USR_INC) -I src/interface/common -I ../utils/user
+ 
+-- 
+2.43.0
+

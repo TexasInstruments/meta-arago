@@ -16,6 +16,7 @@ BRANCH ?= "master"
 
 SRC_URI:remove = "git://github.com/linux-test-project/ltp.git;branch=master;protocol=https"
 SRC_URI:prepend = "git://git.ti.com/git/test-automation/ltp-ddt.git;protocol=https;branch=${BRANCH} "
+SRC_URI += "file://0001-wdt_test_suite-Fix-reproducible-build-issue.patch"
 
 export prefix = "/opt/ltp"
 export exec_prefix = "/opt/ltp"
