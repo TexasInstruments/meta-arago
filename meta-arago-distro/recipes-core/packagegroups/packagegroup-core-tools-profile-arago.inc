@@ -1,0 +1,3 @@
+LTTNGTOOLS:ti33x = ""
+LTTNGTOOLS:ti43x = ""
+LTTNGTOOLS:am57xx = ""
