@@ -15,7 +15,7 @@ PR = "r1"
 PV:append = "+git"
 
 SRCREV = "009ab8e98152dcc4ee070e066882eda6b42f720c"
-BRANCH ?= "master"
+BRANCH ?= "ti-ltp-ddt_20260212"
 
 SRC_URI:remove = "git://github.com/linux-test-project/ltp.git;branch=master;protocol=https"
 SRC_URI:prepend = "git://git.ti.com/git/test-automation/ltp-ddt.git;protocol=https;branch=${BRANCH} "
