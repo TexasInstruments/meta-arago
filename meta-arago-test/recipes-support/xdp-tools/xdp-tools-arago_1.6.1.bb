@@ -15,9 +15,10 @@ SRC_URI = "git://github.com/xdp-project/xdp-tools.git;protocol=https;branch=main
             file://0003-Makefile-fix-KeyError-failure.patch \
             file://0004-Makefile-fix-libxdp.pc-error.patch \
             file://0001-defines.mk-Add-missing-prefix-map-settings-for-OE-bu.patch \
+            file://0001-xdpsock-Fix-32bit-compile-error.patch \
           "
 
-SRCREV = "e78d8d23bb80f221dd6b6970ff5a44aaf4717114"
+SRCREV = "84906a0fe98cbb5e5eaa2c888c50a1ab32d5d0b7"
 
 inherit pkgconfig
 
