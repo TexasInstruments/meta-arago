@@ -1,0 +1,138 @@
+From b4960f715e6aacf732768e57b0647001b44ec4e0 Mon Sep 17 00:00:00 2001
+From: Brandon Brnich <b-brnich@ti.com>
+Date: Wed, 18 Feb 2026 13:10:41 -0600
+Subject: [PATCH] v4l2object: use actual stream resolution for encoded buffer
+ sizing
+
+Newer versions of gstreamer changed OUTPUT buffer sizing from a fixed
+2MB to a dynamic calculation based on the driver's maximum capability.
+This causes severe CMA exhaustion on devices like TI AM62P where the
+wave5 decoder reports 8K (8192x4320) as maximum capability:
+
+- 1080p streams get 8K-sized buffers (16.9 MB instead of ~1 MB)
+- Wave5 ring buffer is 4x OUTPUT size = 67.5 MB (instead of ~4 MB)
+- Total waste: ~89 MB CMA for 1080p content
+
+Fix by using the actual stream resolution from negotiated caps (width
+and height are already available as local variables in
+gst_v4l2_object_set_format_full) instead of the driver's maximum
+capability stored in v4l2object->max_width/max_height.
+
+Upstream-Status: Pending
+
+Signed-off-by: Brandon Brnich <b-brnich@ti.com>
+---
+ sys/v4l2/gstv4l2object.c | 29 +++-------------------
+ sys/v4l2/gstv4l2object.h |  3 ---
+ 2 files changed, 4 insertions(+), 28 deletions(-)
+
+diff --git a/sys/v4l2/gstv4l2object.c b/sys/v4l2/gstv4l2object.c
+index 453ff03d98..dbfe4992be 100644
+--- a/sys/v4l2/gstv4l2object.c
++++ b/sys/v4l2/gstv4l2object.c
+@@ -3123,8 +3123,6 @@ gst_v4l2_object_probe_caps_for_format (GstV4l2Object * v4l2object,
+   template = gst_structure_new_empty ("fields/holder");
+
+   if (size.type == V4L2_FRMSIZE_TYPE_DISCRETE) {
+-    guint32 maxw = 0, maxh = 0;
+-
+     do {
+       GST_LOG_OBJECT (v4l2object->dbg_obj, "got discrete frame size %dx%d",
+           size.discrete.width, size.discrete.height);
+@@ -3141,16 +3139,8 @@ gst_v4l2_object_probe_caps_for_format (GstV4l2Object * v4l2object,
+           results = g_list_prepend (results, tmp);
+       }
+
+-      if (w > maxw && h > maxh) {
+-        maxw = w;
+-        maxh = h;
+-      }
+-
+       size.index++;
+     } while (v4l2object->ioctl (fd, VIDIOC_ENUM_FRAMESIZES, &size) >= 0);
+-
+-    v4l2object->max_width = maxw;
+-    v4l2object->max_height = maxh;
+     GST_DEBUG_OBJECT (v4l2object->dbg_obj,
+         "done iterating discrete frame sizes");
+   } else if (size.type == V4L2_FRMSIZE_TYPE_STEPWISE) {
+@@ -3202,9 +3192,6 @@ gst_v4l2_object_probe_caps_for_format (GstV4l2Object * v4l2object,
+       /* no point using the results list here, since there's only one struct */
+       gst_v4l2_object_update_and_append (v4l2object, pixelformat, ret, tmp,
+           sysmem_tmpl, dmabuf_tmpl);
+-
+-      v4l2object->max_width = maxw;
+-      v4l2object->max_height = maxh;
+     }
+   } else if (size.type == V4L2_FRMSIZE_TYPE_CONTINUOUS) {
+     guint32 maxw, maxh;
+@@ -3235,9 +3222,6 @@ gst_v4l2_object_probe_caps_for_format (GstV4l2Object * v4l2object,
+       /* no point using the results list here, since there's only one struct */
+       gst_v4l2_object_update_and_append (v4l2object, pixelformat, ret, tmp,
+           sysmem_tmpl, dmabuf_tmpl);
+-
+-      v4l2object->max_width = maxw;
+-      v4l2object->max_height = maxh;
+     }
+   } else {
+     gst_structure_free (template);
+@@ -3312,8 +3296,6 @@ default_frame_sizes:
+       min_w = min_h = 1;
+     if (max_w == 0 || max_h == 0)
+       max_w = max_h = GST_V4L2_MAX_SIZE;
+-    v4l2object->max_width = max_w;
+-    v4l2object->max_height = max_h;
+
+     /* Since we can't get framerate directly, try to use the current norm */
+     if (v4l2object->tv_norm && v4l2object->norms) {
+@@ -3897,14 +3879,11 @@ field_to_str (enum v4l2_field f)
+ }
+
+ static guint
+-calculate_max_sizeimage (GstV4l2Object * v4l2object, guint pixel_bitdepth)
++calculate_encoded_sizeimage (guint width, guint height, guint pixel_bitdepth)
+ {
+-  guint max_width, max_height;
+   guint sizeimage;
+
+-  max_width = v4l2object->max_width;
+-  max_height = v4l2object->max_height;
+-  sizeimage = max_width * max_height * pixel_bitdepth / 8 / 2;
++  sizeimage = width * height * pixel_bitdepth / 8 / 2;
+
+   return MAX (ENCODED_BUFFER_MIN_SIZE, sizeimage);
+ }
+@@ -4170,7 +4149,7 @@ gst_v4l2_object_set_format_full (GstV4l2Object * v4l2object, GstCaps * caps,
+
+     if (GST_VIDEO_INFO_FORMAT (&info.vinfo) == GST_VIDEO_FORMAT_ENCODED)
+       format.fmt.pix_mp.plane_fmt[0].sizeimage =
+-          calculate_max_sizeimage (v4l2object, pixel_bitdepth);
++          calculate_encoded_sizeimage (width, height, pixel_bitdepth);
+   } else {
+     gint stride = GST_VIDEO_INFO_PLANE_STRIDE (&info.vinfo, 0);
+
+@@ -4190,7 +4169,7 @@ gst_v4l2_object_set_format_full (GstV4l2Object * v4l2object, GstCaps * caps,
+
+     if (GST_VIDEO_INFO_FORMAT (&info.vinfo) == GST_VIDEO_FORMAT_ENCODED)
+       format.fmt.pix.sizeimage =
+-          calculate_max_sizeimage (v4l2object, pixel_bitdepth);
++          calculate_encoded_sizeimage (width, height, pixel_bitdepth);
+   }
+
+   GST_DEBUG_OBJECT (v4l2object->dbg_obj, "Desired format is %dx%d, format "
+diff --git a/sys/v4l2/gstv4l2object.h b/sys/v4l2/gstv4l2object.h
+index 4b14b7e625..2b8dbd13c5 100644
+--- a/sys/v4l2/gstv4l2object.h
++++ b/sys/v4l2/gstv4l2object.h
+@@ -232,9 +232,6 @@ struct _GstV4l2Object {
+    * on slow USB firmwares. When this is set, gst_v4l2_set_format() will modify
+    * the caps to reflect what was negotiated during fixation */
+   gboolean skip_try_fmt_probes;
+-
+-  guint max_width;
+-  guint max_height;
+ };
+
+ struct _GstV4l2ObjectClassHelper {
+--
+2.43.0
