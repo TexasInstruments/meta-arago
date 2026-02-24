@@ -23,13 +23,13 @@ UTILS = " \
 	 ethtool  \
 	 pciutils \
 	 stress-ng \
-	 iperf \
+	 iperf3 \
 	 lmbench \
 	 usbutils \
 	 devmem2 \
 	 phytool \
 "
-	 
+
 UTILS:append:ti-soc = " \
     mtd-utils-ubifs-tests \
 "
