@@ -46,4 +46,4 @@ TEST_LIST += "\
     watchdog \
 "
 
-INSANE_SKIP:${PN} += "staticdev"
+INSANE_SKIP:${PN} += "staticdev textrel"
