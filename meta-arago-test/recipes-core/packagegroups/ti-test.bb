@@ -5,27 +5,25 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit packagegroup
 
+PACKAGES += " \
+    ${PN}-audio \
+    ${PN}-extras \
+    ${PN}-graphics \
+    ${PN}-multimedia \
+    ${PN}-networking \
+    ${PN}-storage \
+    ${PN}-ti-tools \
+"
+
 TI_TEST_BASE = "\
-    alsa-utils \
     bc \
     bonnie++ \
-    bridge-utils \
     cryptodev-tests \
     devmem2 \
     dma-heap-tests \
-    dosfstools \
-    ethtool \
     evtest \
-    fio \
     git \
-    gst-devtools \
-    hwspinlocktest \
-    hdparm \
     i2c-tools \
-    iozone3 \
-    iproute2-tc \
-    iproute2-devlink \
-    iperf3 \
     kernel-modules \
     kernel-selftest \
     kmsxx \
@@ -36,11 +34,7 @@ TI_TEST_BASE = "\
     lsof \
     media-ctl \
     memtester \
-    mstpd \
-    mtd-utils \
-    mtd-utils-ubifs \
     nbench-byte \
-    netperf \
     openntpd \
     ${@"optee-test" if d.getVar('OPTEEMACHINE') else ""} \
     pcitest \
@@ -48,7 +42,6 @@ TI_TEST_BASE = "\
     perf \
     powertop \
     procps \
-    pulseaudio-misc \
     rng-tools \
     rt-tests \
     rwmem \
@@ -56,33 +49,6 @@ TI_TEST_BASE = "\
     stream \
     stress \
     stress-ng \
-    strongswan \
-    tcpdump \
-    v4l-utils \
-    xdp-tools-arago \
-    yavta \
-"
-
-TI_TEST_BASE:append:ti-soc = " \
-    mtd-utils-ubifs-tests \
-"
-
-TI_TEST_EXTRAS_OPENGL = " \
-    piglit \
-    offscreendemo \
-"
-
-TI_TEST_EXTRAS_OPENCL = " \
-    opencl-cts \
-"
-
-TI_TEST_EXTRAS = " \
-    python3-pillow \
-    pytesseract \
-    python3-numpy \
-    wayland-utils \
-    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', '${TI_TEST_EXTRAS_OPENGL}', '', d)} \
-    ${@bb.utils.contains('DISTRO_FEATURES', 'opencl', '${TI_TEST_EXTRAS_OPENCL}', '', d)} \
 "
 
 TI_TEST_BASE:append:armv7a = " \
@@ -93,10 +59,69 @@ TI_TEST_BASE:append:armv7ve = " \
     cpuburn-neon \
 "
 
+TI_TEST_AUDIO = "\
+    alsa-utils \
+    pulseaudio-misc \
+"
+
+TI_TEST_EXTRAS_OPENCL = " \
+    opencl-cts \
+"
+
+TI_TEST_EXTRAS = " \
+    python3-pillow \
+    pytesseract \
+    python3-numpy \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'opencl', '${TI_TEST_EXTRAS_OPENCL}', '', d)} \
+"
+
+TI_TEST_GRAPHICS_OPENGL = " \
+    piglit \
+    offscreendemo \
+"
+
+TI_TEST_GRAPHICS = " \
+    wayland-utils \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', '${TI_TEST_GRAPHICS_OPENGL}', '', d)} \
+"
+
+TI_TEST_MULTIMEDIA = "\
+    gst-devtools \
+    v4l-utils \
+    yavta \
+"
+
+TI_TEST_NETWORKING = "\
+    bridge-utils \
+    ethtool \
+    iperf3 \
+    iproute2-tc \
+    iproute2-devlink \
+    mstpd \
+    netperf \
+    strongswan \
+    tcpdump \
+    xdp-tools-arago \
+"
+
+TI_TEST_STORAGE = "\
+    dosfstools \
+    fio \
+    hdparm \
+    iozone3 \
+    mtd-utils \
+    mtd-utils-ubifs \
+"
+
+TI_TEST_STORAGE:append:ti-soc = " \
+    mtd-utils-ubifs-tests \
+"
+
 TI_TEST_TI_TOOLS = " \
     arm-benchmarks \
     arm-ddr-bandwidth \
     coremark \
+    hwspinlocktest \
     input-utils \
     ltp-ddt \
     openssl-perf \
@@ -164,13 +189,23 @@ TI_TEST_TI_TOOLS:append:omapl138 = " \
     ${@oe.utils.conditional('ARAGO_BRAND', 'mainline', '', 'ti-ipc-test', d)} \
 "
 
+RDEPENDS:${PN}-audio = "${TI_TEST_AUDIO}"
+RDEPENDS:${PN}-extras = "${TI_TEST_EXTRAS}"
+RDEPENDS:${PN}-graphics = "${TI_TEST_GRAPHICS}"
+RDEPENDS:${PN}-multimedia = "${TI_TEST_MULTIMEDIA}"
+RDEPENDS:${PN}-networking = "${TI_TEST_NETWORKING}"
+RDEPENDS:${PN}-storage = "${TI_TEST_STORAGE}"
+RDEPENDS:${PN}-ti-tools = "${TI_TEST_TI_TOOLS}"
+
 RDEPENDS:${PN} = "\
     ${TI_TEST_BASE} \
-    ${TI_TEST_TI_TOOLS} \
+    ${PN}-networking \
+    ${PN}-storage \
+    ${PN}-ti-tools \
 "
 
-# Package group for things that should only be present in arago-default-image
-PACKAGES += " ${PN}-extras"
-RDEPENDS:${PN}-extras = "\
-    ${TI_TEST_EXTRAS} \
+RDEPENDS:${PN}-extras += "\
+    ${PN}-audio \
+    ${PN}-graphics \
+    ${PN}-multimedia \
 "
