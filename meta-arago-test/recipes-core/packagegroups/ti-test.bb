@@ -91,6 +91,11 @@ TI_TEST_MULTIMEDIA = "\
     yavta \
 "
 
+TI_TEST_MULTIMEDIA:append:ti-soc = " \
+    mpv \
+    ffmpeg \
+"
+
 TI_TEST_NETWORKING = "\
     bridge-utils \
     ethtool \
