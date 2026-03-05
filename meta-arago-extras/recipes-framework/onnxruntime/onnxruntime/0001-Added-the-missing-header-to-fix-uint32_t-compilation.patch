@@ -1,0 +1,26 @@
+From cb67823df8cfa19cf1c0c0ddd1b9aa29ee7773ba Mon Sep 17 00:00:00 2001
+From: Pratham Deshmukh <p-deshmukh@ti.com>
+Date: Thu, 12 Feb 2026 16:02:40 +0530
+Subject: [PATCH] Added the missing header to fix uint32_t compilation error.
+
+Upstream-Status: Backport [https://github.com/microsoft/onnxruntime/commit/d6e712c]
+
+Signed-off-by: Pratham Deshmukh <p-deshmukh@ti.com>
+---
+ onnxruntime/core/common/semver.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/onnxruntime/core/common/semver.h b/onnxruntime/core/common/semver.h
+index a07c24f016..98bb6a2cef 100644
+--- a/onnxruntime/core/common/semver.h
++++ b/onnxruntime/core/common/semver.h
+@@ -3,6 +3,7 @@
+
+ #pragma once
+
++#include <cstdint>
+ #include <optional>
+ #include <string_view>
+
+--
+2.34.1

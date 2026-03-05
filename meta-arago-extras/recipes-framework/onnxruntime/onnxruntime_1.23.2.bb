@@ -5,30 +5,32 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=0f7e3b1308cb5c00b372a6e78835732d"
 
 SRC_URI = "\
-	git://github.com/microsoft/onnxruntime.git;protocol=https;branch=rel-1.20.1 \
-	git://github.com/HowardHinnant/date.git;protocol=https;branch=master;name=date;destsuffix=${S}/cmake/external/date \
-	git://github.com/pytorch/cpuinfo.git;protocol=https;branch=main;name=cpuinfo;destsuffix=${S}/cmake/external/cpuinfo \
-	git://github.com/google/flatbuffers.git;protocol=https;branch=master;name=flatbuffers;destsuffix=${S}/cmake/external/flatbuffers \
-	git://github.com/dcleblanc/SafeInt.git;protocol=https;branch=master;name=safeint;destsuffix=${S}/cmake/external/safeint \
-	git://gitlab.com/libeigen/eigen.git;protocol=https;branch=3.4;name=eigen;destsuffix=${S}/cmake/external/eigen \
-	git://github.com/google/nsync.git;protocol=https;branch=master;name=nsync;destsuffix=${S}/cmake/external/nsync \
+	git://github.com/microsoft/onnxruntime.git;protocol=https;branch=rel-1.23.2 \
+	git://github.com/HowardHinnant/date.git;protocol=https;branch=master;name=date;destsuffix=${S}/_deps/date-src \
+	git://github.com/pytorch/cpuinfo.git;protocol=https;branch=main;name=cpuinfo;destsuffix=${S}/_deps/pytorch_cpuinfo-src \
+	git://github.com/google/flatbuffers.git;protocol=https;branch=master;name=flatbuffers;destsuffix=${S}/_deps/flatbuffers-src \
+	git://github.com/dcleblanc/SafeInt.git;protocol=https;branch=master;name=safeint;destsuffix=${S}/_deps/safeint-src \
+	git://github.com/eigen-mirror/eigen.git;protocol=https;branch=master;name=eigen;destsuffix=${S}/_deps/eigen3-src \
+	git://github.com/boostorg/mp11.git;protocol=https;branch=master;name=mp11;destsuffix=${S}/_deps/mp11-src \
+	git://github.com/dmlc/dlpack.git;protocol=https;branch=main;name=dlpack;destsuffix=${S}/_deps/dlpack-src \
+	git://github.com/abseil/abseil-cpp.git;protocol=https;branch=lts_2025_05_12;name=abseil-cpp;destsuffix=${S}/_deps/abseil_cpp-src \
+	git://github.com/google/re2.git;protocol=https;branch=main;name=re2;destsuffix=${S}/_deps/re2-src \
 "
 SRC_URI += "\
-	file://0002-cmake-Fix-typo-in-option-text-s-buildings-bindings.patch \
-	file://0003-ACL-Do-not-add-LD_LIBRARY_PATH-to-search-path-when-n.patch \
-	file://0004-Do-not-include-CMAKE_CXX_FLAGS-in-build-information-.patch \
-	file://0005-cmake-Print-out-result-of-find_package.patch \
-	file://0001-Remove-executable-permission-bit-from-source-files.patch \
+	file://0001-Added-the-missing-header-to-fix-uint32_t-compilation.patch \
 "
 
 SRCREV_FORMAT = "default"
-SRCREV = "5c1b7ccbff7e5141c1da7a9d963d660e5741c319"
+SRCREV = "a83fc4d58cb48eb68890dd689f94f28288cf2278"
 SRCREV_date = "6e921e1b1d21e84a5c82416ba7ecd98e33a436d0"
-SRCREV_cpuinfo = "ca678952a9a8eaa6de112d154e8e104b22f9ab3f"
+SRCREV_cpuinfo = "8a1772a0c5c447df2d18edf33ec4603a8c9c04a6"
 SRCREV_flatbuffers = "0100f6a5779831fa7a651e4b67ef389a8752bd9b"
 SRCREV_safeint = "4cafc9196c4da9c817992b20f5253ef967685bf8"
-SRCREV_eigen = "e7248b26a1ed53fa030c5c459f7ea095dfd276ac"
-SRCREV_nsync = "13de152c2a1cd73ff4df97bd2c406b6d15d34af3"
+SRCREV_eigen = "1d8b82b0740839c0de7f1242a3585e3390ff5f33"
+SRCREV_mp11 = "0a0b5fb001ce0233ae3a6f99d849c0649e5a7361"
+SRCREV_dlpack = "5c210da409e7f1e51ddf445134a4376fdbd70d7d"
+SRCREV_abseil-cpp = "bc257a88f7c1939f24e0379f14a3589e926c950c"
+SRCREV_re2 = "6dcd83d60f7944926bfd308cc13979fc53dd69ca"
 
 # Only compatible with armv7a, armv7ve, and aarch64
 COMPATIBLE_MACHINE = "(^$)"
@@ -38,11 +40,9 @@ COMPATIBLE_MACHINE:armv7ve = "${@bb.utils.contains("TUNE_FEATURES","neon","(.*)"
 
 DEPENDS += "\
 	onnx \
-	abseil-cpp \
 	protobuf \
 	protobuf-native \
 	boost \
-	re2 \
 	nlohmann-json \
 	microsoft-gsl \
 "
@@ -80,13 +80,16 @@ PACKAGECONFIG[armnn-bn] = "-Donnxruntime_ARMNN_BN_USE_CPU=ON, -Donnxruntime_ARMN
 
 EXTRA_OECMAKE:append = " \
 	-DFETCHCONTENT_FULLY_DISCONNECTED=ON \
-	-DFETCHCONTENT_SOURCE_DIR_DATE=${S}/cmake/external/date \
-	-DFETCHCONTENT_SOURCE_DIR_PYTORCH_CPUINFO=${S}/cmake/external/cpuinfo \
-	-DFETCHCONTENT_SOURCE_DIR_PYTORCH_CLOG=${S}/cmake/external/cpuinfo \
-	-DFETCHCONTENT_SOURCE_DIR_FLATBUFFERS=${S}/cmake/external/flatbuffers \
-	-DFETCHCONTENT_SOURCE_DIR_SAFEINT=${S}/cmake/external/safeint \
-	-DFETCHCONTENT_SOURCE_DIR_EIGEN=${S}/cmake/external/eigen \
-	-DFETCHCONTENT_SOURCE_DIR_GOOGLE_NSYNC=${S}/cmake/external/nsync \
+	-DFETCHCONTENT_SOURCE_DIR_DATE=${S}/_deps/date-src \
+	-DFETCHCONTENT_SOURCE_DIR_PYTORCH_CPUINFO=${S}/_deps/pytorch_cpuinfo-src \
+	-DFETCHCONTENT_SOURCE_DIR_PYTORCH_CLOG=${S}/_deps/pytorch_cpuinfo-src \
+	-DFETCHCONTENT_SOURCE_DIR_FLATBUFFERS=${S}/_deps/flatbuffers-src \
+	-DFETCHCONTENT_SOURCE_DIR_SAFEINT=${S}/_deps/safeint-src \
+	-DFETCHCONTENT_SOURCE_DIR_EIGEN3=${S}/_deps/eigen3-src \
+	-DFETCHCONTENT_SOURCE_DIR_ABSEIL_CPP=${S}/_deps/abseil_cpp-src \
+	-DFETCHCONTENT_SOURCE_DIR_MP11=${S}/_deps/mp11-src \
+	-DFETCHCONTENT_SOURCE_DIR_DLPACK=${S}/_deps/dlpack-src \
+	-DFETCHCONTENT_SOURCE_DIR_RE2=${S}/_deps/re2-src \
 "
 
 EXTRA_OECMAKE:append = " \
