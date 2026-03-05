@@ -106,7 +106,7 @@ cleanup_host_packages() {
 }
 
 ROOTFS_PREPROCESS_COMMAND += "tisdk_image_setup; "
-ROOTFS_POSTPROCESS_COMMAND += "tisdk_image_build; "
+ROOTFS_POSTPROCESS_COMMAND += "tisdk_image_build; add_emptty_inittab; "
 IMAGE_PREPROCESS_COMMAND:append = "tisdk_image_cleanup; "
 
 # Create the SDK image.  We will re-use the rootfs_ipk_do_rootfs functionality
@@ -303,6 +303,18 @@ tisdk_image_build () {
     # Copy the opkg.conf used by the image to allow for future updates
     cp ${WORKDIR}/opkg.conf ${IMAGE_ROOTFS}/etc/
 }
+
+
+add_emptty_inittab() {
+    [ -f ${IMAGE_ROOTFS}${sysconfdir}/inittab ] || return 0
+
+    if ${@bb.utils.contains_any("IMAGE_FEATURES", [ "x11-base", "weston" ], "true", "false", d)}
+    then
+	echo "7:5:respawn:${bindir}/emptty -t 7 -d" >> ${IMAGE_ROOTFS}${sysconfdir}/inittab
+    fi
+}
+
+
 
 TISDK_IMAGE_CLEANUP_DIRS ?= "var etc lib boot dev home media mnt proc run sbin sys tmp usr"
 TISDK_IMAGE_CLEANUP_FILES ?= "bin/bash bin/bash.bash bin/sh"
