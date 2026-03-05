@@ -3,12 +3,11 @@ DESCRIPTION = "Linux software and tools to enable machine learning workloads on 
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=3e14a924c16f7d828b8335a59da64074"
 
-BRANCH = "branches/armnn_24_11"
+BRANCH = "branches/armnn_26_01"
 SRC_URI = "git://github.com/ARM-software/armnn.git;branch=${BRANCH};protocol=https"
-SRC_URI += "file://0001-Fix-type-casting-for-32bit-builds.patch"
 
-# v24.11
-SRCREV = "3ed70c005559d409feff2c578a1a39cf8fec8804"
+# v26.01
+SRCREV = "600c0004a2a7a2d600a3bce22ef83193de1dde57"
 
 # Only compatible with armv7a, armv7ve, and aarch64
 COMPATIBLE_MACHINE = "(^$)"
@@ -37,6 +36,9 @@ PACKAGECONFIG[ref] = "-DARMNNREF=1, -DARMNNREF=0"
 
 EXTRA_OECMAKE += " \
     -DHALF_INCLUDE=${STAGING_DIR_TARGET} \
+    -DARMCOMPUTE_LIBRARY_RELEASE=${STAGING_LIBDIR}/libarm_compute.so \
+    -DARMCOMPUTE_LIBRARY_DEBUG=${STAGING_LIBDIR}/libarm_compute.so \
+    -DARMCOMPUTE_INCLUDE=${STAGING_INCDIR} \
 "
 
 do_install:append() {
