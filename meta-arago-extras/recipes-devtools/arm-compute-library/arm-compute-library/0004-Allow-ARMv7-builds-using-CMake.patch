@@ -1,0 +1,174 @@
+From ddd1ad96efbe900853b64daf94549b4e3bc5bad6 Mon Sep 17 00:00:00 2001
+From: Pratham Deshmukh <p-deshmukh@ti.com>
+Date: Wed, 4 Mar 2026 15:55:49 +0530
+Subject: [PATCH 4/8] Allow-ARMv7-builds-using-CMake
+
+Upstream-Status: Pending
+
+Authored-by: Andrew Davis <afd@ti.com>
+Signed-off-by: Pratham Deshmukh <p-deshmukh@ti.com>
+---
+ CMakeLists.txt                                | 41 +++++++++++++++----
+ cmake/compilers/setup.cmake                   |  6 ++-
+ .../fixtures/CpuGemmAssemblyDispatchFixture.h |  2 +
+ 3 files changed, 38 insertions(+), 11 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index fc9c88a8af..521132917d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -51,8 +51,8 @@ option(ARM_COMPUTE_USE_LIBCXX "Use libcxx instead of the default stdlib." OFF)
+
+ # * Build mode: multi-ISA (default) or single-ISA
+ option(ACL_MULTI_ISA "Build Multi-ISA as default" ON)
+-set(ACL_ARCH_ISA "armv8.6-a" CACHE STRING "Architecture (armv8-a, armv8.2-a, armv8.6-a)")
+-set_property(CACHE ACL_ARCH_ISA PROPERTY STRINGS armv8-a armv8.2-a armv8.6-a)
++set(ACL_ARCH_ISA "armv8.6-a" CACHE STRING "Architecture (armv7, armv8-a, armv8.2-a, armv8.6-a)")
++set_property(CACHE ACL_ARCH_ISA PROPERTY STRINGS armv7 armv8-a armv8.2-a armv8.6-a)
+ set(ACL_ARCH_FEATURES "" CACHE STRING "Comma separated features list (sve,sve2,sme2)")
+
+ # * Arch features
+@@ -92,7 +92,7 @@ list(TRANSFORM ARM_COMPUTE_SVE2_SOURCES PREPEND "src/")
+ list(TRANSFORM ARM_COMPUTE_SOURCES PREPEND "src/")
+ list(TRANSFORM ARM_COMPUTE_FP16 PREPEND "src/")
+
+-if(ACL_ARCH_ISA STREQUAL "armv8-a" AND (ACL_MULTI_ISA OR ACL_BUILD_SVE OR ACL_BUILD_SVE2 OR ACL_BUILD_SME2))
++if(ACL_ARCH_ISA STREQUAL "armv7" OR ACL_ARCH_ISA STREQUAL "armv8-a" AND (ACL_MULTI_ISA OR ACL_BUILD_SVE OR ACL_BUILD_SVE2 OR ACL_BUILD_SME2))
+   message(FATAL_ERROR
+     "Invalid configuration: '${ACL_ARCH_ISA}' does not support requested features"
+   )
+@@ -108,7 +108,7 @@ else()
+     message(STATUS "Requested features: ${ACL_ARCH_FEATURES}")
+   endif()
+   set(libs "core")
+-  if(NOT (ACL_ARCH_ISA STREQUAL "armv8-a"))
++  if(NOT (ACL_ARCH_ISA STREQUAL "armv7" OR ACL_ARCH_ISA STREQUAL "armv8-a"))
+     string(APPEND libs ", core_fp16")
+   endif()
+   if(ACL_BUILD_SVE)
+@@ -132,11 +132,18 @@ else()
+     set(ACL_MARCH  "+sve2+fp16+dotprod+i8mm")
+   elseif(ACL_BUILD_SVE)
+     set(ACL_MARCH "+sve+fp16+dotprod")
++  elseif(ACL_ARCH_ISA STREQUAL "armv7")
++    set(ACL_MARCH "+neon")
+   elseif(ACL_ARCH_ISA STREQUAL "armv8.2-a" OR ACL_ARCH_ISA STREQUAL "armv8.6-a")
+     set(ACL_MARCH "+fp16+dotprod")
+   endif()
+
+-  set(ARM_COMPUTE_ARCH           "-march=${ACL_ARCH_ISA}${ACL_MARCH}" CACHE STRING "Architecture (march) for core library.")
++  # Handle armv7 -> armv7-a mapping for compiler compatibility
++  if(ACL_ARCH_ISA STREQUAL "armv7")
++    set(ARM_COMPUTE_ARCH "-march=armv7-a${ACL_MARCH}" CACHE STRING "Architecture (march) for core library.")
++  else()
++    set(ARM_COMPUTE_ARCH "-march=${ACL_ARCH_ISA}${ACL_MARCH}" CACHE STRING "Architecture (march) for core library.")
++  endif()
+   set(ARM_COMPUTE_CORE_FP16_ARCH "-march=${ACL_ARCH_ISA}${ACL_MARCH}" CACHE STRING "Architecture (march) for core library with fp16 support.")
+   set(ARM_COMPUTE_SVE_ARCH       "-march=${ACL_ARCH_ISA}${ACL_MARCH}" CACHE STRING "Architecture (march) for SVE library.")
+   set(ARM_COMPUTE_SVE2_ARCH      "-march=${ACL_ARCH_ISA}${ACL_MARCH}" CACHE STRING "Architecture (march) for SVE2 library.")
+@@ -235,7 +242,7 @@ set_target_properties(
+   LINK_LIBRARIES "${ARM_COMPUTE_LINK_LIBS}"
+ )
+
+-if(NOT (ACL_ARCH_ISA STREQUAL "armv8-a"))
++if(NOT (ACL_ARCH_ISA STREQUAL "armv7" OR ACL_ARCH_ISA STREQUAL "armv8-a"))
+   add_library(arm_compute_core_fp16 OBJECT)
+   set_target_properties(
+     arm_compute_core_fp16
+@@ -246,7 +253,7 @@ if(NOT (ACL_ARCH_ISA STREQUAL "armv8-a"))
+       LINK_LIBRARIES "${ARM_COMPUTE_LINK_LIBS}"
+   )
+ else()
+-  add_library(arm_compute_core_fp16 OBJECT EXCLUDE_FROM_ALL)
++  add_library(arm_compute_core_fp16 INTERFACE)
+ endif()
+
+ add_library(arm_compute_graph ${ARM_COMPUTE_LIB_BUILD_TYPE} ${ARM_COMPUTE_GRAPH_SOURCES})
+@@ -271,7 +278,8 @@ else()
+
+   if(ACL_ARCH_ISA STREQUAL "armv8-a")
+     # base
+-
++  elseif(ACL_ARCH_ISA STREQUAL "armv7")
++    # base only - no fp16, sve, or sve2 support
+   elseif(ACL_ARCH_ISA STREQUAL "armv8.2-a")
+     list(APPEND lib_objs $<TARGET_OBJECTS:arm_compute_core_fp16>)
+     if(ACL_BUILD_SVE)
+@@ -298,6 +306,15 @@ else()
+   set_target_properties(arm_compute PROPERTIES OUTPUT_NAME "arm_compute_${ACL_ARCH_ISA}")
+ endif()
+
++if(ACL_ARCH_ISA STREQUAL "armv7")
++  target_sources(
++    arm_compute
++    PRIVATE
++      src/core/NEON/kernels/arm_gemm/kernels/a32_sgemm_8x6/a53.cpp
++      src/core/NEON/kernels/arm_gemm/kernels/a32_sgemm_8x6/a55r1.cpp
++      src/core/NEON/kernels/arm_gemm/kernels/a32_sgemm_8x6/generic.cpp)
++endif()
++
+ if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+   target_compile_options(arm_compute_core PRIVATE -arch arm64)
+   if(TARGET arm_compute_core_fp16)
+@@ -341,6 +358,12 @@ if(ARM_COMPUTE_BUILD_TESTING)
+   add_subdirectory(tests)
+   add_executable(arm_compute_validation $<TARGET_OBJECTS:arm_compute_validation_framework>)
+   add_subdirectory(tests/validation)
++  target_include_directories(arm_compute_validation
++    PRIVATE
++      $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
++      $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
++      ${CMAKE_CURRENT_LIST_DIR}
++  )
+   add_executable(arm_compute_benchmark $<TARGET_OBJECTS:arm_compute_validation_framework>)
+   add_subdirectory(tests/benchmark)
+
+@@ -348,7 +371,7 @@ if(ARM_COMPUTE_BUILD_TESTING)
+     arm_compute_benchmark arm_compute_validation_framework arm_compute_validation
+     PROPERTIES
+     COMPILE_OPTIONS "${ARM_COMPUTE_ARCH};${ARM_COMPUTE_COMMON_CCXX_FLAGS}"
+-    INCLUDE_DIRECTORIES "${ARM_COMPUTE_PUBLIC_INCLUDE};${ARM_COMPUTE_COMMON_INCLUDE}"
++    INCLUDE_DIRECTORIES "${ARM_COMPUTE_GRAPH_INCLUDE};${CMAKE_CURRENT_LIST_DIR}/src"
+     COMPILE_DEFINITIONS "${ARM_COMPUTE_DEFINES}"
+     LINK_LIBRARIES "arm_compute;arm_compute_graph"
+
+diff --git a/cmake/compilers/setup.cmake b/cmake/compilers/setup.cmake
+index 642a9a2a5f..4756dc6149 100644
+--- a/cmake/compilers/setup.cmake
++++ b/cmake/compilers/setup.cmake
+@@ -68,7 +68,9 @@ if(ACL_MULTI_ISA)
+     ENABLE_SME
+   )
+ else()
+-  if(ACL_ARCH_ISA STREQUAL "armv8-a")
++  if(ACL_ARCH_ISA STREQUAL "armv7")
++    message(STATUS "Configuring for armv7, NEON enabled")
++  elseif(ACL_ARCH_ISA STREQUAL "armv8-a")
+     message(STATUS "Configuring for armv8-a, no FP16/SVE features")
+
+   elseif(ACL_ARCH_ISA STREQUAL "armv8.2-a")
+@@ -86,7 +88,7 @@ else()
+     )
+   else()
+     message(FATAL_ERROR
+-      "Unsupported ACL_ARCH_ISA='${ACL_ARCH_ISA}'. Allowed presets: armv8-a, armv8.2-a, armv8.6-a"
++      "Unsupported ACL_ARCH_ISA='${ACL_ARCH_ISA}'. Allowed presets: armv7, armv8-a, armv8.2-a, armv8.6-a"
+     )
+   endif()
+
+diff --git a/tests/validation/fixtures/CpuGemmAssemblyDispatchFixture.h b/tests/validation/fixtures/CpuGemmAssemblyDispatchFixture.h
+index 65df3e1c0e..85c9e8c06a 100644
+--- a/tests/validation/fixtures/CpuGemmAssemblyDispatchFixture.h
++++ b/tests/validation/fixtures/CpuGemmAssemblyDispatchFixture.h
+@@ -28,7 +28,9 @@
+ #include "arm_compute/core/CoreTypes.h"
+ #include "arm_compute/core/experimental/Types.h"
+ #include "arm_compute/core/Helpers.h"
++#ifdef ARM_COMPUTE_ENABLE_FIXED_FORMAT_KERNELS
+ #include "arm_compute/runtime/NEON/functions/NEReorderLayer.h"
++#endif ARM_COMPUTE_ENABLE_FIXED_FORMAT_KERNELS
+ #include "arm_compute/runtime/NEON/functions/NETranspose.h"
+
+ #include "src/core/helpers/MemoryHelpers.h"
+--
+2.34.1

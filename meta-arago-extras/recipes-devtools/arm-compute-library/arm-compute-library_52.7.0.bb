@@ -1,20 +1,20 @@
 SUMMARY = "The ARM Computer Vision and Machine Learning library"
 DESCRIPTION = "The ARM Computer Vision and Machine Learning library is a set of functions optimised for both ARM CPUs and GPUs."
 LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://LICENSES/MIT.txt;md5=35f8944fae972976691f3483b0ac9dba"
+LIC_FILES_CHKSUM = "file://LICENSES/MIT.txt;md5=3912d958d00bac4a6b550f75d7c806bb"
 
 SRC_URI = " \
-    git://github.com/ARM-software/ComputeLibrary.git;branch=archived-releases;protocol=https \
-    file://0001-fix-Fix-indention-in-cmake-generator-script.patch \
-    file://0002-Use-ARM_COMPUTE_ENABLE_NEON-in-code-for-checking-NEO.patch \
-    file://0003-Use-ARM_COMPUTE_ENABLE_SVE-in-code-for-checking-SVE-.patch \
-    file://0004-Add-source-files-at-library-definition-time.patch \
-    file://0005-Add-CMake-options-for-SVE-SVE2-and-BF16-support.patch \
-    file://0006-Allow-SVE-and-SVE2-support-to-be-disabled-in-CMake.patch \
-    file://0007-Allow-ARMv7-builds-using-CMake.patch \
-    file://0008-Fix-undefined-symbol-error-when-building-TensorInfo.patch \
+    git://github.com/ARM-software/ComputeLibrary.git;branch=releases/arm_compute_52_7_0;protocol=https \
+    file://0001-Use-ARM_COMPUTE_ENABLE_NEON-in-code-for-checking-NEO.patch \
+    file://0002-Use-ARM_COMPUTE_ENABLE_SVE-in-code-for-checking-SVE.patch \
+    file://0003-Add-source-files-at-library-definition-time.patch \
+    file://0004-Allow-ARMv7-builds-using-CMake.patch \
+    file://0005-Fix-undefined-symbol-error-when-building-TensorInfo.patch \
+    file://0006-Remove-TARGET-dependency.patch \
+    file://0007-cmake-Generate-generic-library-name-instead-of.patch \
+    file://0008-Add-FP16-source-path.patch \
 "
-SRCREV = "32bcced2af7feea6969dd1d22e58d0718dc488e3"
+SRCREV = "c9a1fff898abd5109b759e8e16616519dc758fdd"
 
 # Only compatible with armv7a, armv7ve, and aarch64
 COMPATIBLE_MACHINE = "(^$)"
@@ -33,17 +33,26 @@ PACKAGECONFIG[cppthreads] = "-DARM_COMPUTE_CPPTHREADS=ON,-DARM_COMPUTE_CPPTHREAD
 PACKAGECONFIG[openmp] = "-DARM_COMPUTE_OPENMP=ON,-DARM_COMPUTE_OPENMP=OFF"
 
 EXTRA_OECMAKE:append:aarch64 = " \
-	-DARM_COMPUTE_ARCH=armv8-a \
-	-DENABLE_NEON=ON \
-	-DENABLE_SVE=OFF \
-	-DENABLE_SVE2=OFF \
+	-DACL_MULTI_ISA=OFF \
+	-DACL_ARCH_ISA=armv8-a \
+	-DACL_BUILD_SVE=OFF \
+	-DACL_BUILD_SVE2=OFF \
+	-DCMAKE_BUILD_TYPE=Release \
+	-DARM_COMPUTE_ENABLE_BF16=OFF \
+	-DARM_COMPUTE_ENABLE_FP16=OFF \
+	-DARM_COMPUTE_ENABLE_I8MM=OFF \
+	-DARM_COMPUTE_ASSERTS_ENABLED=ON \
+	-DARM_COMPUTE_ENABLE_FIXED_FORMAT_KERNELS=OFF \
 "
 EXTRA_OECMAKE:append:arm = " \
-	-DARM_COMPUTE_ARCH=armv7-a \
-	-DENABLE_NEON=ON \
-	-DENABLE_SVE=OFF \
-	-DENABLE_SVE2=OFF \
+	-DACL_MULTI_ISA=OFF \
+	-DACL_ARCH_ISA=armv7 \
+	-DACL_BUILD_SVE=OFF \
+	-DACL_BUILD_SVE2=OFF \
+	-DCMAKE_BUILD_TYPE=Release \
 	-DARM_COMPUTE_ENABLE_BF16=OFF \
+	-DARM_COMPUTE_ENABLE_FP16=OFF \
+	-DARM_COMPUTE_ASSERTS_ENABLED=ON \
 	-DARM_COMPUTE_ENABLE_FIXED_FORMAT_KERNELS=OFF \
 "
 
@@ -80,8 +89,15 @@ do_install:append() {
 			install -m 0555 $example ${D}${bindir}/${PN}-${PV}/examples
 		done
 	fi
+
+	if ${@bb.utils.contains('PACKAGECONFIG', 'tests', 'true', 'false', d)}; then
+		install -d ${D}${bindir}/${PN}-${PV}/tests
+		# Copy the validation and benchmark binaries from the build directory
+		install -m 0555 ${B}/arm_compute_validation ${D}${bindir}/${PN}-${PV}/tests
+		install -m 0555 ${B}/arm_compute_benchmark ${D}${bindir}/${PN}-${PV}/tests
+	fi
 }
 
 PACKAGES =+ "${PN}-tests ${PN}-examples"
-FILES:${PN}-tests += "${libdir}/tests"
+FILES:${PN}-tests += "${bindir}/*/tests"
 FILES:${PN}-examples += "${bindir}/*/examples"

@@ -1,0 +1,32 @@
+From 7dea25d8e77a66a6f867027c1d78d4940d28b09e Mon Sep 17 00:00:00 2001
+From: Pratham Deshmukh <p-deshmukh@ti.com>
+Date: Wed, 4 Mar 2026 16:04:25 +0530
+Subject: [PATCH 7/8] cmake: Generate generic library name instead of
+ architecture-specific
+
+Generate libarm_compute.so instead of libarm_compute_${ACL_ARCH_ISA}.so
+to improve compatibility with downstream projects that expect the
+generic library name.
+
+Upstream-Status: Pending
+
+Signed-off-by: Pratham Deshmukh <p-deshmukh@ti.com>
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 87bf38781b..2df5622d47 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -306,7 +306,7 @@ else()
+   endif()
+
+   add_library(arm_compute ${ARM_COMPUTE_LIB_BUILD_TYPE} ${lib_objs})
+-  set_target_properties(arm_compute PROPERTIES OUTPUT_NAME "arm_compute_${ACL_ARCH_ISA}")
++  set_target_properties(arm_compute PROPERTIES OUTPUT_NAME "arm_compute")
+ endif()
+
+ if(ACL_ARCH_ISA STREQUAL "armv7")
+--
+2.34.1

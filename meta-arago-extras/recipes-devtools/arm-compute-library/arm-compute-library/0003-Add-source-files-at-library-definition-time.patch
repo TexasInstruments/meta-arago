@@ -1,0 +1,185 @@
+From 167dd1485ec1396e4b92c623ad7106ca15f420a0 Mon Sep 17 00:00:00 2001
+From: Pratham Deshmukh <p-deshmukh@ti.com>
+Date: Wed, 4 Mar 2026 15:38:50 +0530
+Subject: [PATCH 3/8] Add source files at library definition time
+
+This allows for easier conditional disabling of these libraries.
+
+Upstream-Status: Pending
+
+Authored-by: Andrew Davis <afd@ti.com>
+Signed-off-by: Pratham Deshmukh <p-deshmukh@ti.com>
+---
+ CMakeLists.txt                  | 18 +++++++++++-------
+ scripts/generate_build_files.py | 20 +++++---------------
+ src/CMakeLists.txt              | 20 +++++---------------
+ 3 files changed, 21 insertions(+), 37 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 7dc4102e62..fc9c88a8af 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -84,6 +84,13 @@ endif()
+ include(${CMAKE_CURRENT_LIST_DIR}/cmake/configurations.cmake)
+ include(${CMAKE_CURRENT_LIST_DIR}/cmake/compilers/setup.cmake)
+ include(${CMAKE_CURRENT_LIST_DIR}/cmake/version.cmake)
++include(${CMAKE_CURRENT_SOURCE_DIR}/src/CMakeLists.txt)
++
++list(TRANSFORM ARM_COMPUTE_GRAPH_SOURCES PREPEND "src/")
++list(TRANSFORM ARM_COMPUTE_SVE_SOURCES PREPEND "src/")
++list(TRANSFORM ARM_COMPUTE_SVE2_SOURCES PREPEND "src/")
++list(TRANSFORM ARM_COMPUTE_SOURCES PREPEND "src/")
++list(TRANSFORM ARM_COMPUTE_FP16 PREPEND "src/")
+
+ if(ACL_ARCH_ISA STREQUAL "armv8-a" AND (ACL_MULTI_ISA OR ACL_BUILD_SVE OR ACL_BUILD_SVE2 OR ACL_BUILD_SME2))
+   message(FATAL_ERROR
+@@ -191,7 +198,7 @@ set(
+ )
+
+ if(ACL_MULTI_ISA OR ACL_BUILD_SVE)
+-  add_library(arm_compute_sve OBJECT)
++  add_library(arm_compute_sve OBJECT ${ARM_COMPUTE_SVE_SOURCES})
+   set_target_properties(
+     arm_compute_sve
+     PROPERTIES
+@@ -205,7 +212,7 @@ else()
+ endif()
+
+ if(ACL_MULTI_ISA OR ACL_BUILD_SVE2)
+-  add_library(arm_compute_sve2 OBJECT)
++  add_library(arm_compute_sve2 OBJECT ${ARM_COMPUTE_SVE2_SOURCES})
+   set_target_properties(
+     arm_compute_sve2
+     PROPERTIES
+@@ -218,7 +225,7 @@ else()
+   add_library(arm_compute_sve2 OBJECT EXCLUDE_FROM_ALL)
+ endif()
+
+-add_library(arm_compute_core OBJECT)
++add_library(arm_compute_core OBJECT ${ARM_COMPUTE_SOURCES})
+ set_target_properties(
+   arm_compute_core
+   PROPERTIES
+@@ -242,7 +249,7 @@ else()
+   add_library(arm_compute_core_fp16 OBJECT EXCLUDE_FROM_ALL)
+ endif()
+
+-add_library(arm_compute_graph ${ARM_COMPUTE_LIB_BUILD_TYPE})
++add_library(arm_compute_graph ${ARM_COMPUTE_LIB_BUILD_TYPE} ${ARM_COMPUTE_GRAPH_SOURCES})
+ set_target_properties(
+     arm_compute_graph
+     PROPERTIES
+@@ -329,9 +336,6 @@ endif()
+ add_library(${PROJECT_NAME}::Core ALIAS arm_compute)
+ add_library(${PROJECT_NAME}::Graph ALIAS arm_compute_graph)
+
+-# Library target sources.
+-add_subdirectory(src)
+-
+ if(ARM_COMPUTE_BUILD_TESTING)
+   add_library(arm_compute_validation_framework OBJECT)
+   add_subdirectory(tests)
+diff --git a/scripts/generate_build_files.py b/scripts/generate_build_files.py
+index 913c73e991..bf0573a332 100644
+--- a/scripts/generate_build_files.py
++++ b/scripts/generate_build_files.py
+@@ -171,33 +171,23 @@ def build_from_template_cmake(srcs_graph, srcs_sve, srcs_sve2, srcs_core, srcs_c
+
+     template = f"""{get_template_header()}
+
+-target_sources(
+-    arm_compute_graph
+-    PRIVATE
++set(ARM_COMPUTE_GRAPH_SOURCES
+     {line_separator.join(srcs_graph)}
+ )
+
+-target_sources(
+-    arm_compute_sve
+-    PRIVATE
++set(ARM_COMPUTE_SVE_SOURCES
+     {line_separator.join(srcs_sve)}
+ )
+
+-target_sources(
+-    arm_compute_sve2
+-    PRIVATE
++set(ARM_COMPUTE_SVE2_SOURCES
+     {line_separator.join(srcs_sve2)}
+ )
+
+-target_sources(
+-    arm_compute_core
+-    PRIVATE
++set(ARM_COMPUTE_SOURCES
+     {line_separator.join(srcs_core)}
+ )
+
+-target_sources(
+-    arm_compute_core_fp16
+-    PRIVATE
++set(ARM_COMPUTE_FP16
+     {line_separator.join(srcs_core_fp16)}
+ )"""
+     return template
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index fe70114490..0867ba81ad 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -20,9 +20,7 @@
+ # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ # SOFTWARE.
+
+-target_sources(
+-    arm_compute_graph
+-    PRIVATE
++set(ARM_COMPUTE_GRAPH_SOURCES
+     graph/DataLayerVisitor.cpp
+	graph/Graph.cpp
+	graph/GraphBuilder.cpp
+@@ -100,9 +98,7 @@ target_sources(
+	graph/printers/DotGraphPrinter.cpp
+ )
+
+-target_sources(
+-    arm_compute_sve
+-    PRIVATE
++set(ARM_COMPUTE_SVE_SOURCES
+     core/NEON/kernels/arm_conv/depthwise/interleaves/sve_s8q_3x3_dot.cpp
+	core/NEON/kernels/arm_conv/depthwise/interleaves/sve_u8q_3x3_dot.cpp
+	core/NEON/kernels/arm_conv/depthwise/kernels/sme2_fp16_nhwc_3x3_s1_output2x2_mla_depthfirst/generic_direct.cpp
+@@ -341,9 +337,7 @@ target_sources(
+	cpu/kernels/softmax/generic/sve/impl_bf16.cpp
+ )
+
+-target_sources(
+-    arm_compute_sve2
+-    PRIVATE
++set(ARM_COMPUTE_SVE2_SOURCES
+     cpu/kernels/activation/generic/sve2/lut.cpp
+	cpu/kernels/activation/generic/sve2/qasymm8.cpp
+	cpu/kernels/activation/generic/sve2/qasymm8_signed.cpp
+@@ -366,9 +360,7 @@ target_sources(
+	cpu/kernels/softmax/generic/sve2/impl.cpp
+ )
+
+-target_sources(
+-    arm_compute_core
+-    PRIVATE
++set(ARM_COMPUTE_SOURCES
+     ../third_party/kleidiai/kai/ukernels/matmul/matmul_clamp_f32_f32_f32p/kai_matmul_clamp_f32_f32_f32p8x1biasf32_6x8x4_neon_mla.c
+	../third_party/kleidiai/kai/ukernels/matmul/pack/kai_rhs_pack_kxn_f32p8x1biasf32_f32_f32_neon.c
+	c/AclContext.cpp
+@@ -1000,9 +992,7 @@ target_sources(
+	runtime/experimental/operators/CpuWinogradConv2d.cpp
+ )
+
+-target_sources(
+-    arm_compute_core_fp16
+-    PRIVATE
++set(ARM_COMPUTE_FP16
+     core/NEON/kernels/arm_conv/depthwise/depthwise_fp16.cpp
+	core/NEON/kernels/arm_conv/depthwise/kernels/a64_fp16_nhwc_3x3_s1_output2x2_mla_depthfirst/generic_direct.cpp
+	core/NEON/kernels/arm_conv/depthwise/kernels/a64_fp16_nhwc_3x3_s1_output2x2_mla_depthfirst/generic_indirect.cpp
+--
+2.34.1
