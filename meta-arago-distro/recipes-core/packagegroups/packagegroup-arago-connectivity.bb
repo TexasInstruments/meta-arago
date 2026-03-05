@@ -62,8 +62,9 @@ CONNECTIVITY_RDEPENDS = " \
     htop \
     iptables \
     iproute2 \
-    iproute2-tc \
+    iproute2-bridge \
     iproute2-devlink \
+    iproute2-tc \
     ${WLAN_COMMON} \
     ${WLAN_TI} \
     ${BT_COMMON} \
