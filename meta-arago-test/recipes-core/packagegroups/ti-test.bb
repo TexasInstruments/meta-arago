@@ -100,8 +100,9 @@ TI_TEST_NETWORKING = "\
     bridge-utils \
     ethtool \
     iperf3 \
-    iproute2-tc \
+    iproute2-bridge \
     iproute2-devlink \
+    iproute2-tc \
     mstpd \
     netperf \
     strongswan \
