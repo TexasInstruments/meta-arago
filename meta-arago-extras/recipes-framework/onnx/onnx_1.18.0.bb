@@ -4,12 +4,15 @@ HOMEPAGE = "https://www.onnx.ai/"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
-SRC_URI = "git://github.com/onnx/onnx.git;protocol=https;branch=rel-1.16.1"
+SRC_URI = "git://github.com/onnx/onnx.git;protocol=https;branch=rel-1.18.0"
 SRC_URI += "\
-	file://0001-Try-to-find-package-Protobuf-before-checking-if-it-w.patch \
-	file://0002-Do-not-re-export-internal-targets-directories.patch \
+	file://0001-Apply-onnx-patch.patch \
+	file://0002-cmake-Fix-Protobuf-target-check-by-calling-find_pack.patch \
+	file://0003-cmake-Remove-Protobuf-directory-exports-from-config-.patch \
+	file://0004-Linker-failed-when-trying-to-create-the-final-onnx_g.patch \
+	file://0005-Fix-symbol-visibility-when-tests-are-enabled.patch \
 "
-SRCREV = "595228d99e3977ac27cb79d5963adda262af99ad"
+SRCREV = "e709452ef2bbc1d113faf678c24e6d3467696e83"
 
 DEPENDS += "\
 	abseil-cpp \

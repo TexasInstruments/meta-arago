@@ -1,0 +1,37 @@
+From 6ce0573c3661424c5723f9bab6773a3f6ede79fd Mon Sep 17 00:00:00 2001
+From: Pratham Deshmukh <p-deshmukh@ti.com>
+Date: Thu, 12 Feb 2026 17:24:56 +0530
+Subject: [PATCH 3/5] cmake: Remove Protobuf directory exports from config
+ template
+
+Remove CMAKE_PREFIX_PATH and Protobuf_INCLUDE_DIR exports from
+ONNXConfig.cmake.in as these paths are specific to the ONNX build
+environment and should not be propagated to dependent projects.
+
+Dependent projects should find Protobuf through their own
+find_package(Protobuf REQUIRED) call instead of inheriting
+build-specific paths.
+
+Upstream-Status: Pending
+
+Authored-by: Andrew Davis <afd@ti.com>
+Signed-off-by: Pratham Deshmukh <p-deshmukh@ti.com>
+---
+ cmake/ONNXConfig.cmake.in | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/cmake/ONNXConfig.cmake.in b/cmake/ONNXConfig.cmake.in
+index d588f8ae1..a61af0894 100644
+--- a/cmake/ONNXConfig.cmake.in
++++ b/cmake/ONNXConfig.cmake.in
+@@ -6,8 +6,6 @@
+ # library version information
+ set(ONNX_VERSION "@ONNX_VERSION@")
+
+-list(APPEND CMAKE_PREFIX_PATH "@PROTOBUF_DIR@")
+-set(Protobuf_INCLUDE_DIR "@PROTOBUF_INCLUDE_DIR@")
+ find_package(Protobuf REQUIRED)
+
+ # import targets
+--
+2.34.1

@@ -1,0 +1,36 @@
+From b6628fa7ee3acd35076d617157342b25c432715b Mon Sep 17 00:00:00 2001
+From: Pratham Deshmukh <p-deshmukh@ti.com>
+Date: Thu, 12 Feb 2026 17:23:40 +0530
+Subject: [PATCH 2/5] cmake: Fix Protobuf target check by calling find_package
+ first
+
+Add find_package(Protobuf) before checking if protobuf targets exist
+in the ONNX_BUILD_CUSTOM_PROTOBUF conditional. This ensures Protobuf
+targets are properly defined before being referenced.
+
+Without this change, the target existence checks fails even when
+Protobuf is available.
+
+Upstream-Status: Pending
+
+Authored-by: Andrew Davis <afd@ti.com>
+Signed-off-by: Pratham Deshmukh <p-deshmukh@ti.com>
+---
+ CMakeLists.txt | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 8593fe4a3..9fed84add 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -142,6 +142,8 @@ if(ONNX_BUILD_TESTS)
+   set(googletest_STATIC_LIBRARIES GTest::gtest)
+ endif()
+
++find_package(Protobuf)
++
+ if(NOT ONNX_BUILD_CUSTOM_PROTOBUF)
+ if((ONNX_USE_LITE_PROTO AND TARGET protobuf::libprotobuf-lite) OR ((NOT ONNX_USE_LITE_PROTO) AND TARGET protobuf::libprotobuf))
+   # Sometimes we need to use protoc compiled for host architecture while linking
+--
+2.34.1

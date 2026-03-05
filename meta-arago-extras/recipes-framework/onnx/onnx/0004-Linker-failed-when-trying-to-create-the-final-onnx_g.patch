@@ -1,0 +1,33 @@
+From 8e19cae53e24126cb57e486e0e7da96f02b3cbf7 Mon Sep 17 00:00:00 2001
+From: Pratham Deshmukh <p-deshmukh@ti.com>
+Date: Thu, 12 Feb 2026 17:26:07 +0530
+Subject: [PATCH 4/5] Linker failed when trying to create the final onnx_gtests
+ executable
+
+The main onnx library target was missing the ONNX_API compile
+definitions that are needed to properly export symbols on Linux
+platforms with hidden visibility. This causes undefined reference
+errors when linking tests because symbols like OpSchemaRegistry::Schema()
+are not visible.
+
+Upstream-Status: Pending
+
+Signed-off-by: Pratham Deshmukh <p-deshmukh@ti.com>
+---
+ CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 9fed84add..89d4fed84 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -547,6 +547,7 @@ target_include_directories(onnx PUBLIC
+   $<INSTALL_INTERFACE:include>)
+ target_link_libraries(onnx PUBLIC onnx_proto)
+ add_onnx_global_defines(onnx)
++target_compile_definitions(onnx PRIVATE ${ONNX_API_DEFINE})
+
+ if(ONNX_BUILD_PYTHON)
+   Python3_add_library(onnx_cpp2py_export MODULE WITH_SOABI "${ONNX_ROOT}/onnx/cpp2py_export.cc")
+--
+2.34.1
