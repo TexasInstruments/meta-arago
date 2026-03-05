@@ -8,18 +8,19 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=4158a261ca7f2525513e31ba9c50ae98"
 
 # Get major of the PV variable
-MAJOR = "${@d.getVar('PV').split('.')[0]}"
+TF_MAJOR = "${@d.getVar('PV').split('.')[0]}"
+TF_MINOR = "${@d.getVar('PV').split('.')[1]}"
+TF_PATCH = "${@(d.getVar('PV').split('.') + ['0', '0'])[2]}"
 
 SRC_URI = " \
-    git://github.com/tensorflow/tensorflow.git;protocol=https;branch=r2.18 \
-    file://0001-lite-Update-CMakeLists-for-building-_pywrap_tensorfl.patch \
-    file://0002-lite-Update-CMakeLists-for-building-shared-object-li.patch \
-    file://0003-CMakeLists-Fix-build-issues-observed-in-TFlite-v2.18.patch \
+    git://github.com/tensorflow/tensorflow.git;protocol=https;branch=r2.20 \
+    file://0001-Update-CMakeLists-for-building.patch \
+    file://0002-Update-CMakeLists-for-building-shared-object.patch \
     file://tensorflow2-lite.pc.in \
 "
 
 SRC_URI += " \
-    git://github.com/abseil/abseil-cpp.git;protocol=https;branch=lts_2023_08_02;name=abseil-cpp;destsuffix=${S}/external/abseil-cpp \
+    git://github.com/abseil/abseil-cpp.git;protocol=https;branch=lts_2025_01_27;name=abseil-cpp;destsuffix=${S}/external/abseil-cpp \
     git://gitlab.com/libeigen/eigen.git;protocol=https;branch=master;name=eigen;destsuffix=${S}/external/eigen \
     git://github.com/google/farmhash.git;protocol=https;branch=master;name=farmhash;destsuffix=${S}/external/farmhash \
     git://github.com/petewarden/OouraFFT.git;protocol=https;branch=master;name=fft2d;destsuffix=${S}/external/fft2d \
@@ -28,35 +29,35 @@ SRC_URI += " \
     git://github.com/jax-ml/ml_dtypes.git;branch=main;protocol=https;name=ml_dtypes;destsuffix=${S}/external/ml_dtypes \
     git://github.com/google/ruy.git;branch=master;protocol=https;name=ruy;destsuffix=${S}/external/ruy \
     git://github.com/google/flatbuffers;branch=master;protocol=https;name=flatbuffers;destsuffix=${S}/external/flatbuffers \
-    git://github.com/Maratyszcza/pthreadpool.git;branch=master;protocol=https;name=pthreadpool-source;destsuffix=${S}/external/pthreadpool-source \
+    git://github.com/google/pthreadpool.git;branch=main;protocol=https;name=pthreadpool-source;destsuffix=${S}/external/pthreadpool-source \
     git://github.com/google/XNNPACK.git;branch=master;protocol=https;name=xnnpack;destsuffix=${S}/external/xnnpack \
     git://github.com/Maratyszcza/FXdiv.git;branch=master;protocol=https;name=FXdiv-source;destsuffix=${S}/external/FXdiv-source \
     git://github.com/Maratyszcza/FP16.git;branch=master;protocol=https;name=FP16-source;destsuffix=${S}/external/FP16-source \
     git://git.gitlab.arm.com/kleidi/kleidiai.git;branch=main;protocol=https;name=kleidiai;destsuffix=${S}/external/kleidiai \
     git://github.com/Maratyszcza/psimd.git;branch=master;protocol=https;name=psimd;destsuffix=${S}/external/psimd \
-    git://github.com/protocolbuffers/protobuf.git;branch=25.x;protocol=https;name=protobuf;destsuffix=${S}/external/protobuf \
+    git://github.com/protocolbuffers/protobuf.git;branch=main;protocol=https;name=protobuf;destsuffix=${S}/external/protobuf \
 "
 
 SRCREV_FORMAT = "default"
 
 # Matches v${PV} tag
-SRCREV = "6550e4bd80223cdb8be6c3afd1f81e86a4d433c3"
-SRCREV_abseil-cpp = "fb3621f4f897824c0dbe0615fa94543df6192f30"
+SRCREV = "72fbba3d20f4616d7312b5e2b7f79daf6e82f2fa"
+SRCREV_abseil-cpp = "d9e4955c65cd4367dd6bf46f4ccb8cd3d100540b"
 SRCREV_eigen = "33d0937c6bdf5ec999939fb17f2a553183d14a74"
 SRCREV_farmhash = "0d859a811870d10f53a594927d0d0b97573ad06d"
 SRCREV_fft2d = "c6fd2dd6d21397baa6653139d31d84540d5449a2"
 SRCREV_gemmlowp = "16e8662c34917be0065110bfcd9cc27d30f52fdf"
-SRCREV_cpuinfo = "b73ae6ce38d5dd0b7fe46dbe0a4b5f4bab91c7ea"
+SRCREV_cpuinfo = "de0ce7c7251372892e53ce9bc891750d2c9a4fd8"
 SRCREV_ml_dtypes = "24084d9ed2c3d45bf83b7a9bff833aa185bf9172"
 SRCREV_ruy = "3286a34cc8de6149ac6844107dfdffac91531e72"
 SRCREV_flatbuffers = "e6463926479bd6b330cbcf673f7e917803fd5831"
-SRCREV_pthreadpool-source = "4fe0e1e183925bf8cfa6aae24237e724a96479b8"
-SRCREV_xnnpack = "6b83f69d4938da4dc9ad63c00bd13e9695659a51"
+SRCREV_pthreadpool-source = "c2ba5c50bb58d1397b693740cf75fad836a0d1bf"
+SRCREV_xnnpack = "585e73e63cb35c8a416c83a48ca9ab79f7f7d45e"
 SRCREV_FXdiv-source = "63058eff77e11aa15bf531df5dd34395ec3017c8"
-SRCREV_FP16-source = "0a92994d729ff76a58f692d3028ca1b64b145d91"
-SRCREV_kleidiai = "cddf991af5de49fd34949fa39690e4e906e04074"
+SRCREV_FP16-source = "4dfe081cf6bcd15db339cf2680b9281b8451eeb3"
+SRCREV_kleidiai = "dc69e899945c412a8ce39ccafd25139f743c60b1"
 SRCREV_psimd = "072586a71b55b7f8c584153d223e95687148a900"
-SRCREV_protobuf = "4a2aef570deb2bfb8927426558701e8bfc26f2a4"
+SRCREV_protobuf = "90b73ac3f0b10320315c2ca0d03a5a9b095d2f66"
 
 inherit setuptools3 cmake
 
@@ -91,7 +92,7 @@ OECMAKE_SOURCEPATH = "${S}/tensorflow/lite"
 # to further optimize the build for production use.
 # Hence, activate -O3 optimization and disable debug symbols.
 OECMAKE_C_FLAGS_RELEASE = "-O3 -DNDEBUG"
-OECMAKE_CXX_FLAGS_RELEASE = "-O3 -DNDEBUG -flax-vector-conversions"
+OECMAKE_CXX_FLAGS_RELEASE = "-O3 -DNDEBUG -flax-vector-conversions -DTF_MAJOR_VERSION=${TF_MAJOR} -DTF_MINOR_VERSION=${TF_MINOR} -DTF_PATCH_VERSION=${TF_PATCH} -DTF_VERSION_SUFFIX=\"\""
 
 OECMAKE_C_FLAGS_RELEASE:append:arm = " -march=armv7-a -mfpu=neon"
 OECMAKE_CXX_FLAGS_RELEASE:append:arm = " -march=armv7-a -mfpu=neon"
@@ -112,9 +113,8 @@ EXTRA_OECMAKE:append = " \
     -DCMAKE_SYSTEM_PROCESSOR=${TENSORFLOW_TARGET_ARCH} \
     -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
     -DPYTHON_TARGET_INCLUDE=${RECIPE_SYSROOT}${includedir}/${PYTHON_DIR} \
-    -DNUMPY_TARGET_INCLUDE=${RECIPE_SYSROOT}${PYTHON_SITEPACKAGES_DIR}/numpy/core/include \
+    -DNUMPY_TARGET_INCLUDE=${RECIPE_SYSROOT}${PYTHON_SITEPACKAGES_DIR}/numpy/_core/include \
     -DPYBIND11_TARGET_INCLUDE=${RECIPE_SYSROOT}${PYTHON_SITEPACKAGES_DIR}/pybind11/include \
-    -DTFLITE_VERSION_MAJOR=${MAJOR}  \
     -DTFLITE_HOST_TOOLS_DIR=${STAGING_BINDIR_NATIVE} \
     -DPTHREADPOOL_SOURCE_DIR=${S}/external/pthreadpool-source \
     -DFXDIV_SOURCE_DIR=${S}/external/FXdiv-source \
@@ -122,6 +122,11 @@ EXTRA_OECMAKE:append = " \
     -DCPUINFO_SOURCE_DIR=${S}/external/cpuinfo \
     -DKLEIDIAI_SOURCE_DIR=${S}/external/kleidiai \
     -DPSIMD_SOURCE_DIR=${S}/external/psimd \
+    -DCMAKE_CXX_STANDARD=17 \
+    -DCMAKE_CXX_STANDARD_REQUIRED=ON \
+    -DTF_MAJOR_VERSION=${TF_MAJOR} \
+    -DTF_MINOR_VERSION=${TF_MINOR} \
+    -DTF_PATCH_VERSION=${TF_PATCH} \
     --compile-no-warning-as-error \
     --log-level=VERBOSE \
 "
@@ -143,7 +148,7 @@ do_compile:append() {
     BUILD_DIR=${B}
     TENSORFLOW_DIR=${S}
     TENSORFLOW_LITE_DIR="${TENSORFLOW_DIR}/tensorflow/lite"
-    TENSORFLOW_VERSION=$(grep "_VERSION = " "${TENSORFLOW_DIR}/tensorflow/tools/pip_package/setup.py" | cut -d= -f2 | sed "s/[ '-]//g")
+    TENSORFLOW_VERSION=$(grep "_VERSION = " "${TENSORFLOW_DIR}/tensorflow/tools/pip_package/setup.py.tpl" | cut -d= -f2 | sed "s/[ '-]//g")
     mkdir -p "${B}/tflite_runtime"
     cp -r "${TENSORFLOW_LITE_DIR}/tools/pip_package/debian" \
           "${TENSORFLOW_LITE_DIR}/tools/pip_package/MANIFEST.in" \
@@ -167,9 +172,9 @@ do_compile:append() {
 do_install() {
     # Install tensorflow-lite dynamic library
     install -d ${D}${libdir}
-    install -m 0644 ${B}/libtensorflow-lite.so.${MAJOR} ${D}${libdir}/libtensorflow-lite.so.${PV}
+    install -m 0644 ${B}/libtensorflow-lite.so.${TF_MAJOR} ${D}${libdir}/libtensorflow-lite.so.${PV}
 
-    ln -sf libtensorflow-lite.so.${PV} ${D}${libdir}/libtensorflow-lite.so.${MAJOR}
+    ln -sf libtensorflow-lite.so.${PV} ${D}${libdir}/libtensorflow-lite.so.${TF_MAJOR}
     ln -sf libtensorflow-lite.so.${PV} ${D}${libdir}/libtensorflow-lite.so
 
     # armnn expects the the dynamic library of tensorflow lite to be named as "libtensorflowlite.so"
@@ -197,7 +202,7 @@ do_install() {
 
     # Install pkgconfig file required for NNstreamer build
     install -d ${D}${libdir}/pkgconfig
-    install -m 0644 ${WORKDIR}/tensorflow2-lite.pc.in ${D}${libdir}/pkgconfig/tensorflow2-lite.pc
+    install -m 0644 ${WORKDIR}/sources/tensorflow2-lite.pc.in ${D}${libdir}/pkgconfig/tensorflow2-lite.pc
     sed -i 's:@version@:${PV}:g
             s:@libdir@:${libdir}:g
             s:@includedir@:${includedir}:g' \

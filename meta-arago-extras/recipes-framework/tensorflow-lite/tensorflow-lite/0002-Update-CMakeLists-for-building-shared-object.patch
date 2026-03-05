@@ -1,0 +1,73 @@
+From 799d46ca08223b6f936093a790d510e9247249ae Mon Sep 17 00:00:00 2001
+From: Pratham Deshmukh <p-deshmukh@ti.com>
+Date: Thu, 5 Mar 2026 19:41:36 +0530
+Subject: [PATCH 2/2] Update CMakeLists for building shared object library
+
+- When building TFLite with CMake, it builds static library
+(i.e. libtensorflow-lite.a) by default which isn't self-contained
+since all the transitive dependencies are not included [1]
+
+- As documented in [1], there's an update needed in CMake build steps
+inorder to generate a shared object library (i.e. libtensorflow-lite.so)
+
+- This patch adds schema_conversion_utils.cc to TFLite source files
+& updates CMakeLists.txt to build TFLite as a shared library. Additionally,
+it ensures that the properties are set correctly to manage the shared
+object version.
+
+- Implements conditional versioning using TF_MAJOR_VERSION, TF_MINOR_VERSION,
+and TF_PATCH_VERSION variables passed from the build system, replacing
+the previous approach that used undefined TFLITE_VERSION_MAJOR variable
+which caused malformed SONAME generation (libtensorflow-lite.so.)
+
+- The proper versioning ensures benchmark_model and other dependent binaries
+embed correct SONAME references for successful dynamic linking at runtime.
+
+[1]: https://ai.google.dev/edge/litert/build/cmake#step_5_build_litert
+
+Upstream-Status: Inappropriate [enable feature]
+
+Authored-by: Chirag Shilwant <c-shilwant@ti.com>
+Signed-off-by: Pratham Deshmukh <p-deshmukh@ti.com>
+---
+ tensorflow/lite/CMakeLists.txt | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/tensorflow/lite/CMakeLists.txt b/tensorflow/lite/CMakeLists.txt
+index 63801efb..7e0004ef 100644
+--- a/tensorflow/lite/CMakeLists.txt
++++ b/tensorflow/lite/CMakeLists.txt
+@@ -684,6 +684,7 @@ set(_ALL_TFLITE_SRCS
+   ${TFLITE_SOURCE_DIR}/kernels/internal/utils/sparsity_format_converter.cc
+   ${TFLITE_SOURCE_DIR}/schema/conversion_metadata_generated.h
+   ${TFLITE_SOURCE_DIR}/schema/schema_generated.h
++  ${TFLITE_SOURCE_DIR}/schema/schema_conversion_utils.h
+   ${TFLITE_SRCS}
+   ${TF_SOURCE_DIR}/compiler/mlir/lite/allocation.cc
+   ${TF_SOURCE_DIR}/compiler/mlir/lite/allocation.h
+@@ -714,7 +715,7 @@ else()
+   list(FILTER _ALL_TFLITE_SRCS EXCLUDE REGEX ".*mmap_allocation\\.cc$")
+ endif()
+
+-add_library(tensorflow-lite
++add_library(tensorflow-lite SHARED EXCLUDE_FROM_ALL
+   ${_ALL_TFLITE_SRCS}
+ )
+ set(_ALL_TFLITE_HDRS ${_ALL_TFLITE_SRCS})
+@@ -790,6 +791,14 @@ if(TFLITE_ENABLE_INSTALL)
+   )
+ endif()
+
++# Set proper version properties for shared library
++if(DEFINED TF_MAJOR_VERSION AND DEFINED TF_MINOR_VERSION AND DEFINED TF_PATCH_VERSION)
++  set_target_properties(tensorflow-lite PROPERTIES
++    VERSION "${TF_MAJOR_VERSION}.${TF_MINOR_VERSION}.${TF_PATCH_VERSION}"
++    SOVERSION "${TF_MAJOR_VERSION}"
++  )
++endif()
++
+ # The kernel tests.
+ if(TFLITE_KERNEL_TEST)
+   enable_testing()
+--
+2.34.1
