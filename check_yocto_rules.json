@@ -1,12 +1,17 @@
 {
     "APPEND-1" : {
-        "skip_vars" : [ "FILES", "RDEPENDS" ]
+        "skip_vars" : [ "FILES", "RDEPENDS", "RPROVIDES" ]
     },
     "APPEND-2" : {
         "skip_vars" : [ "PR", "PV" ],
         "files" : {
             "meta-arago-distro/conf/distro/include/arago-prefs.inc" : {
                 "skip_vars": [ "PREFERRED_PROVIDER_virtual/kernel" ]
+            }
+        },
+        "file_regex" : {
+            "meta-arago-distro\\/recipes-graphics\\/emptty\\/emptty_\\S+\\.bb" : {
+                "skip_vars" : [ "GO_TAGS" ]
             }
         }
     },
@@ -33,6 +38,8 @@
             "meta-arago-distro/recipes-core/meta/meta-toolchain-arago-tisdk-server.bb",
             "meta-arago-distro/recipes-core/meta/meta-toolchain-arago-tisdk.bb",
             "meta-arago-distro/recipes-core/meta/meta-toolchain-arago.bb",
+            "meta-arago-distro/recipes-graphics/emptty/emptty-conf.bb",
+            "meta-arago-distro/recipes-graphics/wayland/weston-init-arago.bb",
             "meta-arago-extras/recipes-core/oprofile-example/oprofile-example_git.bb",
             "meta-arago-extras/recipes-devtools/opkg/opkg-bash-completion.bb",
             "meta-arago-extras/recipes-extended/sysrepo/nw-configurator.bb",
