@@ -72,6 +72,8 @@ TI_TEST_EXTRAS = " \
     python3-pillow \
     pytesseract \
     python3-numpy \
+    python3-requests \
+    python3-websocket-client \
     ${@bb.utils.contains('DISTRO_FEATURES', 'opencl', '${TI_TEST_EXTRAS_OPENCL}', '', d)} \
 "
 
