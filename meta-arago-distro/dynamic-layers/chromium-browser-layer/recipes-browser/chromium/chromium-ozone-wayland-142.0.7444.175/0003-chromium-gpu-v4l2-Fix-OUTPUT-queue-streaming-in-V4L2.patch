@@ -1,7 +1,7 @@
-From 3f5cdbc3b1871b6b8cdfa96eccd96f59d66a8afc Mon Sep 17 00:00:00 2001
+From d1d9bcefa8fd299049e6e51855f41b67b27823ed Mon Sep 17 00:00:00 2001
 From: Thorsten Lannynd <t-lannynd@ti.com>
 Date: Sat, 9 Aug 2025 01:46:14 -0500
-Subject: [PATCH] chromium: gpu: v4l2: Fix OUTPUT queue streaming in
+Subject: [PATCH] media/gpu/v4l2: Fix OUTPUT queue streaming in
  V4L2StatefulVideoDecoder
 
 Upstream-Status: Inappropriate [this change is needed to satisfy
@@ -24,15 +24,14 @@ Linux distribution to set the correct device node names.
 
 Signed-off-by: Thorsten Lannynd <t-lannynd@ti.com>
 ---
- media/gpu/v4l2/v4l2_stateful_video_decoder.cc | 40 ++++++++++++++-----
- media/gpu/v4l2/v4l2_utils.cc                  |  2 +-
- 2 files changed, 32 insertions(+), 10 deletions(-)
+ media/gpu/v4l2/v4l2_stateful_video_decoder.cc | 32 +++++++++++++------
+ 1 file changed, 23 insertions(+), 9 deletions(-)
 
 diff --git a/media/gpu/v4l2/v4l2_stateful_video_decoder.cc b/media/gpu/v4l2/v4l2_stateful_video_decoder.cc
-index e5069a3acf..6d11ea7e0f 100644
+index 359145244d..e3aeb060c2 100644
 --- a/media/gpu/v4l2/v4l2_stateful_video_decoder.cc
 +++ b/media/gpu/v4l2/v4l2_stateful_video_decoder.cc
-@@ -410,10 +414,6 @@ void V4L2StatefulVideoDecoder::Initialize(const VideoDecoderConfig& config,
+@@ -417,10 +417,6 @@ void V4L2StatefulVideoDecoder::Initialize(const VideoDecoderConfig& config,
      std::move(init_cb).Run(DecoderStatus::Codes::kFailedToCreateDecoder);
      return;
    }
@@ -43,7 +42,7 @@ index e5069a3acf..6d11ea7e0f 100644
    client_->NotifyEstimatedMaxDecodeRequests(base::checked_cast<int>(
        std::min(static_cast<size_t>(4), num_input_buffers)));
 
-@@ -518,10 +518,22 @@ void V4L2StatefulVideoDecoder::Decode(scoped_refptr<DecoderBuffer> buffer,
+@@ -525,10 +521,22 @@ void V4L2StatefulVideoDecoder::Decode(scoped_refptr<DecoderBuffer> buffer,
                                            std::move(decode_cb));
    }
 
@@ -70,7 +69,7 @@ index e5069a3acf..6d11ea7e0f 100644
    }
 
    if (!event_task_runner_) {
-@@ -729,7 +741,13 @@ bool V4L2StatefulVideoDecoder::InitializeCAPTUREQueue() {
+@@ -743,7 +751,13 @@ bool V4L2StatefulVideoDecoder::InitializeCAPTUREQueue() {
    auto chosen_fourcc = output_format.fourcc;
    const auto chosen_size = output_format.size;
    const auto chosen_modifier = output_format.modifier;
@@ -85,32 +84,5 @@ index e5069a3acf..6d11ea7e0f 100644
    // If our |client_| has a VideoFramePool to allocate buffers for us, we'll
    // use it, otherwise we have to ask the driver.
    const bool use_v4l2_allocated_buffers = !client_->GetVideoFramePool();
-diff --git a/media/gpu/v4l2/v4l2_utils.cc b/media/gpu/v4l2/v4l2_utils.cc
-index 9646e8be73..6a7feb49c9 100644
---- a/media/gpu/v4l2/v4l2_utils.cc
-+++ b/media/gpu/v4l2/v4l2_utils.cc
-@@ -572,18 +572,10 @@ std::optional<SupportedVideoDecoderConfigs> GetSupportedV4L2DecoderConfigs() {
-   SupportedVideoDecoderConfigs supported_media_configs;
-   std::vector<std::string> candidate_paths;
-
--#if BUILDFLAG(IS_CHROMEOS)
--  constexpr char kVideoDevicePattern[] = "/dev/video-dec0";
--  candidate_paths.push_back(kVideoDevicePattern);
--#else
--  constexpr char kVideoDevicePattern[] = "/dev/video";
--  constexpr int kMaxDevices = 256;
--  candidate_paths.reserve(kMaxDevices);
--  for (int i = 0; i < kMaxDevices; ++i) {
--    candidate_paths.push_back(
--        base::StringPrintf("%s%d", kVideoDevicePattern, i));
--  }
--#endif
-+  constexpr char kVideoDevicePattern0[] = "/dev/video-dec0";
-+  constexpr char kVideoDevicePattern1[] = "/dev/video-dec1";
-+  candidate_paths.push_back(kVideoDevicePattern0);
-+  candidate_paths.push_back(kVideoDevicePattern1);
-
-   for (const auto& path : candidate_paths) {
-     base::ScopedFD device_fd(
 --
 2.34.1
