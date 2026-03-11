@@ -17,8 +17,6 @@ TOOLCHAIN_HOST_TASK:append = " nativesdk-buildtools-perl-dummy"
 SDK_PACKAGE_ARCHS += "buildtools-dummy-${SDKPKGSUFFIX}"
 
 BAD_RECOMMENDATIONS += " \
-    libulm-dev \
-    gdbserver-c6x-dev \
     coreutils \
     coreutils-dev \
 "

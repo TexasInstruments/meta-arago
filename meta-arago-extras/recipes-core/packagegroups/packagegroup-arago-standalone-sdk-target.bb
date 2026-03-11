@@ -14,7 +14,6 @@ RDEPENDS:${PN} = "\
     ${LIBC_DEPENDENCIES} \
     libc-staticdev \
     linux-libc-headers-dev \
-    gdbserver \
     alsa-dev \
     alsa-lib-dev \
     alsa-utils-dev \

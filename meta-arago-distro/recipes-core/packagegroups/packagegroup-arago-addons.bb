@@ -9,7 +9,6 @@ inherit packagegroup
 PACKAGES =+ "${PN}-extra"
 
 UTILS = " \
-    gdbserver \
     oprofile \
     ptpd \
     strongswan \
@@ -25,10 +24,6 @@ UTILS:append:arago = " \
 "
 
 UTILS_UBOOT_FW = "libubootenv-bin"
-
-UTILS_DSP = " \
-    ${@bb.utils.contains('MACHINE_FEATURES', 'dsp', 'gdbc6x dsptop', '', d)} \
-"
 
 #                       pru-swuart-fw 
 UTILS:append:ti33x = " mmc-utils \
@@ -71,10 +66,6 @@ UTILS:append:am65xx = " pru-icss"
 UTILS:append:j721e = " pru-icss"
 
 UTILS:append:omapl138 = " ti-ipc-rtos-fw"
-
-UTILS:append:am57xx = " \
-    ${UTILS_DSP} \
-"
 
 EXTRA_PACKAGES = " \
     protobuf \

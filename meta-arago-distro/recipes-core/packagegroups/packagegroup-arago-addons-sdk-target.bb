@@ -25,12 +25,6 @@ UTILS:append:k3 = "\
 	ti-rpmsg-char-staticdev \
 "
 
-EXTRA_LIBS = ""
-EXTRA_LIBS:append:am57xx = " libulm-dev \
-                             libulm-staticdev \
-                             gdbserver-c6x-dev \
-"
-
 EXTRA_PACKAGES = ""
 
 IPCDEV = " \
@@ -43,6 +37,5 @@ EXTRA_PACKAGES:append:omapl138 = " ${IPCDEV}"
 
 RDEPENDS:${PN} = "\
     ${UTILS} \
-    ${EXTRA_LIBS} \
     ${EXTRA_PACKAGES} \
 "
