@@ -11,6 +11,7 @@ RDEPENDS:${PN} = "\
     libgcc-dev \
     libstdc++-dev \
     libgomp-dev \
+    libatomic-dev \
     ${LIBC_DEPENDENCIES} \
     libc-staticdev \
     linux-libc-headers-dev \
