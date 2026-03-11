@@ -1,0 +1,35 @@
+From 8d29018dd31be2045f6724db0942ae1a7da0a789 Mon Sep 17 00:00:00 2001
+From: Brandon Brnich <b-brnich@ti.com>
+Date: Tue, 10 Mar 2026 19:47:35 -0500
+Subject: [PATCH] v4l2object: Attempt non-contiguous if contiguous format isn't
+ present
+
+Gstreamer previously had logic that would set fourcc even if the format
+being negotiated didn't have a contiguous option - YUYV for example. A fix
+was sent to properly set either forcc/forcc_nc properly. For formats that
+don't have contiguous formats, that would mean attempting non-contiguous
+options wouldn't happen. Attempt non-contiguous formats before erroring
+out if applicable.
+
+Upstream-Status: Inappropriate [TI-custom]
+
+Signed-off-by: Brandon Brnich <b-brnich@ti.com>
+---
+ sys/v4l2/gstv4l2object.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sys/v4l2/gstv4l2object.c b/sys/v4l2/gstv4l2object.c
+index dbfe4992be..b4a7c32f31 100644
+--- a/sys/v4l2/gstv4l2object.c
++++ b/sys/v4l2/gstv4l2object.c
+@@ -2167,7 +2167,7 @@ gst_v4l2_object_get_caps_info (GstV4l2Object * v4l2object, GstCaps * caps,
+
+   if (fourcc)
+     fmt = gst_v4l2_object_get_format_from_fourcc (v4l2object, fourcc);
+-  else if (fourcc == 0)
++  else if (fourcc_nc == 0)
+     goto unhandled_format;
+
+   if (fmt == NULL) {
+--
+2.43.0
