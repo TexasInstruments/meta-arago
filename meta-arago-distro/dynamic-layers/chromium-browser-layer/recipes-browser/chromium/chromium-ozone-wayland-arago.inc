@@ -4,18 +4,12 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/chromium-ozone-wayland-142.0.7444.175:"
 
 PACKAGECONFIG:append = " proprietary-codecs"
 
-# Remove incompatible Rust 1.8x patch (for Rust 1.93+)
-SRC_URI:remove = "file://chromium-142-crabbyavif-rust18x.patch"
-
 SRC_URI:append = " \
                   file://0001-media-gpu-v4l2-Use-ChromeOS-style-dev-paths-for-all-.patch \
                   file://0002-chromium-gpu-sandbox-Allow-GPU-sandbox-access-to-V4L.patch \
                   file://0003-chromium-gpu-v4l2-Fix-OUTPUT-queue-streaming-in-V4L2.patch \
                   file://0004-media-gpu-v4l2-Avoid-placing-incomplete-H264-access-.patch \
                   "
-
-# Disable ThinLTO to prevent linker OOM crashes
-GN_ARGS += " use_thin_lto=false"
 
 # Override do_copy_clang_library to handle both target and host architectures
 do_copy_clang_library() {
@@ -68,11 +62,4 @@ do_copy_clang_library() {
             cp -n "$target_dir"/* "$native_arch_path/" 2>/dev/null || true
         fi
     done
-}
-
-# Add pkg-config setup for NSS detection
-do_configure:prepend() {
-    export PKG_CONFIG_PATH="${STAGING_LIBDIR}/pkgconfig:${STAGING_DATADIR}/pkgconfig"
-    export PKG_CONFIG_SYSROOT_DIR="${STAGING_DIR_TARGET}"
-    export PKG_CONFIG_LIBDIR="${STAGING_LIBDIR}/pkgconfig"
 }
