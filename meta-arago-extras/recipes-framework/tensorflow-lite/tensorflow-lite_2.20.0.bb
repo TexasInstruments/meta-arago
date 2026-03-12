@@ -16,6 +16,7 @@ SRC_URI = " \
     git://github.com/tensorflow/tensorflow.git;protocol=https;branch=r2.20 \
     file://0001-Update-CMakeLists-for-building.patch \
     file://0002-Update-CMakeLists-for-building-shared-object.patch \
+    file://0003-Fix-GStreamer-TensorFlow-Lite-pipeline-failures-due-.patch \
     file://tensorflow2-lite.pc.in \
 "
 

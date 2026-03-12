@@ -1,0 +1,61 @@
+From 0e6c2c6d0911897e38f54dd0739e13ea15ccedd8 Mon Sep 17 00:00:00 2001
+From: Pratham Deshmukh <p-deshmukh@ti.com>
+Date: Thu, 12 Mar 2026 16:50:33 +0530
+Subject: [PATCH] Fix GStreamer TensorFlow Lite pipeline failures due to
+ missing Abseil logging symbols
+
+When running GStreamer pipelines with TensorFlow Lite object detection [0]
+
+The pipeline failed with undefined symbol errors:
+  undefined symbol: _ZN4absl12lts_2025012712log_internal9kCharNullE
+  undefined symbol: _ZN4absl12lts_2025012712log_internal10LogMessageC1EPKciNS2_8ErrorTagE
+
+TensorFlow Lite shared library was missing Abseil logging
+components that are required at runtime but weren't being linked during build.
+
+Add missing Abseil logging targets (log_internal_message, log_internal_nullguard)
+to the Findabsl.cmake module and link the required Abseil logging libraries in the
+tensorflow-lite target, including absl::log_internal_nullguard for the kCharNull
+symbol, absl::log_internal_message for the LogMessage constructor, and absl::log_severity
+and absl::raw_logging_internal for base logging support.
+
+[0] https://texasinstruments.github.io/processor-sdk-doc/processor-sdk-linux-AM62X/esd/docs/master/linux/Foundational_Components/Machine_Learning/tflite.html#example-applications
+
+Upstream-Status: Pending
+
+Signed-off-by: Pratham Deshmukh <p-deshmukh@ti.com>
+---
+ tensorflow/lite/CMakeLists.txt                     | 4 ++++
+ tensorflow/lite/tools/cmake/modules/Findabsl.cmake | 2 ++
+ 2 files changed, 6 insertions(+)
+
+diff --git a/tensorflow/lite/CMakeLists.txt b/tensorflow/lite/CMakeLists.txt
+index 7e0004ef..8c43fdac 100644
+--- a/tensorflow/lite/CMakeLists.txt
++++ b/tensorflow/lite/CMakeLists.txt
+@@ -732,6 +732,10 @@ target_link_libraries(tensorflow-lite
+     absl::strings
+     absl::synchronization
+     absl::variant
++    absl::log_internal_nullguard
++    absl::log_severity
++    absl::raw_logging_internal
++    absl::log_internal_message
+     farmhash
+     fft2d_fftsg2d
+     flatbuffers::flatbuffers
+diff --git a/tensorflow/lite/tools/cmake/modules/Findabsl.cmake b/tensorflow/lite/tools/cmake/modules/Findabsl.cmake
+index 75041749..685b851b 100644
+--- a/tensorflow/lite/tools/cmake/modules/Findabsl.cmake
++++ b/tensorflow/lite/tools/cmake/modules/Findabsl.cmake
+@@ -99,6 +99,8 @@ if(abseil-cpp_POPULATED)
+     leak_check_api_enabled_for_testing
+     leak_check_disable
+     log_severity
++    log_internal_message
++    log_internal_nullguard
+     main_lib
+     malloc_internal
+     memory
+--
+2.34.1
