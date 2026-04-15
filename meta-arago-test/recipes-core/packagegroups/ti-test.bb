@@ -111,6 +111,7 @@ TI_TEST_NETWORKING = "\
     iproute2-bridge \
     iproute2-devlink \
     iproute2-tc \
+    lldpd \
     mstpd \
     netperf \
     strongswan \
