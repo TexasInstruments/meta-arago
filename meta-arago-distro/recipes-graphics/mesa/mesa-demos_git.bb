@@ -11,7 +11,6 @@ LIC_FILES_CHKSUM = "file://src/xdemos/glxgears.c;beginline=1;endline=20;md5=a481
 SRC_URI = "git://gitlab.freedesktop.org/mesa/demos.git;protocol=https;branch=main"
 SRCREV = "02eae079cb0b8186064d5b194ca4cc2995f099ee"
 
-DEFAULT_PREFERENCE = "-1"
 PV = "9.0.0+git"
 
 inherit meson pkgconfig features_check
