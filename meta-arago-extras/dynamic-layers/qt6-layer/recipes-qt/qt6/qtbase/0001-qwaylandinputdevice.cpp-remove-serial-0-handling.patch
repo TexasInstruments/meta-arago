@@ -1,0 +1,41 @@
+From f10c63a7391adcf5c28c3378e9d72ee52b5bba97 Mon Sep 17 00:00:00 2001
+From: Randolph Sapp <rs@ti.com>
+Date: Fri, 24 Apr 2026 15:14:26 -0500
+Subject: [PATCH] qwaylandinputdevice.cpp: remove serial 0 handling
+
+Serial number 0 is perfectly valid, though maybe a little uncommon. It
+shouldn't be treated differently or used to indicate a special event.
+
+Signed-off-by: Randolph Sapp <rs@ti.com>
+Upstream-Status: Denied
+Bug: https://qt-project.atlassian.net/browse/QTBUG-146015
+
+Yet another CLA we won't sign.
+---
+ src/plugins/platforms/wayland/qwaylandinputdevice.cpp | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/src/plugins/platforms/wayland/qwaylandinputdevice.cpp b/src/plugins/platforms/wayland/qwaylandinputdevice.cpp
+index b9ca27e6f04..84b7457b0a1 100644
+--- a/src/plugins/platforms/wayland/qwaylandinputdevice.cpp
++++ b/src/plugins/platforms/wayland/qwaylandinputdevice.cpp
+@@ -237,9 +237,6 @@ void QWaylandInputDevice::Pointer::updateCursorTheme()
+
+ void QWaylandInputDevice::Pointer::updateCursor()
+ {
+-    if (mEnterSerial == 0)
+-        return;
+-
+     auto shape = seat()->mCursor.shape;
+
+     if (shape == Qt::BlankCursor) {
+@@ -882,7 +879,6 @@ void QWaylandInputDevice::Pointer::invalidateFocus()
+         disconnect(mFocus.data(), &QObject::destroyed, this, &Pointer::handleFocusDestroyed);
+         mFocus = nullptr;
+     }
+-    mEnterSerial = 0;
+ }
+
+ void QWaylandInputDevice::Pointer::releaseButtons()
+--
+2.53.0
