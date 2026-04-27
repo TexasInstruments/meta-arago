@@ -36,7 +36,7 @@ RDEPENDS:${PN} += "\
     iproute2-bridge \
 "
 
-do_install:prepend() {
+do_install:append() {
 	# Upstream ltp recipe wants to remove this test case in do_install
 	install -d ${D}${prefix}/runtest/
 	echo "memcg_stress" >> ${D}${prefix}/runtest/controllers
