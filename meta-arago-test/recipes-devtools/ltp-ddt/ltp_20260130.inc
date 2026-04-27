@@ -97,7 +97,6 @@ RDEPENDS:${PN} = "\
     gdb \
     gzip \
     iproute2 \
-    iproute2-bridge \
     ${@bb.utils.contains('DISTRO_FEATURES', 'ipv6', 'iputils-ping6', '', d)} \
     ldd \
     libaio \

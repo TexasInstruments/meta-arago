@@ -33,6 +33,7 @@ RDEPENDS:${PN} += "\
     serialcheck \
     memtester \
     libgpiod-tools \
+    iproute2-bridge \
 "
 
 do_install:prepend() {
