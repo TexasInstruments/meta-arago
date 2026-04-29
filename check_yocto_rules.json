@@ -20,12 +20,7 @@
             "meta-arago-distro/dynamic-layers/chromium-browser-layer/recipes-core/images/arago-default-image.bbappend",
             "meta-arago-distro/dynamic-layers/selinux/recipes-core/images/arago-default-image.bbappend",
             "meta-arago-distro/dynamic-layers/selinux/recipes-kernel/linux/linux-ti-staging_%.bbappend",
-            "meta-arago-extras/recipes-extended/sysrepo/libyang_%.bbappend",
-            "meta-arago-test/dynamic-layers/qt6-layer/recipes-core/packagegroups/ti-test.bbappend",
-            "meta-arago-test/dynamic-layers/flutter-layer/recipes-graphics/flutter/flutter-wayland-client_%.bbappend",
-            "meta-arago-test/dynamic-layers/flutter-layer/recipes-graphics/flutter/flutter-samples-material-3-demo_%.bbappend",
-            "meta-arago-test/recipes-benchmark/stream/stream_%.bbappend",
-            "meta-arago-test/recipes-extended/bc/bc_%.bbappend"
+            "meta-arago-extras/recipes-extended/sysrepo/libyang_%.bbappend"
         ]
     },
     "GUARD-2" : {
