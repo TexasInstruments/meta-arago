@@ -6,18 +6,19 @@ Subject: [PATCH] examples: client: allow configurable server
 * Enable a remote server URL to be provided as an argument.
 * Default to localhost if no arguments are provided.
 
-Upstream-Status: Pending
+Upstream-Status: Submitted [https://github.com/open62541/open62541/pull/8045]
 
 Signed-off-by: Jacob Stiffler <j-stiffler@ti.com>
+Signed-off-by: Thorsten Lannynd <t-lannynd@ti.com>
 ---
- examples/client.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ examples/client.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/examples/client.c b/examples/client.c
-index f04bed9..dfc56f5 100644
+index bc54d8504..42290dd0c 100644
 --- a/examples/client.c
 +++ b/examples/client.c
-@@ -29,13 +29,18 @@ nodeIter(UA_NodeId childId, UA_Boolean isInverse, UA_NodeId referenceTypeId, voi
+@@ -31,6 +31,11 @@ nodeIter(UA_NodeId childId, UA_Boolean isInverse,
  }
  
  int main(int argc, char *argv[]) {
@@ -29,27 +30,25 @@ index f04bed9..dfc56f5 100644
      UA_Client *client = UA_Client_new();
      UA_ClientConfig_setDefault(UA_Client_getConfig(client));
  
-     /* Listing endpoints */
+@@ -38,7 +43,7 @@ int main(int argc, char *argv[]) {
      UA_EndpointDescription* endpointArray = NULL;
      size_t endpointArraySize = 0;
--    UA_StatusCode retval = UA_Client_getEndpoints(client, "opc.tcp://localhost:4840",
-+    UA_StatusCode retval = UA_Client_getEndpoints(client, ua_server,
-                                                   &endpointArraySize, &endpointArray);
+     UA_StatusCode retval =
+-        UA_Client_getEndpoints(client, "opc.tcp://localhost:4840",
++        UA_Client_getEndpoints(client, "ua_server",
+                                &endpointArraySize, &endpointArray);
      if(retval != UA_STATUSCODE_GOOD) {
          printf("Could not get the endpoints\n");
-         UA_Array_delete(endpointArray, endpointArraySize, &UA_TYPES[UA_TYPES_ENDPOINTDESCRIPTION]);
-@@ -52,8 +57,8 @@ int main(int argc, char *argv[]) {
-     UA_Array_delete(endpointArray,endpointArraySize, &UA_TYPES[UA_TYPES_ENDPOINTDESCRIPTION]);
- 
-     /* Connect to a server */
--    /* anonymous connect would be: retval = UA_Client_connect(client, "opc.tcp://localhost:4840"); */
--    retval = UA_Client_connect_username(client, "opc.tcp://localhost:4840", "user1", "password");
-+    /* anonymous connect would be: retval = UA_Client_connect(client, ua_server); */
-+    retval = UA_Client_connect_username(client, ua_server, "user1", "password");
+@@ -58,8 +63,8 @@ int main(int argc, char *argv[]) {
+     /* Create a client and connect */
+     client = UA_Client_new();
+     UA_ClientConfig_setDefault(UA_Client_getConfig(client));
+-    /* Anonymous connect: UA_Client_connect(client, "opc.tcp://localhost:4840"); */
+-    retval = UA_Client_connectUsername(client, "opc.tcp://localhost:4840",
++    /* Anonymous connect: UA_Client_connect(client, "ua_server"); */
++    retval = UA_Client_connectUsername(client, "ua_server",
+                                        "user1", "password");
      if(retval != UA_STATUSCODE_GOOD) {
          printf("Could not connect\n");
-         UA_Client_delete(client);
-         return EXIT_FAILURE;
 -- 
-2.7.4
-
+2.34.1

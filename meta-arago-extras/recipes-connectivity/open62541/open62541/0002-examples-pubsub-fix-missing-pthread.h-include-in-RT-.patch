@@ -1,0 +1,30 @@
+From 3c3fbc17c9d649d20ea5c86e5581b6a4409447f3 Mon Sep 17 00:00:00 2001
+From: Thorsten Lannynd <t-lannynd@ti.com>
+Date: Wed, 13 May 2026 14:54:39 -0500
+Subject: [PATCH] examples: pubsub: fix missing pthread.h include in RT
+ state machine example
+
+Include header file, to fix error of implicit declaration of
+pthread_create.
+
+Upstream-Status: Submitted [https://github.com/open62541/open62541/pull/8044]
+
+Signed-off-by: Thorsten Lannynd <t-lannynd@ti.com>
+---
+ .../pubsub_realtime/server_pubsub_subscribe_rt_state_machine.c   | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/examples/pubsub_realtime/server_pubsub_subscribe_rt_state_machine.c b/examples/pubsub_realtime/server_pubsub_subscribe_rt_state_machine.c
+index 0fb4243ae..f41d718ec 100644
+--- a/examples/pubsub_realtime/server_pubsub_subscribe_rt_state_machine.c
++++ b/examples/pubsub_realtime/server_pubsub_subscribe_rt_state_machine.c
+@@ -19,6 +19,7 @@
+ #include <poll.h>
+ #include <unistd.h>
+ #include <fcntl.h>
++#include <pthread.h>
+
+ #define PUBSUB_CONFIG_FIELD_COUNT 10
+
+--
+2.34.1
