@@ -6,7 +6,7 @@ Subject: [PATCH] examples: client: allow configurable server
 * Enable a remote server URL to be provided as an argument.
 * Default to localhost if no arguments are provided.
 
-Upstream-Status: Submitted [https://github.com/open62541/open62541/pull/8045]
+Upstream-Status: Backport [dc33c82dcbeea22f8e4fa9ee5e41b691e8db1f03]
 
 Signed-off-by: Jacob Stiffler <j-stiffler@ti.com>
 Signed-off-by: Thorsten Lannynd <t-lannynd@ti.com>
