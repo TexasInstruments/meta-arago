@@ -7,7 +7,7 @@ Subject: [PATCH] examples: pubsub: fix missing pthread.h include in RT
 Include header file, to fix error of implicit declaration of
 pthread_create.
 
-Upstream-Status: Submitted [https://github.com/open62541/open62541/pull/8044]
+Upstream-Status: Backport [12f122e16a6a76dbff0022f64a615a5ba459e71e]
 
 Signed-off-by: Thorsten Lannynd <t-lannynd@ti.com>
 ---
