@@ -1,4 +1,4 @@
-From d6a8f091cebd265c0f7f681173d2aa218a0b89cd Mon Sep 17 00:00:00 2001
+From c31cb261202bc96d9a0581c3efdba5279acc04ef Mon Sep 17 00:00:00 2001
 From: Thorsten Lannynd <t-lannynd@ti.com>
 Date: Thu, 5 Mar 2026 12:02:31 -0600
 Subject: [PATCH] chromium: gpu: sandbox: Allow GPU sandbox access to V4L2
@@ -17,18 +17,17 @@ Signed-off-by: Thorsten Lannynd <t-lannynd@ti.com>
  1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/content/common/gpu_pre_sandbox_hook_linux.cc b/content/common/gpu_pre_sandbox_hook_linux.cc
-index 2e53794fa3..9dec7fa08b 100644
+index 2e53794fa3..e2facce9da 100644
 --- a/content/common/gpu_pre_sandbox_hook_linux.cc
 +++ b/content/common/gpu_pre_sandbox_hook_linux.cc
-@@ -627,13 +627,14 @@ std::vector<BrokerFilePermission> FilePermissionsForGpu(
-       BrokerFilePermission::ReadOnly(kDriRcPath)};
+@@ -628,12 +628,13 @@ std::vector<BrokerFilePermission> FilePermissionsForGpu(
 
    AddVulkanICDPermissions(&permissions);
-+
+
 +  if (UseV4L2Codec(options)) {
 +      AddV4L2GpuPermissions(&permissions, options);
 +  }
-
++
    if (IsChromeOS()) {
      // Permissions are additive, there can be multiple GPUs in the system.
      AddStandardChromeOsPermissions(&permissions);
