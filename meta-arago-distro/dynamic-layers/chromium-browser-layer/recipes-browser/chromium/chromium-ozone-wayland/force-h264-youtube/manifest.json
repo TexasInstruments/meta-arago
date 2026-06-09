@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Force H.264",
+  "version": "1.0.0",
+  "description": "Lightweight extension that forces YouTube to play H.264 (avc1) by blocking VP8, VP9, and AV1",
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.youtube.com/*",
+        "*://*.youtube-nocookie.com/*",
+        "*://*.youtu.be/*"
+      ],
+      "js": ["force_h264.js"],
+      "run_at": "document_start",
+      "world": "MAIN",
+      "all_frames": true
+    }
+  ]
+}
