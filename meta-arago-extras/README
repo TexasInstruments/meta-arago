@@ -1,27 +1,29 @@
 meta-arago-extras provides additional TI applications that are distro-agnostic
 
-This layer works with the latest Yocto Project release (currently 2.2+) and tracks
-the stable/maintenance branches (currently "master") of the corresponding layers:
+The source repository is hosted at https://git.yoctoproject.org/meta-arago
 
-URI: git://git.openembedded.org/openembedded-core
+This layer works with the latest Yocto Project and tracks the "master"
+branches of the corresponding layers:
+
+URI: https://git.openembedded.org/openembedded-core
 branch: master
 revision: HEAD
 layers: meta
 
-URI: git://git.yoctoproject.org/meta-ti
+URI: https://git.yoctoproject.org/meta-ti
 branch: master
 revision: HEAD
 layers: meta-ti-bsp, meta-ti-extras
 
-URI: git://git.yoctoproject.org/meta-arm
+URI: https://git.yoctoproject.org/meta-arm
 branch: master
 revision: HEAD
 layers: meta-arm, meta-arm-toolchain
 
-URI: git://git.openembedded.org/meta-openembedded
+URI: https://git.openembedded.org/meta-openembedded
 branch: master
 revision: HEAD
-layers: meta-oe, meta-networking, meta-python
+layers: meta-oe, meta-networking
 
 Send pull requests, patches, comments or questions to:
 meta-arago@lists.yoctoproject.org
