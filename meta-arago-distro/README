@@ -1,30 +1,37 @@
 meta-arago-distro provides Arago distribution configuration for TI products
 
-This layer works with the latest Yocto Project release (currently 2.2+) and tracks
-the stable/maintenance branches (currently "master") of the corresponding layers:
+The source repository is hosted at https://git.yoctoproject.org/meta-arago
 
-URI: git://git.openembedded.org/openembedded-core
-branch: master
+This layer works with the latest Yocto Project Wrynose 6.0 release and tracks
+the stable/maintenance "wrynose" branches of the corresponding layers:
+
+URI: https://git.openembedded.org/openembedded-core
+branch: wrynose
 revision: HEAD
 layers: meta
 
-URI: git://git.yoctoproject.org/meta-ti
-branch: master
+URI: https://git.yoctoproject.org/meta-ti
+branch: wrynose
 revision: HEAD
-layers: meta-ti-bsp, meta-ti-extras
+layers: meta-ti-bsp, meta-ti-extras, meta-ti-test
 
-URI: git://git.yoctoproject.org/meta-arm
-branch: master
+URI: https://git.yoctoproject.org/meta-arm
+branch: wrynose
 revision: HEAD
 layers: meta-arm, meta-arm-toolchain
 
-URI: git://git.openembedded.org/meta-openembedded
-branch: master
+URI: https://git.openembedded.org/meta-openembedded
+branch: wrynose
 revision: HEAD
-layers: meta-oe, meta-networking, meta-python
+layers: meta-oe, meta-multimedia, meta-networking, meta-python
 
-URI: git://git.yoctoproject.org/meta-arago
-branch: master
+URI: https://git.yoctoproject.org/meta-virtualization
+branch: wrynose
+revision: HEAD
+layers: meta-virtualization
+
+URI: https://git.yoctoproject.org/meta-arago
+branch: wrynose
 revision: HEAD
 layers: meta-arago-extras
 
