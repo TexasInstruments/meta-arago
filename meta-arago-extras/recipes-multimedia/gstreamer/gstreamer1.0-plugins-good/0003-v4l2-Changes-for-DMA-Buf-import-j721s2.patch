@@ -24,7 +24,7 @@ diff --git a/sys/v4l2/gstv4l2bufferpool.c b/sys/v4l2/gstv4l2bufferpool.c
 index d85f036..e6a60dc 100644
 --- a/sys/v4l2/gstv4l2bufferpool.c
 +++ b/sys/v4l2/gstv4l2bufferpool.c
-@@ -83,7 +83,7 @@ enum _GstV4l2BufferState
+@@ -92,7 +92,7 @@ enum _GstV4l2BufferState
  static void gst_v4l2_buffer_pool_complete_release_buffer (GstBufferPool * bpool,
      GstBuffer * buffer, gboolean queued);
 
@@ -33,7 +33,7 @@ index d85f036..e6a60dc 100644
  gst_v4l2_is_buffer_valid (GstBuffer * buffer, GstV4l2MemoryGroup ** out_group,
      gboolean check_writable)
  {
-@@ -1584,11 +1584,22 @@ gst_v4l2_buffer_pool_complete_release_buffer (GstBufferPool * bpool,
+@@ -1624,11 +1624,22 @@ gst_v4l2_buffer_pool_complete_release_buffer (GstBufferPool * bpool,
              gst_v4l2_allocator_reset_group (pool->vallocator, group);
              /* queue back in the device */
              if (pool->other_pool)
@@ -62,9 +62,9 @@ diff --git a/sys/v4l2/gstv4l2bufferpool.h b/sys/v4l2/gstv4l2bufferpool.h
 index 60340c2..cec4207 100644
 --- a/sys/v4l2/gstv4l2bufferpool.h
 +++ b/sys/v4l2/gstv4l2bufferpool.h
-@@ -124,6 +124,9 @@ gboolean            gst_v4l2_buffer_pool_orphan  (GstV4l2Object * v4l2object);
+@@ -124,6 +124,9 @@ void                gst_v4l2_buffer_pool_enable_resolution_change (GstV4l2Buffer
 
- void                gst_v4l2_buffer_pool_enable_resolution_change (GstV4l2BufferPool *self);
+ void                gst_v4l2_buffer_pool_release_buffers (GstV4l2BufferPool * pool);
 
 +gboolean            gst_v4l2_is_buffer_valid (GstBuffer * buffer, GstV4l2MemoryGroup ** out_group,
 +                                              gboolean check_writable);
