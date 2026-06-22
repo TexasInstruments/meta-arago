@@ -38,7 +38,7 @@ ARAGO_EXTRA = "\
     expat \
     glib-2.0 \
     libxml2 \
-    libpcre \
+    libpcre2 \
     iptables \
     iperf3 \
     netperf \
