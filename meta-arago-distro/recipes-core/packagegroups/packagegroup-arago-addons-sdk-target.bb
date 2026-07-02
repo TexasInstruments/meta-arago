@@ -22,7 +22,6 @@ UTILS:append:am57xx = " can-utils-dev \
 UTILS:append:k3 = "\
 	can-utils-dev \
 	ti-rpmsg-char-dev \
-	ti-rpmsg-char-staticdev \
 "
 
 EXTRA_PACKAGES = ""
