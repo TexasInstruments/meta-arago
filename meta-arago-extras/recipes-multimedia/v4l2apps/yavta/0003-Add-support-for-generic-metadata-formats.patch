@@ -1,0 +1,41 @@
+From a4f5a948d05827d95ff2f73a997fd3cdba46d2bf Mon Sep 17 00:00:00 2001
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
+Date: Thu, 24 Aug 2023 11:08:56 +0300
+Subject: [PATCH 3/4] Add support for generic metadata formats
+
+Upstream-Status: Pending
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Rishikesh Donadkar <r-donadkar@ti.com>
+---
+ yavta.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/yavta.c b/yavta.c
+index 25b95e7..6a494da 100644
+--- a/yavta.c
++++ b/yavta.c
+@@ -340,6 +340,7 @@ static const struct v4l2_format_info {
+	unsigned int fourcc;
+	unsigned char n_planes;
+ } pixel_formats[] = {
++	/* Pixel data formats */
+	{ "RGB332", V4L2_PIX_FMT_RGB332, 1 },
+	{ "RGB444", V4L2_PIX_FMT_RGB444, 1 },
+	{ "ARGB444", V4L2_PIX_FMT_ARGB444, 1 },
+@@ -424,6 +425,14 @@ static const struct v4l2_format_info {
+	{ "DV", V4L2_PIX_FMT_DV, 1 },
+	{ "MJPEG", V4L2_PIX_FMT_MJPEG, 1 },
+	{ "MPEG", V4L2_PIX_FMT_MPEG, 1 },
++	/* Metadata formats */
++	{ "GENERIC_8", V4L2_META_FMT_GENERIC_8, 1 },
++	{ "GENERIC_CSI2_10", V4L2_META_FMT_GENERIC_CSI2_10, 1 },
++	{ "GENERIC_CSI2_12", V4L2_META_FMT_GENERIC_CSI2_12, 1 },
++	{ "GENERIC_CSI2_14", V4L2_META_FMT_GENERIC_CSI2_14, 1 },
++	{ "GENERIC_CSI2_16", V4L2_META_FMT_GENERIC_CSI2_16, 1 },
++	{ "GENERIC_CSI2_20", V4L2_META_FMT_GENERIC_CSI2_20, 1 },
++	{ "GENERIC_CSI2_24", V4L2_META_FMT_GENERIC_CSI2_24, 1 },
+ };
+
+ static void list_formats(void)
+--
+2.34.1

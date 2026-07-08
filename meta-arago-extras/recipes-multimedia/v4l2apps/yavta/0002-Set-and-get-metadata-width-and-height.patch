@@ -1,0 +1,51 @@
+From 94ea50843fa80fd91f8aa3ef3618310a53f40dc6 Mon Sep 17 00:00:00 2001
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
+Date: Fri, 9 May 2025 18:43:38 +0300
+Subject: [PATCH 2/4] Set and get metadata width and height
+
+Support getting and setting the width and height fields of the metadata
+formats. This is required to capture line-based metadata e.g. from camera
+sensors.
+
+Upstream-Status: Pending
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Rishikesh Donadkar <r-donadkar@ti.com>
+---
+ yavta.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
+
+diff --git a/yavta.c b/yavta.c
+index ba94bfa..25b95e7 100644
+--- a/yavta.c
++++ b/yavta.c
+@@ -889,13 +889,14 @@ static int video_get_format(struct device *dev)
+				fmt.fmt.pix_mp.plane_fmt[i].sizeimage);
+		}
+	} else if (video_is_meta(dev)) {
+-		dev->width = 0;
+-		dev->height = 0;
++		dev->width = fmt.fmt.meta.width;
++		dev->height = fmt.fmt.meta.height;
+		dev->num_planes = 1;
+
+-		printf("Meta-data format: %s (%08x) buffer size %u\n",
+-			v4l2_format_name(fmt.fmt.meta.dataformat), fmt.fmt.meta.dataformat,
+-					 fmt.fmt.meta.buffersize);
++		printf("Meta-data format: %s (%08x) %ux%u buffer size %u\n",
++		       v4l2_format_name(fmt.fmt.meta.dataformat),
++		       fmt.fmt.meta.dataformat, fmt.fmt.meta.width,
++		       fmt.fmt.meta.height, fmt.fmt.meta.buffersize);
+	} else {
+		dev->width = fmt.fmt.pix.width;
+		dev->height = fmt.fmt.pix.height;
+@@ -951,6 +952,8 @@ static int video_set_format(struct device *dev, unsigned int w, unsigned int h,
+	} else if (video_is_meta(dev)) {
+		fmt.fmt.meta.dataformat = format;
+		fmt.fmt.meta.buffersize = buffer_size;
++		fmt.fmt.meta.width = w;
++		fmt.fmt.meta.height = h;
+	} else {
+		fmt.fmt.pix.width = w;
+		fmt.fmt.pix.height = h;
+--
+2.34.1
