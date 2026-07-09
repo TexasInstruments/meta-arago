@@ -4,7 +4,6 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/systemd:"
 
 SRC_URI:append = " \
     file://10-eth.network \
-    file://15-eth.network \
     file://30-wlan.network \
     file://60-usb.network \
     file://timesyncd.conf \
@@ -14,7 +13,6 @@ SRC_URI:append = " \
 do_install:append() {
     install -d ${D}${sysconfdir}/systemd/network/
     install -m 0644 ${UNPACKDIR}/10-eth.network ${D}${sysconfdir}/systemd/network/
-    install -m 0644 ${UNPACKDIR}/15-eth.network ${D}${sysconfdir}/systemd/network/
     install -m 0644 ${UNPACKDIR}/30-wlan.network ${D}${sysconfdir}/systemd/network/
     install -m 0644 ${UNPACKDIR}/60-usb.network ${D}${sysconfdir}/systemd/network/
 
