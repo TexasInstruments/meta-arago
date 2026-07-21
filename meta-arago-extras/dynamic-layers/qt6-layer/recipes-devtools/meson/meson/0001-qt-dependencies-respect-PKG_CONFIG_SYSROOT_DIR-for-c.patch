@@ -56,7 +56,7 @@ index c245e5c..a3846ec 100644
      return [private_dir, Path(private_dir, f'Qt{module}').as_posix()]
 
 
-@@ -192,7 +200,10 @@ class QtPkgConfigDependency(_QtBase, PkgConfigDependency, metaclass=abc.ABCMeta)
+@@ -195,7 +203,10 @@ class QtPkgConfigDependency(_QtBase, PkgConfigDependency, metaclass=abc.ABCMeta)
              if self.private_headers:
                  qt_inc_dir = mod.get_variable(pkgconfig='includedir')
                  mod_private_dir = os.path.join(qt_inc_dir, 'Qt' + m)
@@ -65,8 +65,8 @@ index c245e5c..a3846ec 100644
 +                sysroot = os.environ.get('PKG_CONFIG_SYSROOT_DIR', '')
 +                check_dir = os.path.join(sysroot, mod_private_dir.lstrip('/')) if sysroot else mod_private_dir
 +                if not os.path.isdir(check_dir):
-                     # At least some versions of homebrew don't seem to set this
-                     # up correctly. /usr/local/opt/qt/include/Qt + m_name is a
-                     # symlink to /usr/local/opt/qt/include, but the pkg-config
+                     if self.env.machines[self.for_machine].is_darwin():
+                         # On macOS Qt is conventionally shipped as a framework
+                         # (e.g. Homebrew's qt@6). pkg-config 'includedir' is
 --
 2.34.1
