@@ -1,3 +1,5 @@
+FILESEXTRAPATHS:prepend := "${THISDIR}/libyang:"
+
 PV = "3.7.8"
 
 LIC_FILES_CHKSUM = "file://LICENSE;md5=9bb3d334294e8719f41c531e28a9a697"
