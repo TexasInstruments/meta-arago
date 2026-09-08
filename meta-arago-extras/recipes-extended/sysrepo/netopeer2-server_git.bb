@@ -11,6 +11,8 @@ SRC_URI = " \
     ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'file://netopeer2-serverd.service', '', d)} \
 "
 
+SRC_URI += "file://0001-Update-for-OpenSSL-4.0-support.patch"
+
 PV = "2.2.35+git"
 SRCREV = "6d1cb61ef3ce2274a91dc9cbc51318bcd0b54697"
 

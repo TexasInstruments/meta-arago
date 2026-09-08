@@ -1,0 +1,64 @@
+From e8dec096bf30c0e074814af223717cd109634f05 Mon Sep 17 00:00:00 2001
+From: Ryan Eatmon <reatmon@ti.com>
+Date: Thu, 3 Sep 2026 17:32:39 -0500
+Subject: [PATCH] Update for OpenSSL 4.0 support
+
+Upstream-Status: Pending
+
+Signed-off-by: Ryan Eatmon <reatmon@ti.com>
+---
+ cli/commands.c | 21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
+
+diff --git a/cli/commands.c b/cli/commands.c
+index 677fbe7..f4ad96f 100644
+--- a/cli/commands.c
++++ b/cli/commands.c
+@@ -1825,6 +1825,7 @@ parse_cert(const char *name, const char *path)
+     int i, j, has_san, first_san;
+     ASN1_OCTET_STRING *ip;
+     ASN1_INTEGER *bs;
++    BIGNUM *bn;
+     BIO *bio_out;
+     FILE *fp;
+     X509 *cert;
+@@ -1847,10 +1848,10 @@ parse_cert(const char *name, const char *path)
+     bio_out = BIO_new_fp(stdout, BIO_NOCLOSE);
+ 
+     bs = X509_get_serialNumber(cert);
++    bn = ASN1_INTEGER_to_BN(bs,NULL);
++
+     BIO_printf(bio_out, "-----%s----- serial: ", name);
+-    for (i = 0; i < bs->length; i++) {
+-        BIO_printf(bio_out, "%02x", bs->data[i]);
+-    }
++    BIO_printf(bio_out, "%s", BN_bn2hex(bn));
+     BIO_printf(bio_out, "\n");
+ 
+     BIO_printf(bio_out, "Subject: ");
+@@ -1903,14 +1904,16 @@ parse_cert(const char *name, const char *path)
+                 if (san_name->type == GEN_IPADD) {
+                     BIO_printf(bio_out, "IP:");
+                     ip = san_name->d.iPAddress;
+-                    if (ip->length == 4) {
+-                        BIO_printf(bio_out, "%d.%d.%d.%d", ip->data[0], ip->data[1], ip->data[2], ip->data[3]);
+-                    } else if (ip->length == 16) {
+-                        for (j = 0; j < ip->length; ++j) {
++                    const unsigned char *ptr = ASN1_STRING_get0_data(ip);
++                    int len = ASN1_STRING_length(ip);
++                    if (len == 4) {
++                        BIO_printf(bio_out, "%d.%d.%d.%d", ptr[0], ptr[1], ptr[2], ptr[3]);
++                    } else if (len == 16) {
++                        for (j = 0; j < len; ++j) {
+                             if ((j > 0) && (j < 15) && (j % 2 == 1)) {
+-                                BIO_printf(bio_out, "%02x:", ip->data[j]);
++                                BIO_printf(bio_out, "%02x:", ptr[j]);
+                             } else {
+-                                BIO_printf(bio_out, "%02x", ip->data[j]);
++                                BIO_printf(bio_out, "%02x", ptr[j]);
+                             }
+                         }
+                     }
+-- 
+2.43.0
+
