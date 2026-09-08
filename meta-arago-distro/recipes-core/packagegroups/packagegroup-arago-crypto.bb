@@ -8,7 +8,6 @@ CRYPTO_SUPPORT = "\
     openssl \
     openssl-bin \
     openssl-conf \
-    openssl-engines \
     cryptodev-module \
     opensc \
 "
