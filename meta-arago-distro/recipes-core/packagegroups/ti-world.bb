@@ -7,17 +7,7 @@ inherit packagegroup
 
 INSANE_SKIP:${PN} += "dev-deps"
 
-CHROMIUM = ""
-CHROMIUM:append:am57xx = "\
-    chromium-ozone-wayland \
-"
-CHROMIUM:append:k3 = "\
-    chromium-ozone-wayland \
-"
-
-PYTHON2APPS = " \
-    ${@bb.utils.contains("BBFILE_COLLECTIONS","browser-layer",bb.utils.contains('DISTRO_FEATURES','wayland',"${CHROMIUM}",'',d),'',d)} \
-"
+CHROMIUM_TOOLS = "chromium-ozone-wayland"
 
 DEVTOOLS = " \
     linux-libc-headers-dev \
@@ -39,7 +29,7 @@ RDEPENDS:${PN} = "\
     packagegroup-arago-addons \
     packagegroup-arago-addons-extra \
     ${@bb.utils.contains('DISTRO_FEATURES','opengl','','packagegroup-arago-base-server-extra',d)} \
-    ${@bb.utils.contains("BBFILE_COLLECTIONS", "meta-python2", "${PYTHON2APPS}", "", d)} \
+    ${@bb.utils.contains("BBFILE_COLLECTIONS","browser-layer",bb.utils.contains('DISTRO_FEATURES','wayland',"${CHROMIUM_TOOLS}",'',d),'',d)} \
     ${DEVTOOLS} \
     packagegroup-arago-misc \
     ${PREFERRED_PROVIDER_virtual/docker} \
