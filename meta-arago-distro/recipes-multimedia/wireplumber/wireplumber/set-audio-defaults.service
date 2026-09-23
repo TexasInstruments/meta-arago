@@ -1,0 +1,21 @@
+[Unit]
+Description=Set PipeWire Default Audio Devices
+# Wait for pipewire and wireplumber services to be started
+After=pipewire.service wireplumber.service
+# Ensure sound-card is ready
+After=sys-devices-platform-sound-sound-card0-controlC0.device
+Wants=pipewire.service wireplumber.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/set-audio-defaults.sh
+StandardOutput=append:/var/log/set-audio-defaults-output.log
+StandardError=append:/var/log/set-audio-defaults-error.log
+RemainAfterExit=yes
+TimeoutStartSec=90
+# Restart on failure with delay
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
