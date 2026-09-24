@@ -1,6 +1,11 @@
 {
     "APPEND-1" : {
-        "skip_vars" : [ "FILES", "RDEPENDS", "RPROVIDES" ]
+        "skip_vars" : [ "FILES", "RDEPENDS", "RPROVIDES" ],
+        "files" : {
+            "meta-arago-distro/recipes-multimedia/wireplumber/wireplumber-arago.inc" : {
+                "skip_vars": [ "SYSTEMD_SERVICE" ]
+            }
+        }
     },
     "APPEND-2" : {
         "skip_vars" : [ "PR", "PV" ],
