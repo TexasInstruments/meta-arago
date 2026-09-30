@@ -1,0 +1,34 @@
+From 5bcdc4db88d908abdeba11270740864a13bafad1 Mon Sep 17 00:00:00 2001
+From: Thorsten Lannynd <t-lannynd@ti.com>
+Date: Mon, 28 Sep 2026 13:22:56 -0500
+Subject: [PATCH] chromium: wrapper: Auto-load arago extensions at runtime
+
+Upstream-Status: Inappropriate [TI-specific extension directory]
+
+Scan $HERE/extensions/arago/ at runtime and pass any installed
+subdirectories through --load-extension, allowing all TI extensions to be
+enabled by default.
+
+Signed-off-by: Thorsten Lannynd <t-lannynd@ti.com>
+---
+ chrome/installer/linux/common/wrapper | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/chrome/installer/linux/common/wrapper b/chrome/installer/linux/common/wrapper
+index 3547069c2a..76588abda8 100755
+--- a/chrome/installer/linux/common/wrapper
++++ b/chrome/installer/linux/common/wrapper
+@@ -28,5 +28,11 @@ exec 2> >(exec cat >&2)
+
+ CHROME_EXTRA_ARGS=""
+
++# Auto-load arago extensions at runtime
++for _ext in "$HERE/extensions/arago"/*/; do
++    [ -d "$_ext" ] && _ext_list="${_ext_list:+$_ext_list,}${_ext%/}"
++done
++[ -n "$_ext_list" ] && CHROME_EXTRA_ARGS="$CHROME_EXTRA_ARGS --load-extension=$_ext_list"
++
+ # Note: exec -a below is a bashism.
+ exec -a "$0" "$HERE/@@PROGNAME@@" ${CHROME_EXTRA_ARGS} "$@"
+--
+2.34.1
