@@ -11,6 +11,7 @@ SRC_URI:append = " \
                   file://0002-chromium-gpu-sandbox-Allow-GPU-sandbox-access-to-V4L.patch \
                   file://0003-chromium-gpu-v4l2-Fix-OUTPUT-queue-streaming-in-V4L2.patch \
                   file://0004-media-gpu-v4l2-Avoid-placing-incomplete-H264-access-.patch \
+                  file://0005-chromium-wrapper-Auto-load-arago-extensions-at-runti.patch \
                   file://force-h264-youtube/force_h264.js \
                   file://force-h264-youtube/manifest.json \
                   "
