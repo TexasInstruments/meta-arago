@@ -23,9 +23,21 @@ PACKAGECONFIG[use-pixman] = ",,"
 DEFAULTBACKEND ??= ""
 DEFAULTBACKEND:qemuall ?= "drm"
 
+DRI_CARD_COUNT ??= "1"
+DRI_CARD_COUNT:j721e = "2"
+DRI_CARD_COUNT:j721s2 = "2"
+DRI_CARD_COUNT:j784s4 = "2"
+DRI_CARD_COUNT:j742s2 = "2"
+DRI_CARD_COUNT:am62xx = "2"
+DRI_CARD_COUNT:am62pxx = "2"
+DRI_CARD_COUNT:j722s = "2"
+
 do_install() {
 	install -D -p -m0644 weston.ini ${D}${sysconfdir}/xdg/weston/weston.ini
 	install -D -p -m0644 emptty.conf ${D}${sysconfdir}/emptty/conf
+	if [ -n "${DRI_CARD_COUNT}" ]; then
+		sed -i -e "/^#WAIT_CARD_DEVICE_COUNT=/c WAIT_CARD_DEVICE_COUNT=${DRI_CARD_COUNT}" ${D}${sysconfdir}/emptty/conf
+	fi
 
 	if [ -n "${DEFAULTBACKEND}" ]; then
 		sed -i -e "/^\[core\]/a backend=${DEFAULTBACKEND}-backend.so" ${D}${sysconfdir}/xdg/weston/weston.ini
