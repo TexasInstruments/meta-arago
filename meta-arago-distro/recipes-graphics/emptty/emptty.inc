@@ -19,9 +19,9 @@ SRC_URI = "\
     git://${GO_IMPORT_pam}.git;protocol=https;branch=master;name=pam;destsuffix=src/${GO_IMPORT_pam} \
     file://pamconf \
     "
-SRCREV = "bb203ad0a224731a7a2ff50deeb342ab79c4af09"
+SRCREV = "bc471001fdea13a6cece38d25cfb7d2f3ce08b06"
 SRCREV_pam = "50ded1b0e7864b9bf75005eb945a8ec826bcf69d"
 
 SRCREV_FORMAT .= "_pam"
 
-PR = "r1"
+PV = "0.16.1+git"
