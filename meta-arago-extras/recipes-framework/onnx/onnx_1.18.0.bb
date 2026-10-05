@@ -92,7 +92,7 @@ do_install:append() {
 		install -d ${D}${PYTHON_SITEPACKAGES_DIR}/onnx
 		(cd ${S}/onnx; cp --parents $(find . -name "*.py*") ${D}${PYTHON_SITEPACKAGES_DIR}/onnx)
 		cp $CP_ARGS ${B}/onnx ${D}${PYTHON_SITEPACKAGES_DIR}
-		cp $CP_ARGS ${B}/onnx_cpp2py_export.so ${D}${PYTHON_SITEPACKAGES_DIR}/onnx
+		cp $CP_ARGS ${B}/onnx_cpp2py_export*.so ${D}${PYTHON_SITEPACKAGES_DIR}/onnx
 	fi
 }
 
