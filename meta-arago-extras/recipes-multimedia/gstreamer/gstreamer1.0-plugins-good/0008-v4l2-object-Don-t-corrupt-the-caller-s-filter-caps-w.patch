@@ -1,0 +1,55 @@
+From 872040cd7cc755bd970e4642a521168d6e19df63 Mon Sep 17 00:00:00 2001
+From: Qi Hou <qi.hou@nxp.com>
+Date: Wed, 23 Sep 2026 15:31:30 +0900
+Subject: [PATCH] v4l2: object: Don't corrupt the caller's filter caps when
+ probing
+
+In gst_v4l2_object_probe_caps(), the DMABuf candidate branch built the
+temporary format_caps with gst_caps_append_structure() and then called
+gst_caps_set_features() on the incoming filter caps to attach
+GST_CAPS_FEATURE_MEMORY_DMABUF.
+
+That is wrong for three reasons:
+
+  - filter is owned by the caller (the pad caps query), so modifying it
+    leaks a side effect back to the caller and can hit a writability
+    assertion when the caps refcount is greater than one.
+  - only structure index 0 was touched, leaving any other structure in
+    the filter untouched.
+  - the feature belongs on the candidate caps we are about to intersect
+    against the filter, not on the filter itself, so the pre-probe
+    intersection test could pick the wrong formats.
+
+Attach the memory:DMABuf feature to the candidate structure directly via
+gst_caps_append_structure_full(), which is what the rest of the file
+(gst_v4l2_object_get_caps_helper(), gst_v4l2_object_update_and_append())
+already does, and leave filter untouched.
+
+No functional change intended for the resulting probed caps; this only
+fixes the filter corruption and makes the cheap pre-probe rejection test
+behave as documented.
+
+Part-of: <https://gitlab.freedesktop.org/gstreamer/gstreamer/-/merge_requests/12529>
+Upstream-Status: Backport [1.28.8]
+---
+ sys/v4l2/gstv4l2object.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/sys/v4l2/gstv4l2object.c b/sys/v4l2/gstv4l2object.c
+index 7d35c34..9dd0c46 100644
+--- a/sys/v4l2/gstv4l2object.c
++++ b/sys/v4l2/gstv4l2object.c
+@@ -5475,9 +5475,10 @@ gst_v4l2_object_probe_caps (GstV4l2Object * v4l2object, GstCaps * filter)
+       GstCaps *format_caps = gst_caps_new_empty ();
+
+       if (dmabuf_tmpl) {
+-        gst_caps_append_structure (format_caps,
+-            gst_structure_copy (dmabuf_tmpl));
+-        gst_caps_set_features (filter, 0,
++	/* Tag the candidate structure itself with the DMABuf memory feature
++         * instead of corrupting the caller owned filter caps. */
++        gst_caps_append_structure_full (format_caps,
++            gst_structure_copy (dmabuf_tmpl),
+             gst_caps_features_new_single_static_str
+             (GST_CAPS_FEATURE_MEMORY_DMABUF));
+         add_alternate_variant (v4l2object, format_caps, dmabuf_tmpl,

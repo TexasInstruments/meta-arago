@@ -8,6 +8,7 @@ SRC_URI:append = " \
     file://0005-HACK-gstv4l2object-Increase-min-buffers-for-CSI-capt.patch \
     file://0006-v4l2object-use-actual-stream-resolution-for-encoded-.patch \
     file://0007-v4l2object-Attempt-non-contiguous-if-contiguous-form.patch \
+    file://0008-v4l2-object-Don-t-corrupt-the-caller-s-filter-caps-w.patch \
 "
 
 PR:append = ".arago0"
