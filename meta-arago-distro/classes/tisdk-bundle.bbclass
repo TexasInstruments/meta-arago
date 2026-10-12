@@ -288,6 +288,12 @@ tisdk_image_build () {
         cp ${DEPLOY_DIR_IMAGE}/ti-hsm/* ${prebuilt_dir}/ti-hsm/
     fi
 
+    # Copy EthFw which enables multi-core Ethernet
+    if [ -d "${DEPLOY_DIR_IMAGE}/ti-eth" ]
+    then
+        cp -r ${DEPLOY_DIR_IMAGE}/ti-eth ${prebuilt_dir}/
+    fi
+
     # Add the EXTRA_TISDK_FILES contents if they exist
     # Make sure EXTRA_TISDK_FILES is not empty so we don't accidentaly
     # copy the root directory.
