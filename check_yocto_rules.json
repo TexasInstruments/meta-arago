@@ -15,7 +15,7 @@
             }
         },
         "file_regex" : {
-            "meta-arago-distro\\/recipes-graphics\\/emptty\\/emptty_\\S+\\.bb" : {
+            "meta-arago-distro\\/recipes-graphics\\/emptty\\/emptty(_\\S+)?\\.bb" : {
                 "skip_vars" : [ "GO_TAGS" ]
             }
         }
