@@ -5,7 +5,6 @@ SRC_URI:append = " \
     file://0002-Adding-support-for-bayer-formats-with-IR-component.patch \
     file://0003-v4l2-Changes-for-DMA-Buf-import-j721s2.patch \
     file://0005-HACK-gstv4l2object-Increase-min-buffers-for-CSI-capt.patch \
-    file://0006-v4l2object-use-actual-stream-resolution-for-encoded-.patch \
 "
 
 PR:append = ".arago0"
