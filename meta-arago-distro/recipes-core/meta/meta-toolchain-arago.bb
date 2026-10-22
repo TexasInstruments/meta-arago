@@ -92,7 +92,7 @@ EOF
 
 }
 
-SDK_POSTPROCESS_COMMAND:prepend = "arago_sdk_fixup; "
+SDK_POSTPROCESS_COMMAND:prepend = "arago_sdk_fixup "
 
 arago_sdk_fixup () {
 	# Remove broken .la files
