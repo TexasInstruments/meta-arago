@@ -91,7 +91,7 @@ do_rootfs[mcdepends] += "${@string_set('%s:do_populate_sdk' % pn for pn in (d.ge
 
 # Call the cleanup_host_packages to remove packages that should be removed from
 # the host for various reasons.  This may include licensing issues as well.
-OPKG_POSTPROCESS_COMMANDS = "cleanup_host_packages; "
+OPKG_POSTPROCESS_COMMANDS = "cleanup_host_packages "
 
 # List of packages to remove from the SDK host package set
 HOST_CLEANUP_PACKAGES ?= ""
@@ -105,9 +105,9 @@ cleanup_host_packages() {
     fi
 }
 
-ROOTFS_PREPROCESS_COMMAND += "tisdk_image_setup; "
-ROOTFS_POSTPROCESS_COMMAND += "tisdk_image_build; add_emptty_inittab; "
-IMAGE_PREPROCESS_COMMAND:append = "tisdk_image_cleanup; "
+ROOTFS_PREPROCESS_COMMAND += "tisdk_image_setup "
+ROOTFS_POSTPROCESS_COMMAND += "tisdk_image_build add_emptty_inittab "
+IMAGE_PREPROCESS_COMMAND:append = "tisdk_image_cleanup "
 
 # Create the SDK image.  We will re-use the rootfs_ipk_do_rootfs functionality
 # to install a given list of packages using opkg.
