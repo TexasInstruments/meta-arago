@@ -43,7 +43,6 @@ ARAGO_EXTRA = "\
     iperf3 \
     netperf \
     arago-gpl-notice \
-    arago-feed-config \
     nfs-utils-client \
     cifs-utils \
     phytool \
